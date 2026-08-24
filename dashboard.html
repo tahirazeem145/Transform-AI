@@ -187,16 +187,32 @@
             position: relative;
         }
 
-        /* Cybernetic Neural Grid Background with Subtle Perspective */
+        /* Cybernetic Neural Grid Background with Interactive Cursor Parallax Shift */
         .dashboard-bg-grid {
             position: fixed;
-            inset: 0;
+            inset: -40px;
             background-image: 
-                linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+                linear-gradient(to right, rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
             background-size: 40px 40px;
+            background-position: var(--grid-x, 0px) var(--grid-y, 0px);
             pointer-events: none;
             z-index: 0;
+            will-change: background-position, transform;
+            transition: transform 0.1s ease-out;
+        }
+
+        .cursor-grid-spotlight {
+            position: fixed;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(59, 130, 246, 0.05) 45%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         /* Ambient Pulsing Glow Orbs */
@@ -344,7 +360,8 @@
 </head>
 <body class="font-body-md text-body-md antialiased overflow-x-hidden min-h-screen flex bg-[#030712]">
     <!-- Background Ambient Effects -->
-    <div class="dashboard-bg-grid"></div>
+    <div id="dashboard-grid" class="dashboard-bg-grid"></div>
+    <div id="grid-spotlight" class="cursor-grid-spotlight"></div>
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
 
@@ -571,5 +588,60 @@
             </div>
         </main>
     </div>
+    <script>
+        // Interactive Background Grid & Ambient Cursor Spotlight Tracking
+        const gridElement = document.getElementById('dashboard-grid');
+        const spotlightElement = document.getElementById('grid-spotlight');
+
+        if (gridElement && spotlightElement) {
+            let targetX = 0, targetY = 0;
+            let currentX = 0, currentY = 0;
+            let spotlightX = 0, spotlightY = 0;
+            let curSpotX = window.innerWidth / 2, curSpotY = window.innerHeight / 2;
+            let isInsideWindow = false;
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isInsideWindow) {
+                    isInsideWindow = true;
+                    spotlightElement.style.opacity = '1';
+                }
+                
+                // Calculate offset from window center for 3D parallax grid motion
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                targetX = ((e.clientX - centerX) / centerX) * 20; // 20px dynamic shift
+                targetY = ((e.clientY - centerY) / centerY) * 20;
+                
+                spotlightX = e.clientX;
+                spotlightY = e.clientY;
+            });
+
+            window.addEventListener('mouseleave', () => {
+                isInsideWindow = false;
+                spotlightElement.style.opacity = '0';
+                targetX = 0;
+                targetY = 0;
+            });
+
+            function renderParallaxGrid() {
+                // Smooth easing interpolation (Lerp)
+                currentX += (targetX - currentX) * 0.08;
+                currentY += (targetY - currentY) * 0.08;
+                
+                curSpotX += (spotlightX - curSpotX) * 0.12;
+                curSpotY += (spotlightY - curSpotY) * 0.12;
+
+                gridElement.style.setProperty('--grid-x', `${currentX}px`);
+                gridElement.style.setProperty('--grid-y', `${currentY}px`);
+                gridElement.style.transform = `translate3d(${currentX * 0.5}px, ${currentY * 0.5}px, 0)`;
+
+                spotlightElement.style.left = `${curSpotX}px`;
+                spotlightElement.style.top = `${curSpotY}px`;
+
+                requestAnimationFrame(renderParallaxGrid);
+            }
+            renderParallaxGrid();
+        }
+    </script>
 </body>
 </html>
