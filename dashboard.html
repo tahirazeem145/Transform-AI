@@ -210,59 +210,56 @@
             overflow: hidden;
         }
 
-        /* Top Border Glow: Moves Left to Right continuously (Never disappears) */
+        /* 360-Degree Rotating Border Glow Beam */
         .glass-panel::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent 0%, rgba(96, 165, 250, 0.7) 20%, rgba(255, 255, 255, 1) 50%, rgba(96, 165, 250, 0.7) 80%, transparent 100%);
-            animation: topBorderGlow 5s ease-in-out infinite alternate;
-            filter: drop-shadow(0 0 6px rgba(147, 197, 253, 1)) drop-shadow(0 0 12px rgba(59, 130, 246, 0.8));
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent 60deg,
+                rgba(59, 130, 246, 0.6) 80deg,
+                rgba(147, 197, 253, 1) 90deg,
+                rgba(255, 255, 255, 1) 95deg,
+                rgba(147, 197, 253, 1) 100deg,
+                rgba(59, 130, 246, 0.6) 110deg,
+                transparent 130deg,
+                transparent 360deg
+            );
+            animation: rotateBorderGlow 6s linear infinite;
             pointer-events: none;
-            z-index: 4;
+            z-index: 0;
         }
 
-        /* Bottom Border Glow: Moves in OPPOSITE direction (Right to Left continuously) */
+        /* Inner Glass Background Mask (Leaves 1px rotating border glow visible) */
         .glass-panel::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent 0%, rgba(96, 165, 250, 0.7) 20%, rgba(255, 255, 255, 1) 50%, rgba(96, 165, 250, 0.7) 80%, transparent 100%);
-            animation: bottomBorderGlow 5s ease-in-out infinite alternate;
-            filter: drop-shadow(0 0 6px rgba(147, 197, 253, 1)) drop-shadow(0 0 12px rgba(59, 130, 246, 0.8));
+            inset: 1px;
+            background: rgba(11, 15, 20, 0.92);
+            border-radius: inherit;
             pointer-events: none;
-            z-index: 4;
+            z-index: 1;
         }
 
-        /* Top border: Left (0) <-> Right (100% - 100px) */
-        @keyframes topBorderGlow {
+        /* Ensure all card contents sit above the rotating border & mask */
+        .glass-panel > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Full 360-Degree Continuous Rotation along the border */
+        @keyframes rotateBorderGlow {
             0% {
-                left: 0%;
+                transform: rotate(0deg);
             }
             100% {
-                left: calc(100% - 100px);
+                transform: rotate(360deg);
             }
-        }
-
-        /* Bottom border: Starts at Right (100% - 100px) <-> Left (0%) in OPPOSITE direction */
-        @keyframes bottomBorderGlow {
-            0% {
-                left: calc(100% - 100px);
-            }
-            100% {
-                left: 0%;
-            }
-        }
-
-        /* Inside card soft ambient glow */
-        .glass-panel {
-            background-image: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
         }
 
         /* Subtle, gentle pop-up on cursor hover */
