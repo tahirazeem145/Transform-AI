@@ -894,7 +894,18 @@
                 }
             ];
 
-            function setMilestoneCompleted(mEl) {
+            const milestoneState = {
+                1: 'active',
+                2: 'pending',
+                3: 'pending',
+                4: 'pending'
+            };
+
+            function setMilestoneCompleted(idx) {
+                if (milestoneState[idx] === 'completed') return;
+                milestoneState[idx] = 'completed';
+
+                const mEl = document.getElementById(`milestone-${idx}`);
                 if (!mEl) return;
                 const dot = mEl.querySelector('.milestone-dot');
                 const lbl = mEl.querySelector('.milestone-label');
@@ -917,7 +928,11 @@
                 }, 180);
             }
 
-            function setMilestoneActive(mEl, text) {
+            function setMilestoneActive(idx, text) {
+                if (milestoneState[idx] === 'active' || milestoneState[idx] === 'completed') return;
+                milestoneState[idx] = 'active';
+
+                const mEl = document.getElementById(`milestone-${idx}`);
                 if (!mEl) return;
                 mEl.classList.remove('opacity-40');
                 const dot = mEl.querySelector('.milestone-dot');
@@ -960,7 +975,27 @@
                         etaEl.innerText = remainingSeconds > 0 ? `${remainingSeconds}s` : 'Ready';
                     }
 
-                    // Check triggers
+                    // Milestone state transitions based on exact progress intervals
+                    if (progress >= 35 && progress < 60) {
+                        setMilestoneCompleted(1);
+                        setMilestoneActive(2, 'Mapping Knowledge');
+                    } else if (progress >= 60 && progress < 92) {
+                        setMilestoneCompleted(1);
+                        setMilestoneCompleted(2);
+                        setMilestoneActive(3, 'Synthesizing Assets');
+                    } else if (progress >= 92 && progress < 100) {
+                        setMilestoneCompleted(1);
+                        setMilestoneCompleted(2);
+                        setMilestoneCompleted(3);
+                        setMilestoneActive(4, 'Verifying Grounding');
+                    } else if (progress >= 100) {
+                        setMilestoneCompleted(1);
+                        setMilestoneCompleted(2);
+                        setMilestoneCompleted(3);
+                        setMilestoneCompleted(4);
+                    }
+
+                    // Check pipeline log step triggers
                     while (stepIndex < steps.length && progress >= steps[stepIndex].at) {
                         const step = steps[stepIndex];
                         if (phaseLabel) phaseLabel.innerText = step.phase;
@@ -984,24 +1019,6 @@
                             statusListEl.appendChild(li);
                         }
 
-                        // Milestone 1 (Analyze) completed -> Milestone 2 (Understand) starts
-                        if (step.at >= 35 && step.at < 60) {
-                            setMilestoneCompleted(document.getElementById('milestone-1'));
-                            setMilestoneActive(document.getElementById('milestone-2'), 'Mapping Knowledge');
-                        }
-
-                        // Milestone 2 completed -> Milestone 3 (Transform) starts
-                        if (step.at >= 60 && step.at < 92) {
-                            setMilestoneCompleted(document.getElementById('milestone-2'));
-                            setMilestoneActive(document.getElementById('milestone-3'), 'Synthesizing Assets');
-                        }
-
-                        // Milestone 3 completed -> Milestone 4 (Validate) starts
-                        if (step.at >= 92 && !step.final) {
-                            setMilestoneCompleted(document.getElementById('milestone-3'));
-                            setMilestoneActive(document.getElementById('milestone-4'), 'Verifying Grounding');
-                        }
-
                         // Update Artifacts
                         if (step.updateArtifact) {
                             const updates = Array.isArray(step.updateArtifact) ? step.updateArtifact : [step.updateArtifact];
@@ -1012,7 +1029,7 @@
                         }
 
                         if (step.final) {
-                            setMilestoneCompleted(document.getElementById('milestone-4'));
+                            setMilestoneCompleted(4);
 
                             const jobStatus = document.getElementById('activeJobStatus');
                             if (jobStatus) {
@@ -1025,7 +1042,7 @@
                                 const ctaLi = document.createElement('li');
                                 ctaLi.className = 'pt-md';
                                 ctaLi.innerHTML = `
-                                    <a href="artifact-workspace.html" class="w-full bg-primary-container hover:bg-blue-500 text-white rounded-lg py-sm px-md flex items-center justify-center gap-sm font-label-md text-label-md transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)] active:scale-95">
+                                    <a href="artifact-workspace.html" class="btn-neon-glow w-full text-white rounded-xl py-sm px-md flex items-center justify-center gap-sm font-label-md text-label-md">
                                         <span>Open Artifact Workspace</span>
                                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                     </a>
@@ -1037,6 +1054,10 @@
                         stepIndex++;
                     }
                 } else {
+                    setMilestoneCompleted(1);
+                    setMilestoneCompleted(2);
+                    setMilestoneCompleted(3);
+                    setMilestoneCompleted(4);
                     clearInterval(progressTimer);
                 }
             }, 600);
