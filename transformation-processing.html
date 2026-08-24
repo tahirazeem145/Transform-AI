@@ -512,9 +512,9 @@
                         <!-- Live Telemetry Matrix & Waveform HUD -->
                         <div class="w-full bg-[#060a12]/90 border border-white/8 rounded-xl p-md flex items-center justify-between gap-md text-[12px] font-mono mt-lg">
                             <div class="flex items-center gap-sm">
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                                <span class="text-on-surface-variant">Throughput:</span>
-                                <span class="text-emerald-400 font-bold" id="liveTokensRate">148 tk/s</span>
+                                <span class="material-symbols-outlined text-emerald-400 text-[18px]">verified_user</span>
+                                <span class="text-on-surface-variant">Grounding Accuracy:</span>
+                                <span class="text-emerald-400 font-bold" id="liveGroundingRate">99.4%</span>
                             </div>
 
                             <!-- Animated Tensor Waveform -->
@@ -527,8 +527,9 @@
                             </div>
 
                             <div class="flex items-center gap-sm">
-                                <span class="text-on-surface-variant">Memory Allocation:</span>
-                                <span class="text-primary font-bold" id="liveMemoryUsage">1.25 GB</span>
+                                <span class="material-symbols-outlined text-primary text-[18px]">timer</span>
+                                <span class="text-on-surface-variant">Est. Time Remaining:</span>
+                                <span class="text-primary font-bold" id="liveEta">12s</span>
                             </div>
                         </div>
                     </div>
@@ -810,16 +811,16 @@
                         progressCircle.style.strokeDashoffset = offset;
                     }
 
-                    // Dynamic live telemetry fluctuations
-                    const tokensEl = document.getElementById('liveTokensRate');
-                    const memoryEl = document.getElementById('liveMemoryUsage');
-                    if (tokensEl) {
-                        const jitterRate = Math.floor(138 + Math.random() * 24);
-                        tokensEl.innerText = `${jitterRate} tk/s`;
+                    // Dynamic live telemetry fluctuations (Grounding Accuracy & ETA countdown)
+                    const groundingEl = document.getElementById('liveGroundingRate');
+                    const etaEl = document.getElementById('liveEta');
+                    if (groundingEl) {
+                        const jitterRate = (98.8 + Math.random() * 0.9).toFixed(1);
+                        groundingEl.innerText = `${jitterRate}%`;
                     }
-                    if (memoryEl) {
-                        const currentMem = (1.1 + (progress * 0.012)).toFixed(2);
-                        memoryEl.innerText = `${currentMem} GB`;
+                    if (etaEl) {
+                        const remainingSeconds = Math.max(0, Math.ceil((100 - progress) * 0.25));
+                        etaEl.innerText = remainingSeconds > 0 ? `${remainingSeconds}s` : 'Ready';
                     }
 
                     // Check triggers
