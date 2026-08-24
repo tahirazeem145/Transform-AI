@@ -575,41 +575,6 @@
                     ctx.stroke();
                 }
 
-                // Low-profile subtle expanded grid highlight near cursor
-                if (isInside) {
-                    const minCol = Math.max(0, Math.floor((mouse.x - distortionRadius) / cellSize));
-                    const maxCol = Math.min(cols, Math.ceil((mouse.x + distortionRadius) / cellSize));
-                    const minRow = Math.max(0, Math.floor((mouse.y - distortionRadius) / cellSize));
-                    const maxRow = Math.min(rows, Math.ceil((mouse.y + distortionRadius) / cellSize));
-
-                    ctx.strokeStyle = 'rgba(59, 130, 246, 0.07)';
-                    ctx.lineWidth = 1;
-
-                    // Highlighted horizontal segments
-                    for (let r = minRow; r <= maxRow; r++) {
-                        const basePy = r * cellSize;
-                        ctx.beginPath();
-                        for (let c = minCol; c <= maxCol; c++) {
-                            const p = getDistortedPoint(c * cellSize, basePy);
-                            if (c === minCol) ctx.moveTo(p.x, p.y);
-                            else ctx.lineTo(p.x, p.y);
-                        }
-                        ctx.stroke();
-                    }
-
-                    // Highlighted vertical segments
-                    for (let c = minCol; c <= maxCol; c++) {
-                        const basePx = c * cellSize;
-                        ctx.beginPath();
-                        for (let r = minRow; r <= maxRow; r++) {
-                            const p = getDistortedPoint(basePx, r * cellSize);
-                            if (r === minRow) ctx.moveTo(p.x, p.y);
-                            else ctx.lineTo(p.x, p.y);
-                        }
-                        ctx.stroke();
-                    }
-                }
-
                 requestAnimationFrame(drawGrid);
             }
 
