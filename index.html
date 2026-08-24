@@ -113,12 +113,25 @@
         }
         
         .right-surface {
-            background-color: #0B0F14;
+            background: linear-gradient(135deg, #09111e 0%, #0d1a2d 50%, #060c16 100%);
+            position: relative;
+        }
+
+        .right-surface::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
         }
 
         .input-base {
-            background-color: #0B0F14;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background-color: rgba(13, 26, 45, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
             transition: all 0.2s ease;
         }
         
