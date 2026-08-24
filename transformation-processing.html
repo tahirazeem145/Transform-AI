@@ -317,6 +317,70 @@
             animation: pulseGlow 2s infinite;
         }
 
+        /* Radiant Glowing Roadmap Rail & Laser Beam */
+        .roadmap-laser-track {
+            position: relative;
+            background: linear-gradient(90deg, #2563eb, #6366f1, #a855f7, #38bdf8);
+            background-size: 200% 100%;
+            animation: laserSweep 2.5s linear infinite;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.8), 0 0 35px rgba(59, 130, 246, 0.6);
+        }
+
+        .roadmap-laser-track::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: 0;
+            width: 14px;
+            height: 10px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #ffffff, 0 0 30px #60a5fa;
+            animation: laserTipPulse 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes laserSweep {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        @keyframes laserTipPulse {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            100% { transform: scale(1.3); opacity: 1; }
+        }
+
+        /* Glowing & Shining Active Milestone */
+        .milestone-active-glow {
+            animation: activeMilestoneShine 2s ease-in-out infinite;
+            border-color: #60a5fa !important;
+            background: radial-gradient(circle, rgba(37,99,235,0.4) 0%, rgba(9,13,21,0.9) 70%) !important;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.9), 0 0 45px rgba(99, 102, 241, 0.5), inset 0 0 15px rgba(96, 165, 250, 0.6) !important;
+        }
+
+        @keyframes activeMilestoneShine {
+            0%, 100% {
+                transform: scale(1.12);
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.7), 0 0 40px rgba(99, 102, 241, 0.4), inset 0 0 10px rgba(96, 165, 250, 0.5);
+            }
+            50% {
+                transform: scale(1.22);
+                box-shadow: 0 0 35px rgba(59, 130, 246, 1), 0 0 60px rgba(147, 51, 234, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        /* Sparkling Emerald Completed Milestone */
+        .milestone-completed-shine {
+            border-color: #34d399 !important;
+            background: radial-gradient(circle, rgba(16,185,129,0.25) 0%, rgba(9,13,21,0.9) 70%) !important;
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.7), 0 0 35px rgba(16, 185, 129, 0.3), inset 0 0 12px rgba(52, 211, 153, 0.4) !important;
+            animation: completedPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes completedPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(52, 211, 153, 0.5), inset 0 0 8px rgba(52, 211, 153, 0.3); }
+            50% { box-shadow: 0 0 28px rgba(52, 211, 153, 0.9), 0 0 45px rgba(16, 185, 129, 0.5), inset 0 0 16px rgba(255, 255, 255, 0.6); }
+        }
+
         /* Quantum Radar & Neural Core Orbit Animations */
         @keyframes radarSweep {
             0% { transform: rotate(0deg); }
@@ -457,15 +521,15 @@
                         <!-- Horizontal Interactive Roadmap Track -->
                         <div class="relative w-full my-xl py-lg px-xs">
                             <!-- Background Milestone Connecting Rail -->
-                            <div class="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-1.5 bg-[#05070a] rounded-full overflow-hidden z-0">
-                                <div id="roadmapProgressBar" class="h-full bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 rounded-full transition-all duration-700 ease-out shadow-[0_0_12px_rgba(99,102,241,0.6)]" style="width: 0%;"></div>
+                            <div class="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-2 bg-[#05070a] rounded-full overflow-hidden z-0 border border-white/5">
+                                <div id="roadmapProgressBar" class="h-full roadmap-laser-track rounded-full transition-all duration-700 ease-out" style="width: 0%;"></div>
                             </div>
 
                             <!-- 4 Milestone Nodes -->
                             <div class="relative z-10 flex justify-between items-center w-full">
                                 <!-- Milestone 1: Ingestion & Analysis -->
                                 <div id="milestone-1" class="flex flex-col items-center group cursor-pointer">
-                                    <div class="milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-primary text-primary flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.6)] transition-all duration-300 transform scale-110">
+                                    <div class="milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-primary text-primary flex items-center justify-center milestone-active-glow transition-all duration-300">
                                         <span class="material-symbols-outlined text-[20px] animate-spin">sync</span>
                                     </div>
                                     <div class="mt-md text-center">
@@ -852,20 +916,26 @@
                             const m1 = document.getElementById('milestone-1');
                             if (m1) {
                                 const dot = m1.querySelector('.milestone-dot');
-                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.4)]';
-                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span>';
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-emerald-400 flex items-center justify-center milestone-completed-shine transition-all duration-500';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px] font-bold">check</span>';
                                 const lbl = m1.querySelector('.milestone-label');
-                                if (lbl) lbl.innerText = 'Completed';
+                                if (lbl) {
+                                    lbl.innerText = 'Completed';
+                                    lbl.className = 'text-[11px] text-emerald-400 font-mono block mt-0.5 milestone-label font-semibold';
+                                }
                             }
 
                             const m2 = document.getElementById('milestone-2');
                             if (m2 && step.at < 60) {
                                 m2.classList.remove('opacity-40');
                                 const dot = m2.querySelector('.milestone-dot');
-                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-primary text-primary flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.6)] transform scale-110';
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-primary flex items-center justify-center milestone-active-glow transition-all duration-500';
                                 dot.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span>';
                                 const lbl = m2.querySelector('.milestone-label');
-                                if (lbl) { lbl.innerText = 'Mapping Knowledge'; lbl.className = 'text-[11px] text-primary font-mono block mt-0.5 milestone-label font-medium'; }
+                                if (lbl) { 
+                                    lbl.innerText = 'Mapping Knowledge'; 
+                                    lbl.className = 'text-[11px] text-primary font-mono block mt-0.5 milestone-label font-semibold animate-pulse'; 
+                                }
                             }
                         }
 
@@ -874,20 +944,26 @@
                             const m2 = document.getElementById('milestone-2');
                             if (m2) {
                                 const dot = m2.querySelector('.milestone-dot');
-                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.4)]';
-                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span>';
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-emerald-400 flex items-center justify-center milestone-completed-shine transition-all duration-500';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px] font-bold">check</span>';
                                 const lbl = m2.querySelector('.milestone-label');
-                                if (lbl) lbl.innerText = 'Completed';
+                                if (lbl) {
+                                    lbl.innerText = 'Completed';
+                                    lbl.className = 'text-[11px] text-emerald-400 font-mono block mt-0.5 milestone-label font-semibold';
+                                }
                             }
 
                             const m3 = document.getElementById('milestone-3');
                             if (m3 && step.at < 92) {
                                 m3.classList.remove('opacity-40');
                                 const dot = m3.querySelector('.milestone-dot');
-                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-primary text-primary flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.6)] transform scale-110';
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-primary flex items-center justify-center milestone-active-glow transition-all duration-500';
                                 dot.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span>';
                                 const lbl = m3.querySelector('.milestone-label');
-                                if (lbl) { lbl.innerText = 'Synthesizing Assets'; lbl.className = 'text-[11px] text-primary font-mono block mt-0.5 milestone-label font-medium'; }
+                                if (lbl) { 
+                                    lbl.innerText = 'Synthesizing Assets'; 
+                                    lbl.className = 'text-[11px] text-primary font-mono block mt-0.5 milestone-label font-semibold animate-pulse'; 
+                                }
                             }
                         }
 
@@ -896,57 +972,25 @@
                             const m3 = document.getElementById('milestone-3');
                             if (m3) {
                                 const dot = m3.querySelector('.milestone-dot');
-                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.4)]';
-                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span>';
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-emerald-400 flex items-center justify-center milestone-completed-shine transition-all duration-500';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px] font-bold">check</span>';
                                 const lbl = m3.querySelector('.milestone-label');
-                                if (lbl) lbl.innerText = 'Completed';
+                                if (lbl) {
+                                    lbl.innerText = 'Completed';
+                                    lbl.className = 'text-[11px] text-emerald-400 font-mono block mt-0.5 milestone-label font-semibold';
+                                }
                             }
 
                             const m4 = document.getElementById('milestone-4');
                             if (m4) {
                                 m4.classList.remove('opacity-40');
                                 const dot = m4.querySelector('.milestone-dot');
-                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-primary text-primary flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.6)] transform scale-110';
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-primary flex items-center justify-center milestone-active-glow transition-all duration-500';
                                 dot.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span>';
                                 const lbl = m4.querySelector('.milestone-label');
-                                if (lbl) { lbl.innerText = 'Verifying Grounding'; lbl.className = 'text-[11px] text-primary font-mono block mt-0.5 milestone-label font-medium'; }
-                            }
-                        }
-
-                        // Activate node
-                        if (step.node) {
-                            const nodeEl = document.getElementById(step.node);
-                            if (nodeEl) {
-                                nodeEl.classList.remove('opacity-30');
-                                nodeEl.classList.add('opacity-100');
-                                const iconEl = nodeEl.querySelector('.node-icon');
-                                if (iconEl) {
-                                    iconEl.className = 'node-icon w-8 h-8 rounded-full bg-primary-container border border-primary flex items-center justify-center z-10 node-active shadow-[0_0_15px_rgba(37,99,235,0.6)]';
-                                    iconEl.innerHTML = '<span class="material-symbols-outlined text-white text-[16px] animate-spin">sync</span>';
-                                }
-                                const statusEl = nodeEl.querySelector('.node-status');
-                                if (statusEl && step.nodeStatus) {
-                                    statusEl.className = 'node-status flex-1 text-left font-body-sm text-body-sm text-primary font-medium';
-                                    statusEl.innerText = step.nodeStatus;
-                                }
-                            }
-                        }
-
-                        // Complete node
-                        if (step.completeNode) {
-                            const nodeEl = document.getElementById(step.completeNode);
-                            if (nodeEl) {
-                                nodeEl.classList.remove('opacity-100');
-                                nodeEl.classList.add('opacity-60');
-                                const iconEl = nodeEl.querySelector('.node-icon');
-                                if (iconEl) {
-                                    iconEl.className = 'node-icon w-8 h-8 rounded-full bg-surface-container border border-primary/50 flex items-center justify-center z-10';
-                                    iconEl.innerHTML = '<span class="material-symbols-outlined text-primary text-[16px]">check</span>';
-                                }
-                                const statusEl = nodeEl.querySelector('.node-status');
-                                if (statusEl && step.nodeStatusDone) {
-                                    statusEl.className = 'node-status flex-1 text-left font-body-sm text-body-sm text-on-surface-variant';
-                                    statusEl.innerText = step.nodeStatusDone;
+                                if (lbl) { 
+                                    lbl.innerText = 'Verifying Grounding'; 
+                                    lbl.className = 'text-[11px] text-primary font-mono block mt-0.5 milestone-label font-semibold animate-pulse'; 
                                 }
                             }
                         }
@@ -964,10 +1008,13 @@
                             const m4 = document.getElementById('milestone-4');
                             if (m4) {
                                 const dot = m4.querySelector('.milestone-dot');
-                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.4)]';
-                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span>';
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-emerald-400 flex items-center justify-center milestone-completed-shine transition-all duration-500';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px] font-bold">check</span>';
                                 const lbl = m4.querySelector('.milestone-label');
-                                if (lbl) lbl.innerText = 'Completed';
+                                if (lbl) {
+                                    lbl.innerText = 'Completed';
+                                    lbl.className = 'text-[11px] text-emerald-400 font-mono block mt-0.5 milestone-label font-semibold';
+                                }
                             }
 
                             const jobStatus = document.getElementById('activeJobStatus');
