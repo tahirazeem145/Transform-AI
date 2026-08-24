@@ -211,76 +211,107 @@
             overflow: hidden;
         }
 
-        /* Compact White Shade Glow Light sweeping gracefully with 10s quiet gap */
+        /* Inside Card White Shade Glow (Sweeps Left to Right and returns Right to Left) */
         .glass-panel::before {
             content: '';
             position: absolute;
             top: 0;
             bottom: 0;
             left: 0;
-            width: 100px;
+            width: 140px;
             background: linear-gradient(
                 90deg,
                 transparent 0%,
-                rgba(255, 255, 255, 0.03) 25%,
+                rgba(255, 255, 255, 0.02) 20%,
                 rgba(255, 255, 255, 0.12) 50%,
-                rgba(255, 255, 255, 0.03) 75%,
+                rgba(255, 255, 255, 0.02) 80%,
                 transparent 100%
             );
-            transform: translateX(-150px);
-            animation: whiteShadeSweep 18s ease-in-out infinite;
+            transform: translateX(-180px);
+            animation: cardShadeSweep 18s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
         }
 
-        /* Corner Box Glow moving Left to Right along the card corners */
+        /* Moving Border Glow (Luminous Top & Bottom Border Beams moving L->R & R->L) */
         .glass-panel::after {
             content: '';
             position: absolute;
             top: 0;
+            bottom: 0;
             left: 0;
-            width: 42px;
-            height: 42px;
-            border-top: 2px solid rgba(255, 255, 255, 0.95);
-            border-left: 2px solid rgba(147, 197, 253, 0.8);
-            border-right: 2px solid rgba(59, 130, 246, 0.4);
-            border-bottom: 1px solid transparent;
-            border-radius: 8px 8px 0 0;
-            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.25) 0%, rgba(59, 130, 246, 0.15) 50%, transparent 80%);
-            transform: translateX(-80px);
-            animation: cornerBoxGlow 18s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px rgba(147, 197, 253, 0.9)) drop-shadow(0 0 16px rgba(59, 130, 246, 0.6));
+            width: 90px;
+            /* Top and Bottom border beam runner lines */
+            background-image: 
+                linear-gradient(90deg, transparent 0%, rgba(96, 165, 250, 0.6) 25%, rgba(255, 255, 255, 0.98) 50%, rgba(96, 165, 250, 0.6) 75%, transparent 100%),
+                linear-gradient(90deg, transparent 0%, rgba(96, 165, 250, 0.6) 25%, rgba(255, 255, 255, 0.98) 50%, rgba(96, 165, 250, 0.6) 75%, transparent 100%);
+            background-position: top left, bottom left;
+            background-size: 100% 2px, 100% 2px;
+            background-repeat: no-repeat;
+            transform: translateX(-180px);
+            animation: borderBeamSweep 18s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(147, 197, 253, 0.95)) drop-shadow(0 0 14px rgba(59, 130, 246, 0.7));
             pointer-events: none;
-            z-index: 4;
+            z-index: 3;
         }
 
-        /* Corner Box Glow Animation: Moves left to right across card, returns, and rests for 10s */
-        @keyframes cornerBoxGlow {
+        /* 18s cycle: Slow smooth sweep Left -> Right (4s), returns Right -> Left (4s), then rests for 10s */
+        @keyframes borderBeamSweep {
             0% {
-                transform: translateX(-80px);
+                transform: translateX(-180px);
                 opacity: 0;
             }
             2% {
                 opacity: 1;
             }
             22% {
-                transform: translateX(calc(100% - 20px));
+                transform: translateX(1100px);
                 opacity: 1;
             }
             24% {
-                transform: translateX(calc(100% - 20px));
+                transform: translateX(1100px);
                 opacity: 1;
             }
             44% {
-                transform: translateX(-80px);
+                transform: translateX(-180px);
                 opacity: 1;
             }
             46% {
                 opacity: 0;
-                transform: translateX(-80px);
+                transform: translateX(-180px);
             }
             100% {
-                transform: translateX(-80px);
+                transform: translateX(-180px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes cardShadeSweep {
+            0% {
+                transform: translateX(-180px);
+                opacity: 0;
+            }
+            2% {
+                opacity: 1;
+            }
+            22% {
+                transform: translateX(1100px);
+                opacity: 1;
+            }
+            24% {
+                transform: translateX(1100px);
+                opacity: 1;
+            }
+            44% {
+                transform: translateX(-180px);
+                opacity: 1;
+            }
+            46% {
+                opacity: 0;
+                transform: translateX(-180px);
+            }
+            100% {
+                transform: translateX(-180px);
                 opacity: 0;
             }
         }
