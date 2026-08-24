@@ -118,30 +118,52 @@
         }
 
         .right-surface {
-            background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.08) 0%, #030712 50%, #02040a 100%);
+            background: #030712;
             position: relative;
+            overflow: hidden;
+        }
+
+        .right-glow-spot {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.22) 0%, rgba(59, 130, 246, 0.08) 45%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease, transform 0.1s ease-out;
+            opacity: 0;
+            z-index: 1;
         }
 
         .right-surface::before {
             content: '';
             position: absolute;
-            top: -15%;
-            right: -15%;
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -10%;
+            right: -10%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(0,0,0,0) 70%);
             pointer-events: none;
         }
 
         .input-base {
-            background-color: #0a0f1d;
+            background-color: rgba(10, 15, 29, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease;
+            backdrop-filter: blur(12px);
+            transition: all 0.25s ease;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .input-base:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.15);
         }
         
         .input-base:focus-within {
             border-color: #3b82f6;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2), inset 0 0 8px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.35), inset 0 0 10px rgba(59, 130, 246, 0.15);
         }
 
         .btn-primary {
@@ -468,9 +490,11 @@
     </div>
 
     <!-- RIGHT PANEL (45% - Login Form) -->
-    <div class="flex-1 right-surface flex flex-col justify-center items-center p-margin-mobile md:p-margin-desktop min-h-screen">
+    <div id="right-panel" class="flex-1 right-surface flex flex-col justify-center items-center p-margin-mobile md:p-margin-desktop min-h-screen relative">
+        <div id="right-glow-spot" class="right-glow-spot"></div>
+
         <!-- Mobile Logo (hidden on desktop) -->
-        <div class="md:hidden flex items-center gap-md mb-xl w-full max-w-[420px]">
+        <div class="md:hidden flex items-center gap-md mb-xl w-full max-w-[420px] relative z-10">
             <div class="w-8 h-8 rounded bg-primary-container/10 border border-primary-container/30 flex items-center justify-center shadow-[0_0_10px_rgba(37,99,235,0.15)]">
                 <span class="material-symbols-outlined text-primary-container text-sm" style="font-variation-settings: 'FILL' 1;">hub</span>
             </div>
@@ -478,7 +502,7 @@
         </div>
 
         <!-- Form Container -->
-        <div class="w-full max-w-[420px] flex flex-col">
+        <div class="w-full max-w-[420px] flex flex-col relative z-10">
             <span class="font-label-md text-label-md text-blue-400 tracking-widest uppercase mb-sm font-semibold">Welcome Back</span>
             <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-bold mb-xl text-white">Sign in to TransformAI</h2>
             
@@ -573,6 +597,42 @@
                 passwordInput.setAttribute('type', type);
                 toggleIcon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
             });
+        }
+
+        // Right side interactive cursor glow
+        const rightPanel = document.getElementById('right-panel');
+        const rightGlowSpot = document.getElementById('right-glow-spot');
+
+        if (rightPanel && rightGlowSpot) {
+            let glowX = 0, glowY = 0;
+            let currentX = 0, currentY = 0;
+            let isInside = false;
+
+            rightPanel.addEventListener('mousemove', (e) => {
+                const rect = rightPanel.getBoundingClientRect();
+                glowX = e.clientX - rect.left;
+                glowY = e.clientY - rect.top;
+                if (!isInside) {
+                    isInside = true;
+                    rightGlowSpot.style.opacity = '1';
+                }
+            });
+
+            rightPanel.addEventListener('mouseleave', () => {
+                isInside = false;
+                rightGlowSpot.style.opacity = '0';
+            });
+
+            function updateRightGlow() {
+                if (isInside) {
+                    currentX += (glowX - currentX) * 0.15;
+                    currentY += (glowY - currentY) * 0.15;
+                    rightGlowSpot.style.left = `${currentX}px`;
+                    rightGlowSpot.style.top = `${currentY}px`;
+                }
+                requestAnimationFrame(updateRightGlow);
+            }
+            updateRightGlow();
         }
     </script>
 </body>
