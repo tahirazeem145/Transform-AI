@@ -210,38 +210,44 @@
             overflow: hidden;
         }
 
-        /* Continuous Left to Right and Right to Left Looping Glow Beam */
+        /* Interior White Shade Glow Light sweeping inside card Left-to-Right & Right-to-Left every 3s in parallel loop */
         .glass-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.02) 20%,
+                rgba(255, 255, 255, 0.12) 45%,
+                rgba(255, 255, 255, 0.22) 50%,
+                rgba(255, 255, 255, 0.12) 55%,
+                rgba(255, 255, 255, 0.02) 80%,
+                transparent 100%
+            );
+            transform: translateX(-100%);
+            animation: whiteShadeSweep 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Top Border Glowing Highlight Beam in exact 3s parallel sync */
+        .glass-panel::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.9) 50%, rgba(147, 197, 253, 1) 75%, transparent 100%);
-            animation: glowLoopLR 4.5s ease-in-out infinite;
-            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8));
-            opacity: 0.75;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 30%, rgba(255, 255, 255, 0.95) 50%, rgba(255, 255, 255, 0.4) 70%, transparent 100%);
+            animation: whiteShadeSweep 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
             pointer-events: none;
             z-index: 3;
         }
 
-        .glass-panel::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(147, 197, 253, 1) 25%, rgba(59, 130, 246, 0.9) 50%, transparent 100%);
-            animation: glowLoopRL 4.5s ease-in-out infinite;
-            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8));
-            opacity: 0.75;
-            pointer-events: none;
-            z-index: 3;
-        }
-
-        @keyframes glowLoopLR {
+        /* 3-second continuous loop: Left to Right -> Right to Left */
+        @keyframes whiteShadeSweep {
             0% {
                 transform: translateX(-100%);
             }
@@ -250,26 +256,14 @@
             }
             100% {
                 transform: translateX(-100%);
-            }
-        }
-
-        @keyframes glowLoopRL {
-            0% {
-                transform: translateX(100%);
-            }
-            50% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
             }
         }
 
         /* Subtle, gentle pop-up on cursor hover */
         .glass-panel:hover {
             transform: translateY(-2px) scale(1.008);
-            border-color: rgba(255, 255, 255, 0.16);
-            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.5), 0 0 15px -3px rgba(59, 130, 246, 0.2);
+            border-color: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.5), 0 0 20px -4px rgba(255, 255, 255, 0.12);
             z-index: 10;
         }
 
