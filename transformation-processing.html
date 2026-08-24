@@ -386,36 +386,18 @@
             animation: iconFadeOut 0.25s ease-in forwards;
         }
 
-        /* Glowing & Shining Active Milestone */
-        .milestone-active-glow {
-            animation: activeMilestoneShine 2s ease-in-out infinite;
-            border-color: #60a5fa !important;
-            background: radial-gradient(circle, rgba(37,99,235,0.4) 0%, rgba(9,13,21,0.9) 70%) !important;
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.9), 0 0 45px rgba(99, 102, 241, 0.5), inset 0 0 15px rgba(96, 165, 250, 0.6) !important;
+        /* Clean Active Milestone (No heavy glow) */
+        .milestone-active-box {
+            border-color: #3b82f6 !important;
+            background: #0d1527 !important;
+            box-shadow: none !important;
         }
 
-        @keyframes activeMilestoneShine {
-            0%, 100% {
-                transform: scale(1.12);
-                box-shadow: 0 0 20px rgba(59, 130, 246, 0.7), 0 0 40px rgba(99, 102, 241, 0.4), inset 0 0 10px rgba(96, 165, 250, 0.5);
-            }
-            50% {
-                transform: scale(1.22);
-                box-shadow: 0 0 35px rgba(59, 130, 246, 1), 0 0 60px rgba(147, 51, 234, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.8);
-            }
-        }
-
-        /* Sparkling Emerald Completed Milestone */
-        .milestone-completed-shine {
-            border-color: #34d399 !important;
-            background: radial-gradient(circle, rgba(16,185,129,0.3) 0%, rgba(9,13,21,0.95) 70%) !important;
-            box-shadow: 0 0 24px rgba(52, 211, 153, 0.8), 0 0 40px rgba(16, 185, 129, 0.4), inset 0 0 12px rgba(52, 211, 153, 0.5) !important;
-            animation: completedPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes completedPulse {
-            0%, 100% { box-shadow: 0 0 15px rgba(52, 211, 153, 0.5), inset 0 0 8px rgba(52, 211, 153, 0.3); }
-            50% { box-shadow: 0 0 28px rgba(52, 211, 153, 0.9), 0 0 45px rgba(16, 185, 129, 0.5), inset 0 0 16px rgba(255, 255, 255, 0.6); }
+        /* Clean Completed Milestone (No heavy glow) */
+        .milestone-completed-box {
+            border-color: #10b981 !important;
+            background: #061a14 !important;
+            box-shadow: none !important;
         }
 
         /* Quantum Radar & Neural Core Orbit Animations */
@@ -566,7 +548,7 @@
                             <div class="relative z-10 flex justify-between items-center w-full">
                                 <!-- Milestone 1: Ingestion & Analysis -->
                                 <div id="milestone-1" class="flex flex-col items-center group cursor-pointer">
-                                    <div class="milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-primary text-primary flex items-center justify-center milestone-active-glow transition-all duration-300">
+                                    <div class="milestone-dot w-12 h-12 rounded-2xl bg-[#0d1527] border-2 border-primary text-primary flex items-center justify-center milestone-active-box transition-all duration-300">
                                         <span class="material-symbols-outlined text-[20px] animate-spin">sync</span>
                                     </div>
                                     <div class="mt-md text-center">
@@ -917,9 +899,9 @@
                     existingIcon.classList.add('animate-spinner-fade');
                 }
 
-                // Smoothly morph to glowing emerald checkmark
+                // Smoothly morph to clean emerald checkmark
                 setTimeout(() => {
-                    dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-emerald-400 flex items-center justify-center milestone-completed-shine transition-all duration-500';
+                    dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-emerald-400 flex items-center justify-center milestone-completed-box transition-all duration-300';
                     dot.innerHTML = '<span class="material-symbols-outlined text-[22px] font-bold animate-check-pop text-emerald-400">check</span>';
                     if (lbl) {
                         lbl.innerText = 'Completed';
@@ -938,7 +920,7 @@
                 const dot = mEl.querySelector('.milestone-dot');
                 const lbl = mEl.querySelector('.milestone-label');
                 if (dot) {
-                    dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-primary flex items-center justify-center milestone-active-glow transition-all duration-500';
+                    dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-primary flex items-center justify-center milestone-active-box transition-all duration-300';
                     dot.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span>';
                 }
                 if (lbl) {
