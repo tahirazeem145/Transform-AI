@@ -174,6 +174,28 @@
             background-color: #080d1a;
             border: 1px solid rgba(37, 99, 235, 0.4);
             box-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
+            transition: all 0.3s ease;
+        }
+        .ai-node:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+            transform: scale(1.05);
+        }
+        .ai-engine-box {
+            transition: all 0.3s ease;
+        }
+        .ai-engine-box:hover {
+            box-shadow: 0 0 35px rgba(37, 99, 235, 0.7);
+            transform: scale(1.04);
+        }
+        .ai-output-item {
+            transition: all 0.2s ease;
+        }
+        .ai-output-item:hover {
+            background-color: rgba(37, 99, 235, 0.2);
+            border-color: rgba(37, 99, 235, 0.5);
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.3);
+            transform: translateX(4px);
         }
         .ai-line {
             background: linear-gradient(90deg, rgba(37, 99, 235, 0.6) 0%, rgba(37, 99, 235, 0.15) 100%);
@@ -219,6 +241,7 @@
             uniform float u_time;
             uniform vec2 u_resolution;
             uniform vec2 u_mouse;
+            uniform float u_mouse_active;
             varying vec2 v_texCoord;
 
             float hash(vec2 p) {
@@ -232,14 +255,14 @@
                 vec2 p = (uv - 0.5) * 2.0;
                 p.x *= u_resolution.x / u_resolution.y;
 
-                vec3 color = vec3(0.02, 0.03, 0.05); // Deep background match
+                vec3 color = vec3(0.015, 0.025, 0.045); // Deep pure background
 
-                // Mouse impact offset
+                // Normalized mouse coordinates
                 vec2 m = (u_mouse / u_resolution - 0.5) * 2.0;
                 m.x *= u_resolution.x / u_resolution.y;
 
                 // Slow moving background grid
-                vec2 moving_uv = uv * 12.0 + vec2(u_time * 0.05, u_time * 0.03);
+                vec2 moving_uv = uv * 14.0 + vec2(u_time * 0.04, u_time * 0.02);
                 vec2 id = floor(moving_uv);
                 vec2 gv = fract(moving_uv) - 0.5;
                 
@@ -248,39 +271,46 @@
                 vec2 offset = vec2(sin(u_time * 0.8 + n * 6.28), cos(u_time * 0.7 + n * 3.14)) * 0.35;
                 float dist = length(gv - offset);
                 
-                float particle = smoothstep(0.12, 0.01, dist) * (sin(u_time * 1.5 + n * 6.28) * 0.4 + 0.6);
+                // Reactive particles near mouse
+                float mouseDist = length(p - m);
+                float mouseProximity = smoothstep(1.2, 0.0, mouseDist) * u_mouse_active;
+                
+                float particle = smoothstep(0.14, 0.01, dist) * (sin(u_time * 1.5 + n * 6.28) * 0.4 + 0.6 + mouseProximity * 0.8);
                 
                 // Floating energy particles layer
                 float floatingParticles = 0.0;
                 for(float i = 1.0; i <= 3.0; i+=1.0) {
-                    vec2 particle_uv = uv * (8.0 * i);
+                    vec2 particle_uv = uv * (9.0 * i);
                     particle_uv.y += u_time * (0.15 * i);
                     particle_uv.x += sin(u_time * 0.2 * i + particle_uv.y) * 0.5;
                     vec2 p_id = floor(particle_uv);
                     vec2 p_gv = fract(particle_uv) - 0.5;
                     float p_n = hash(p_id);
-                    if(p_n > 0.65) {
+                    if(p_n > 0.62) {
                         float p_d = length(p_gv);
-                        floatingParticles += smoothstep(0.08, 0.01, p_d) * (0.3 / i);
+                        floatingParticles += smoothstep(0.09, 0.01, p_d) * (0.35 / i);
                     }
                 }
 
-                // Primary blue brand color & accent teal color
-                vec3 blue = vec3(0.145, 0.388, 0.922);
-                vec3 cyan = vec3(0.2, 0.7, 1.0);
+                // Brand colors
+                vec3 blue = vec3(0.145, 0.388, 0.922);  // #2563EB
+                vec3 cyan = vec3(0.1, 0.75, 1.0);       // Neon cyan
+                vec3 deepBlue = vec3(0.05, 0.2, 0.6);
 
-                color += blue * particle * 0.7;
-                color += mix(blue, cyan, sin(u_time + uv.x) * 0.5 + 0.5) * floatingParticles * 0.8;
+                color += blue * particle * 0.8;
+                color += mix(blue, cyan, sin(u_time + uv.x) * 0.5 + 0.5) * floatingParticles * 0.9;
 
-                // Mouse glow
-                float mouseDist = length(p - m);
-                float mouseGlow = exp(-mouseDist * 1.8) * 0.25;
-                color += cyan * mouseGlow;
+                // Dynamic mouse spotlight glow
+                float spotGlow = exp(-mouseDist * 2.2) * 0.6 * u_mouse_active;
+                float outerGlow = exp(-mouseDist * 0.9) * 0.25 * u_mouse_active;
+                
+                color += cyan * spotGlow;
+                color += blue * outerGlow;
 
                 // Center focal ambient glow
                 float distToCenter = length(p);
-                float centerGlow = exp(-distToCenter * 1.5) * 0.2;
-                color += blue * centerGlow;
+                float centerGlow = exp(-distToCenter * 1.6) * 0.2;
+                color += deepBlue * centerGlow;
 
                 gl_FragColor = vec4(color, 1.0);
             }`;
@@ -304,24 +334,44 @@
               const uTime = gl.getUniformLocation(prog, 'u_time');
               const uRes = gl.getUniformLocation(prog, 'u_resolution');
               const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+              const uMouseActive = gl.getUniformLocation(prog, 'u_mouse_active');
 
-              let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
-              window.addEventListener('mousemove', (event) => {
+              let targetMouse = { x: canvas.width / 2, y: canvas.height / 2 };
+              let currentMouse = { x: canvas.width / 2, y: canvas.height / 2 };
+              let mouseActive = 0.0;
+              let targetActive = 0.0;
+
+              const leftPanel = canvas.closest('.left-surface') || window;
+              
+              leftPanel.addEventListener('mousemove', (event) => {
                 const rect = canvas.getBoundingClientRect();
-                if (rect.width && rect.height) {
-                  const nx = (event.clientX - rect.left) / rect.width;
-                  const ny = 1.0 - (event.clientY - rect.top) / rect.height;
-                  mouse.x = nx * canvas.width;
-                  mouse.y = ny * canvas.height;
-                }
+                targetMouse.x = (event.clientX - rect.left);
+                targetMouse.y = (rect.bottom - event.clientY);
+                targetActive = 1.0;
+              });
+
+              leftPanel.addEventListener('mouseenter', () => {
+                targetActive = 1.0;
+              });
+
+              leftPanel.addEventListener('mouseleave', () => {
+                targetActive = 0.3;
               });
 
               function render(t) {
                 if (typeof ResizeObserver === 'undefined') syncSize();
                 gl.viewport(0, 0, canvas.width, canvas.height);
+                
+                // Smooth mouse interpolation
+                currentMouse.x += (targetMouse.x - currentMouse.x) * 0.1;
+                currentMouse.y += (targetMouse.y - currentMouse.y) * 0.1;
+                mouseActive += (targetActive - mouseActive) * 0.05;
+
                 if (uTime) gl.uniform1f(uTime, t * 0.001);
                 if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
-                if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+                if (uMouse) gl.uniform2f(uMouse, currentMouse.x, currentMouse.y);
+                if (uMouseActive) gl.uniform1f(uMouseActive, mouseActive);
+                
                 gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
                 requestAnimationFrame(render);
               }
@@ -367,7 +417,7 @@
                     </div>
                     <!-- AI ENGINE -->
                     <div class="flex flex-col items-center gap-md z-10">
-                        <div class="w-20 h-20 rounded-xl bg-primary-container/10 border border-primary-container shadow-[0_0_20px_rgba(37,99,235,0.3)] flex items-center justify-center relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-xl bg-primary-container/10 border border-primary-container shadow-[0_0_20px_rgba(37,99,235,0.3)] flex items-center justify-center relative overflow-hidden ai-engine-box cursor-pointer">
                             <div class="absolute inset-0 bg-primary-container/20 animate-pulse"></div>
                             <span class="material-symbols-outlined text-primary-container text-4xl relative z-10">memory</span>
                         </div>
@@ -383,15 +433,15 @@
                     </div>
                     <!-- OUTPUTS -->
                     <div class="flex flex-col gap-sm z-10 justify-between h-32">
-                        <div class="flex items-center gap-sm bg-surface-container/50 px-3 py-1.5 rounded border border-white/5">
+                        <div class="flex items-center gap-sm bg-surface-container/50 px-3 py-1.5 rounded border border-white/5 ai-output-item cursor-pointer">
                             <span class="material-symbols-outlined text-primary text-sm">summarize</span>
                             <span class="font-label-md text-[10px] text-on-surface uppercase">Summary</span>
                         </div>
-                        <div class="flex items-center gap-sm bg-surface-container/50 px-3 py-1.5 rounded border border-white/5">
+                        <div class="flex items-center gap-sm bg-surface-container/50 px-3 py-1.5 rounded border border-white/5 ai-output-item cursor-pointer">
                             <span class="material-symbols-outlined text-primary text-sm">forum</span>
                             <span class="font-label-md text-[10px] text-on-surface uppercase">Advisory</span>
                         </div>
-                        <div class="flex items-center gap-sm bg-surface-container/50 px-3 py-1.5 rounded border border-white/5">
+                        <div class="flex items-center gap-sm bg-surface-container/50 px-3 py-1.5 rounded border border-white/5 ai-output-item cursor-pointer">
                             <span class="material-symbols-outlined text-primary text-sm">co_present</span>
                             <span class="font-label-md text-[10px] text-on-surface uppercase">Present</span>
                         </div>
