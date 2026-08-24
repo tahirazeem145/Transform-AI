@@ -336,38 +336,39 @@
                     </div>
 
                     <!-- Upload Area -->
-                    <div class="glass-panel rounded-xl p-xl flex flex-col items-center justify-center gap-md hover:border-primary/50 transition-colors border-dashed text-center">
+                    <div id="dropzone" class="glass-panel rounded-xl p-xl flex flex-col items-center justify-center gap-md hover:border-primary/50 transition-colors border-dashed text-center cursor-pointer">
+                        <input type="file" id="fileInput" class="hidden" accept=".pdf,.docx,.txt,.csv"/>
                         <div class="w-14 h-14 rounded-full bg-primary-container/15 flex items-center justify-center text-primary-container mb-xs shadow-[0_0_12px_rgba(37,99,235,0.2)]">
                             <span class="material-symbols-outlined text-[30px]">cloud_upload</span>
                         </div>
                         <div>
-                            <p class="font-headline-md text-[18px] text-white font-semibold mb-1">Drop your files here</p>
+                            <p class="font-headline-md text-[18px] text-white font-semibold mb-1">Drop your file here, or browse</p>
                             <p class="font-body-sm text-body-sm text-on-surface-variant">Supports PDF, DOCX, TXT, CSV (Max 50MB)</p>
                         </div>
-                        <button class="mt-xs bg-surface-container-high/60 border border-white/10 text-white px-lg py-sm rounded-lg hover:border-primary/40 transition-colors font-label-md text-label-md">
+                        <button type="button" onclick="document.getElementById('fileInput').click()" class="mt-xs bg-surface-container-high/60 border border-white/10 text-white px-lg py-sm rounded-lg hover:border-primary/40 transition-colors font-label-md text-label-md">
                             Browse Files
                         </button>
                     </div>
 
-                    <!-- Uploaded State File Card -->
-                    <div class="glass-panel rounded-xl p-md flex items-center justify-between">
+                    <!-- Dynamic Uploaded File Container (hidden until uploaded) -->
+                    <div id="fileCardContainer" class="hidden glass-panel rounded-xl p-md flex items-center justify-between">
                         <div class="flex items-center gap-md">
-                            <div class="w-10 h-10 rounded bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
-                                <span class="material-symbols-outlined text-xl">picture_as_pdf</span>
+                            <div class="w-10 h-10 rounded bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined text-xl" id="fileIcon">description</span>
                             </div>
                             <div>
-                                <p class="font-body-md text-body-md text-white font-medium">Threat_Intelligence_Report.pdf</p>
+                                <p class="font-body-md text-body-md text-white font-medium" id="fileName">Uploaded_Document.pdf</p>
                                 <div class="flex items-center gap-sm mt-xs">
-                                    <span class="font-label-md text-label-md text-on-surface-variant">24.8 MB · 94 pages</span>
+                                    <span class="font-label-md text-label-md text-on-surface-variant" id="fileSize">0 KB</span>
                                     <span class="w-1 h-1 rounded-full bg-on-surface-variant"></span>
                                     <span class="font-label-md text-label-md text-emerald-400 flex items-center gap-xs">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                                         Ready to analyze
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <button class="text-on-surface-variant hover:text-red-400 transition-colors p-sm rounded hover:bg-white/5">
+                        <button type="button" onclick="removeFile()" class="text-on-surface-variant hover:text-red-400 transition-colors p-sm rounded hover:bg-white/5">
                             <span class="material-symbols-outlined text-lg">delete</span>
                         </button>
                     </div>
@@ -376,12 +377,12 @@
                     <div class="glass-panel rounded-xl overflow-hidden flex flex-col focus-within:border-primary-container transition-all">
                         <div class="px-md py-sm border-b border-white/10 bg-surface-container-lowest/60 flex justify-between items-center">
                             <label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Paste Raw Content</label>
-                            <button class="text-on-surface-variant hover:text-white p-xs rounded hover:bg-white/5 transition-colors flex items-center gap-xs font-label-md text-label-md">
+                            <button type="button" onclick="navigator.clipboard.readText().then(t => { document.getElementById('pasteArea').value = t; })" class="text-on-surface-variant hover:text-white p-xs rounded hover:bg-white/5 transition-colors flex items-center gap-xs font-label-md text-label-md">
                                 <span class="material-symbols-outlined text-sm">content_paste</span>
                                 Paste
                             </button>
                         </div>
-                        <textarea class="w-full bg-transparent border-none text-white font-body-md text-body-md p-md min-h-[140px] resize-y placeholder:text-on-surface-variant/40 focus:ring-0" placeholder="Enter text, JSON, code, or raw data..."></textarea>
+                        <textarea id="pasteArea" class="w-full bg-transparent border-none text-white font-body-md text-body-md p-md min-h-[140px] resize-y placeholder:text-on-surface-variant/40 focus:ring-0" placeholder="Enter text, JSON, code, or raw data..."></textarea>
                     </div>
 
                     <!-- URL Input -->
@@ -390,7 +391,7 @@
                             <label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Import from URL</label>
                         </div>
                         <input class="w-full bg-transparent border-none text-white font-body-md text-body-md px-md py-sm placeholder:text-on-surface-variant/40 focus:ring-0" placeholder="https://..." type="url">
-                        <button class="px-md text-primary-container hover:text-white transition-colors bg-surface-container-high/40 hover:bg-primary-container/20 flex items-center">
+                        <button type="button" class="px-md text-primary-container hover:text-white transition-colors bg-surface-container-high/40 hover:bg-primary-container/20 flex items-center">
                             <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </button>
                     </div>
@@ -409,6 +410,7 @@
                             <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Target Audience</label>
                             <div class="relative">
                                 <select class="w-full bg-surface-container border border-white/10 rounded-lg px-md py-sm text-white font-body-md text-body-md appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
+                                    <option value="" disabled selected>Select target audience...</option>
                                     <option>Executive</option>
                                     <option>Technical Team</option>
                                     <option>General Public</option>
@@ -421,10 +423,10 @@
                         <!-- Tone -->
                         <div>
                             <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Tone</label>
-                            <div class="flex flex-wrap gap-sm">
-                                <button type="button" class="px-md py-xs rounded-full border border-primary-container bg-primary-container/10 text-primary font-body-sm text-body-sm transition-all font-medium">Professional</button>
-                                <button type="button" class="px-md py-xs rounded-full border border-white/10 bg-surface-container text-on-surface-variant hover:text-white hover:border-white/20 font-body-sm text-body-sm transition-all">Formal</button>
-                                <button type="button" class="px-md py-xs rounded-full border border-white/10 bg-surface-container text-on-surface-variant hover:text-white hover:border-white/20 font-body-sm text-body-sm transition-all">Concise</button>
+                            <div class="flex flex-wrap gap-sm" id="toneSelector">
+                                <button type="button" onclick="setTone(this)" class="tone-btn px-md py-xs rounded-full border border-primary-container bg-primary-container/10 text-primary font-body-sm text-body-sm transition-all font-medium">Professional</button>
+                                <button type="button" onclick="setTone(this)" class="tone-btn px-md py-xs rounded-full border border-white/10 bg-surface-container text-on-surface-variant hover:text-white hover:border-white/20 font-body-sm text-body-sm transition-all">Formal</button>
+                                <button type="button" onclick="setTone(this)" class="tone-btn px-md py-xs rounded-full border border-white/10 bg-surface-container text-on-surface-variant hover:text-white hover:border-white/20 font-body-sm text-body-sm transition-all">Concise</button>
                             </div>
                         </div>
 
@@ -434,7 +436,7 @@
                                 <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Language</label>
                                 <div class="relative">
                                     <select class="w-full bg-surface-container border border-white/10 rounded-lg px-sm py-sm text-white font-body-sm text-body-sm appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
-                                        <option>English</option>
+                                        <option selected>English</option>
                                         <option>Spanish</option>
                                         <option>French</option>
                                         <option>German</option>
@@ -446,6 +448,7 @@
                                 <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Objective</label>
                                 <div class="relative">
                                     <select class="w-full bg-surface-container border border-white/10 rounded-lg px-sm py-sm text-white font-body-sm text-body-sm appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
+                                        <option value="" disabled selected>Select objective...</option>
                                         <option>Inform</option>
                                         <option>Persuade</option>
                                         <option>Alert</option>
@@ -473,56 +476,57 @@
                         <div class="pt-md border-t border-white/10">
                             <label class="font-label-md text-label-md text-on-surface-variant block mb-md flex items-center justify-between">
                                 <span>Choose Deliverables</span>
-                                <span class="text-primary">6 Selected</span>
+                                <span class="text-primary" id="selectedCount">0 Selected</span>
                             </label>
-                            <div class="grid grid-cols-2 gap-sm">
-                                <div class="bg-primary-container/10 border border-primary-container/40 rounded-lg p-sm flex items-start gap-sm cursor-pointer relative group">
-                                    <div class="absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
-                                    <span class="material-symbols-outlined text-primary text-[18px]">summarize</span>
+                            <div class="grid grid-cols-2 gap-sm" id="deliverablesGrid">
+                                <div onclick="toggleDeliverable(this)" class="deliverable-card bg-surface-container border border-white/10 rounded-lg p-sm flex items-start gap-sm cursor-pointer hover:border-white/20 transition-all relative group">
+                                    <div class="check-icon hidden absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
+                                    <span class="material-symbols-outlined text-on-surface-variant text-[18px]">summarize</span>
                                     <div>
                                         <p class="font-body-sm text-body-sm text-white font-medium">Executive Summary</p>
                                     </div>
                                 </div>
-                                <div class="bg-primary-container/10 border border-primary-container/40 rounded-lg p-sm flex items-start gap-sm cursor-pointer relative group">
-                                    <div class="absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
-                                    <span class="material-symbols-outlined text-primary text-[18px]">policy</span>
+                                <div onclick="toggleDeliverable(this)" class="deliverable-card bg-surface-container border border-white/10 rounded-lg p-sm flex items-start gap-sm cursor-pointer hover:border-white/20 transition-all relative group">
+                                    <div class="check-icon hidden absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
+                                    <span class="material-symbols-outlined text-on-surface-variant text-[18px]">policy</span>
                                     <div>
                                         <p class="font-body-sm text-body-sm text-white font-medium">Advisory</p>
                                     </div>
                                 </div>
-                                <div class="bg-primary-container/10 border border-primary-container/40 rounded-lg p-sm flex items-start gap-sm cursor-pointer relative group">
-                                    <div class="absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
-                                    <span class="material-symbols-outlined text-primary text-[18px]">co_present</span>
+                                <div onclick="toggleDeliverable(this)" class="deliverable-card bg-surface-container border border-white/10 rounded-lg p-sm flex items-start gap-sm cursor-pointer hover:border-white/20 transition-all relative group">
+                                    <div class="check-icon hidden absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
+                                    <span class="material-symbols-outlined text-on-surface-variant text-[18px]">co_present</span>
                                     <div>
                                         <p class="font-body-sm text-body-sm text-white font-medium">Presentation</p>
                                     </div>
                                 </div>
-                                <div class="bg-primary-container/10 border border-primary-container/40 rounded-lg p-sm flex items-start gap-sm cursor-pointer relative group">
-                                    <div class="absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
-                                    <span class="material-symbols-outlined text-primary text-[18px]">feed</span>
+                                <div onclick="toggleDeliverable(this)" class="deliverable-card bg-surface-container border border-white/10 rounded-lg p-sm flex items-start gap-sm cursor-pointer hover:border-white/20 transition-all relative group">
+                                    <div class="check-icon hidden absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
+                                    <span class="material-symbols-outlined text-on-surface-variant text-[18px]">feed</span>
                                     <div>
                                         <p class="font-body-sm text-body-sm text-white font-medium">LinkedIn Post</p>
                                     </div>
                                 </div>
-                                <div class="bg-surface-container border border-white/10 rounded-lg p-sm flex items-start gap-sm cursor-pointer hover:border-white/20 transition-colors">
+                                <div onclick="toggleDeliverable(this)" class="deliverable-card bg-surface-container border border-white/10 rounded-lg p-sm flex items-start gap-sm cursor-pointer hover:border-white/20 transition-all relative group">
+                                    <div class="check-icon hidden absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
                                     <span class="material-symbols-outlined text-on-surface-variant text-[18px]">forum</span>
                                     <div>
                                         <p class="font-body-sm text-body-sm text-on-surface-variant font-medium">X Thread</p>
                                     </div>
                                 </div>
-                                <div class="bg-primary-container/10 border border-primary-container/40 rounded-lg p-sm flex items-start gap-sm cursor-pointer relative group">
-                                    <div class="absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
-                                    <span class="material-symbols-outlined text-primary text-[18px]">insert_chart</span>
+                                <div onclick="toggleDeliverable(this)" class="deliverable-card bg-surface-container border border-white/10 rounded-lg p-sm flex items-start gap-sm cursor-pointer hover:border-white/20 transition-all relative group">
+                                    <div class="check-icon hidden absolute top-sm right-sm text-primary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
+                                    <span class="material-symbols-outlined text-on-surface-variant text-[18px]">insert_chart</span>
                                     <div>
                                         <p class="font-body-sm text-body-sm text-white font-medium">Infographic</p>
                                     </div>
                                 </div>
-                                <div class="col-span-2 bg-primary-container/10 border border-primary-container/40 rounded-lg p-sm flex items-center justify-between cursor-pointer relative group">
+                                <div onclick="toggleDeliverable(this)" class="deliverable-card col-span-2 bg-surface-container border border-white/10 rounded-lg p-sm flex items-center justify-between cursor-pointer hover:border-white/20 transition-all relative group">
                                     <div class="flex items-center gap-sm">
-                                        <span class="material-symbols-outlined text-primary text-[18px]">movie</span>
+                                        <span class="material-symbols-outlined text-on-surface-variant text-[18px]">movie</span>
                                         <p class="font-body-sm text-body-sm text-white font-medium">Video Package</p>
                                     </div>
-                                    <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                    <div class="check-icon hidden text-primary"><span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
                                 </div>
                             </div>
                         </div>
@@ -530,13 +534,13 @@
                         <!-- CTA & Processing Estimate -->
                         <div class="pt-md border-t border-white/10 space-y-md">
                             <div class="flex justify-between items-center text-on-surface-variant font-label-md text-label-md">
-                                <span>6 Deliverables Selected</span>
+                                <span id="deliverablesStatus">No Deliverables Selected</span>
                                 <span class="flex items-center gap-xs">
                                     <span class="material-symbols-outlined text-[14px]">timer</span>
-                                    Est. processing: ~30s
+                                    Ready
                                 </span>
                             </div>
-                            <button class="w-full bg-primary-container hover:bg-blue-500 text-white rounded-lg py-md px-lg flex items-center justify-center gap-sm transition-all duration-300 group overflow-hidden relative shadow-[0_0_15px_rgba(37,99,235,0.3)] font-headline-md text-[16px] font-semibold">
+                            <button type="button" class="w-full bg-primary-container hover:bg-blue-500 text-white rounded-lg py-md px-lg flex items-center justify-center gap-sm transition-all duration-300 group overflow-hidden relative shadow-[0_0_15px_rgba(37,99,235,0.3)] font-headline-md text-[16px] font-semibold">
                                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
                                 <span class="relative z-10">Generate Content</span>
                                 <span class="material-symbols-outlined relative z-10 transition-transform group-hover:translate-x-1 text-sm">arrow_forward</span>
@@ -646,6 +650,68 @@
 
             drawGrid();
         })();
+
+        // Deliverable and form helpers
+        function setTone(btn) {
+            document.querySelectorAll('.tone-btn').forEach(b => {
+                b.className = 'tone-btn px-md py-xs rounded-full border border-white/10 bg-surface-container text-on-surface-variant hover:text-white hover:border-white/20 font-body-sm text-body-sm transition-all';
+            });
+            btn.className = 'tone-btn px-md py-xs rounded-full border border-primary-container bg-primary-container/10 text-primary font-body-sm text-body-sm transition-all font-medium';
+        }
+
+        function toggleDeliverable(card) {
+            const check = card.querySelector('.check-icon');
+            const icon = card.querySelector('.material-symbols-outlined:not(.fill)');
+            const isSelected = !check.classList.contains('hidden');
+
+            if (isSelected) {
+                check.classList.add('hidden');
+                card.classList.remove('bg-primary-container/10', 'border-primary-container/40');
+                card.classList.add('bg-surface-container', 'border-white/10');
+                if (icon) icon.className = 'material-symbols-outlined text-on-surface-variant text-[18px]';
+            } else {
+                check.classList.remove('hidden');
+                card.classList.remove('bg-surface-container', 'border-white/10');
+                card.classList.add('bg-primary-container/10', 'border-primary-container/40');
+                if (icon) icon.className = 'material-symbols-outlined text-primary text-[18px]';
+            }
+            updateDeliverableCount();
+        }
+
+        function updateDeliverableCount() {
+            const selected = document.querySelectorAll('.deliverable-card .check-icon:not(.hidden)').length;
+            const countLabel = document.getElementById('selectedCount');
+            const statusLabel = document.getElementById('deliverablesStatus');
+            if (countLabel) countLabel.innerText = `${selected} Selected`;
+            if (statusLabel) {
+                statusLabel.innerText = selected === 0 ? 'No Deliverables Selected' : `${selected} Deliverables Selected`;
+            }
+        }
+
+        // File upload dynamic UI
+        const fileInput = document.getElementById('fileInput');
+        const dropzone = document.getElementById('dropzone');
+        const fileCardContainer = document.getElementById('fileCardContainer');
+        const fileNameEl = document.getElementById('fileName');
+        const fileSizeEl = document.getElementById('fileSize');
+
+        if (fileInput) {
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    fileNameEl.textContent = file.name;
+                    fileSizeEl.textContent = `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+                    fileCardContainer.classList.remove('hidden');
+                    dropzone.classList.add('hidden');
+                }
+            });
+        }
+
+        function removeFile() {
+            if (fileInput) fileInput.value = '';
+            fileCardContainer.classList.add('hidden');
+            dropzone.classList.remove('hidden');
+        }
     </script>
 </body>
 </html>
