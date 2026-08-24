@@ -321,11 +321,47 @@
             z-index: 10;
         }
 
-        .glow-blue {
-            box-shadow: 0 0 10px rgba(37, 99, 235, 0.1);
+        /* Ultra Attractive Neon Glowing Transformation Button */
+        .btn-neon-glow {
+            position: relative;
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.4), 0 0 40px rgba(37, 99, 235, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
         }
-        .hover-glow-blue:hover {
-            box-shadow: 0 0 10px rgba(37, 99, 235, 0.18);
+
+        .btn-neon-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-neon-glow:hover::before {
+            left: 100%;
+        }
+
+        .btn-neon-glow:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.6), 0 0 50px rgba(59, 130, 246, 0.4);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-neon-glow:active {
+            transform: scale(0.97);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
@@ -364,9 +400,9 @@
                 <span class="material-symbols-outlined text-sm">logout</span>
                 Sign Out
             </a>
-            <a href="new-transformation.html" class="w-full bg-primary-container hover:bg-blue-500 text-white rounded-lg p-sm font-label-md text-label-md transition-all active:scale-95 duration-200 flex items-center justify-center gap-sm shadow-[0_0_12px_rgba(37,99,235,0.3)]">
-                <span class="material-symbols-outlined text-sm">add</span>
-                New Transformation
+            <a href="new-transformation.html" class="btn-neon-glow text-white w-full rounded-xl p-sm font-label-md text-label-md flex items-center justify-center gap-sm">
+                <span class="material-symbols-outlined text-[18px]">add_circle</span>
+                <span>New Transformation</span>
             </a>
         </div>
     </aside>
@@ -419,9 +455,9 @@
                         </div>
                     </div>
                 </div>
-                <a href="new-transformation.html" class="bg-primary-container hover:bg-blue-500 text-white px-lg py-md rounded-lg font-label-md text-label-md transition-all flex items-center gap-sm active:scale-95 shadow-[0_0_12px_rgba(37,99,235,0.3)]">
-                    <span class="material-symbols-outlined">add</span>
-                    New Transformation
+                <a href="new-transformation.html" class="btn-neon-glow text-white px-xl py-md rounded-xl font-label-md text-label-md flex items-center gap-sm">
+                    <span class="material-symbols-outlined text-[20px]">add_circle</span>
+                    <span>New Transformation</span>
                 </a>
             </section>
 
