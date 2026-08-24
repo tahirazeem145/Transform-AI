@@ -106,74 +106,72 @@
         }
     </script>
     <style>
-        /* Light Futuristic Base */
+        /* Sleek Deep Black Theme */
         body {
-            background-color: #f8fafc; 
-            color: #0f172a;
+            background-color: #030712; 
+            color: #f3f4f6;
         }
         
         .left-surface {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #f8fafc;
+            background-color: #030712;
+            color: #f3f4f6;
         }
 
         .right-surface {
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%);
+            background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.08) 0%, #030712 50%, #02040a 100%);
             position: relative;
-            box-shadow: -1px 0 0 rgba(0, 0, 0, 0.05);
         }
 
         .right-surface::before {
             content: '';
             position: absolute;
-            top: -10%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, rgba(0,0,0,0) 70%);
+            top: -15%;
+            right: -15%;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(0,0,0,0) 70%);
             pointer-events: none;
         }
 
         .input-base {
-            background-color: #ffffff;
-            border: 1px solid #cbd5e1;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            background-color: #0a0f1d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.2s ease;
         }
         
         .input-base:focus-within {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2), inset 0 0 8px rgba(59, 130, 246, 0.1);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            background-color: #2563eb;
             color: white;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
             transition: all 0.2s ease;
         }
         
         .btn-primary:hover {
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+            background-color: #1d4ed8;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
             transform: translateY(-1px);
         }
 
         .btn-secondary {
-            background-color: #ffffff;
-            border: 1px solid #cbd5e1;
-            color: #1e293b;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f3f4f6;
             transition: all 0.2s ease;
         }
 
         .btn-secondary:hover {
-            background-color: #f8fafc;
-            border-color: #94a3b8;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.25);
         }
 
         /* Connecting rail styling for left panel */
         .ai-node {
-            background-color: #1e293b;
+            background-color: #080d1a;
             border: 1px solid rgba(37, 99, 235, 0.4);
             box-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
         }
@@ -182,13 +180,13 @@
         }
         
         .glow-text {
-            text-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+            text-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col md:flex-row antialiased font-body-md bg-slate-50 text-slate-900">
+<body class="min-h-screen flex flex-col md:flex-row antialiased font-body-md bg-[#030712] text-slate-100">
     <!-- LEFT PANEL (55%) -->
-    <div class="relative hidden md:flex flex-col w-[55%] min-h-screen p-margin-desktop border-r border-slate-800 left-surface text-slate-100">
+    <div class="relative hidden md:flex flex-col w-[55%] min-h-screen p-margin-desktop border-r border-white/10 left-surface text-slate-100">
         <!-- WebGL Animation Background -->
         <div class="absolute inset-0 w-full h-full opacity-60 pointer-events-none mix-blend-screen" style="display:block;">
             <canvas id="shader-canvas-ANIMATION_3" style="display:block;width:100%;height:100%"></canvas>
@@ -431,26 +429,26 @@
 
         <!-- Form Container -->
         <div class="w-full max-w-[420px] flex flex-col">
-            <span class="font-label-md text-label-md text-blue-600 tracking-widest uppercase mb-sm font-semibold">Welcome Back</span>
-            <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-bold mb-xl text-slate-900">Sign in to TransformAI</h2>
+            <span class="font-label-md text-label-md text-blue-400 tracking-widest uppercase mb-sm font-semibold">Welcome Back</span>
+            <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-bold mb-xl text-white">Sign in to TransformAI</h2>
             
             <form class="flex flex-col gap-lg" onsubmit="event.preventDefault();">
                 <!-- Email -->
                 <div class="flex flex-col gap-xs">
-                    <label class="font-label-md text-label-md text-slate-600 font-medium" for="email">Email</label>
+                    <label class="font-label-md text-label-md text-slate-300 font-medium" for="email">Email</label>
                     <div class="input-base rounded-lg flex items-center px-md py-sm">
                         <span class="material-symbols-outlined text-slate-400 text-lg mr-sm">mail</span>
-                        <input class="bg-transparent border-none focus:ring-0 w-full text-slate-900 font-body-md p-0 placeholder-slate-400 focus:outline-none" id="email" placeholder="name@company.com" type="email" required>
+                        <input class="bg-transparent border-none focus:ring-0 w-full text-white font-body-md p-0 placeholder-slate-500 focus:outline-none" id="email" placeholder="name@company.com" type="email" required>
                     </div>
                 </div>
 
                 <!-- Password -->
                 <div class="flex flex-col gap-xs">
-                    <label class="font-label-md text-label-md text-slate-600 font-medium" for="password">Password</label>
+                    <label class="font-label-md text-label-md text-slate-300 font-medium" for="password">Password</label>
                     <div class="input-base rounded-lg flex items-center px-md py-sm">
                         <span class="material-symbols-outlined text-slate-400 text-lg mr-sm">lock</span>
-                        <input class="bg-transparent border-none focus:ring-0 w-full text-slate-900 font-body-md p-0 placeholder-slate-400 focus:outline-none" id="password" placeholder="••••••••" type="password" required>
-                        <button id="toggle-password" class="ml-sm text-slate-400 hover:text-slate-700 transition-colors focus:outline-none" type="button">
+                        <input class="bg-transparent border-none focus:ring-0 w-full text-white font-body-md p-0 placeholder-slate-500 focus:outline-none" id="password" placeholder="••••••••" type="password" required>
+                        <button id="toggle-password" class="ml-sm text-slate-400 hover:text-white transition-colors focus:outline-none" type="button">
                             <span class="material-symbols-outlined text-lg" id="toggle-icon">visibility</span>
                         </button>
                     </div>
@@ -461,12 +459,12 @@
                     <label class="flex items-center gap-sm cursor-pointer group">
                         <div class="relative flex items-center">
                             <input class="peer sr-only" type="checkbox">
-                            <div class="w-4 h-4 rounded border border-slate-300 bg-white peer-checked:bg-blue-600 peer-checked:border-blue-600 transition-colors"></div>
+                            <div class="w-4 h-4 rounded border border-white/20 bg-[#0a0f1d] peer-checked:bg-blue-600 peer-checked:border-blue-600 transition-colors"></div>
                             <span class="material-symbols-outlined absolute text-white text-[12px] left-[2px] top-[2px] opacity-0 peer-checked:opacity-100 pointer-events-none" style="font-variation-settings: 'FILL' 1;">check</span>
                         </div>
-                        <span class="font-body-sm text-body-sm text-slate-600 group-hover:text-slate-900 transition-colors font-medium">Remember Me</span>
+                        <span class="font-body-sm text-body-sm text-slate-300 group-hover:text-white transition-colors font-medium">Remember Me</span>
                     </label>
-                    <a class="font-label-md text-label-md text-blue-600 hover:text-blue-700 font-semibold transition-colors" href="#">Forgot password?</a>
+                    <a class="font-label-md text-label-md text-blue-400 hover:text-blue-300 font-semibold transition-colors" href="#">Forgot password?</a>
                 </div>
 
                 <!-- Submit -->
@@ -478,9 +476,9 @@
 
             <!-- Divider -->
             <div class="flex items-center gap-md my-xl">
-                <div class="h-px bg-slate-200 flex-1"></div>
+                <div class="h-px bg-white/10 flex-1"></div>
                 <span class="font-label-md text-label-md text-slate-400 uppercase font-semibold">OR</span>
-                <div class="h-px bg-slate-200 flex-1"></div>
+                <div class="h-px bg-white/10 flex-1"></div>
             </div>
 
             <!-- SSO -->
@@ -496,18 +494,18 @@
 
             <!-- Try Demo Link -->
             <div class="mt-xl text-center">
-                <a class="font-body-sm text-body-sm text-slate-600 hover:text-slate-900 transition-colors flex items-center justify-center gap-xs group font-medium" href="#">
-                    Want to explore the platform? <span class="text-blue-600 group-hover:text-blue-700 font-semibold transition-colors ml-1">Try Demo</span>
-                    <span class="material-symbols-outlined text-sm text-blue-600 group-hover:text-blue-700 group-hover:translate-x-1 transition-all">arrow_forward</span>
+                <a class="font-body-sm text-body-sm text-slate-300 hover:text-white transition-colors flex items-center justify-center gap-xs group font-medium" href="#">
+                    Want to explore the platform? <span class="text-blue-400 group-hover:text-blue-300 font-semibold transition-colors ml-1">Try Demo</span>
+                    <span class="material-symbols-outlined text-sm text-blue-400 group-hover:text-blue-300 group-hover:translate-x-1 transition-all">arrow_forward</span>
                 </a>
             </div>
 
             <!-- Security Footer -->
-            <div class="mt-2xl flex items-start gap-md p-md rounded-lg bg-white border border-slate-200 shadow-sm">
-                <span class="material-symbols-outlined text-blue-600" style="font-variation-settings: 'FILL' 1;">security</span>
+            <div class="mt-2xl flex items-start gap-md p-md rounded-lg bg-[#080d1a] border border-white/10 shadow-sm">
+                <span class="material-symbols-outlined text-blue-400" style="font-variation-settings: 'FILL' 1;">security</span>
                 <div>
-                    <p class="font-label-md text-label-md text-slate-900 mb-1 font-semibold">Secure enterprise environment</p>
-                    <p class="font-body-sm text-[12px] text-slate-500 leading-relaxed">Your content is protected during processing and is not used to train global AI models.</p>
+                    <p class="font-label-md text-label-md text-white mb-1 font-semibold">Secure enterprise environment</p>
+                    <p class="font-body-sm text-[12px] text-slate-400 leading-relaxed">Your content is protected during processing and is not used to train global AI models.</p>
                 </div>
             </div>
         </div>
