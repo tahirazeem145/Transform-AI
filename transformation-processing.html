@@ -811,6 +811,19 @@
                                 jobStatus.className = 'text-emerald-400 font-mono text-[11px]';
                                 jobStatus.innerText = 'COMPLETE';
                             }
+                            
+                            // Add completion banner button to proceed to artifact-workspace.html
+                            if (statusListEl) {
+                                const ctaLi = document.createElement('li');
+                                ctaLi.className = 'pt-md';
+                                ctaLi.innerHTML = `
+                                    <a href="artifact-workspace.html" class="w-full bg-primary-container hover:bg-blue-500 text-white rounded-lg py-sm px-md flex items-center justify-center gap-sm font-label-md text-label-md transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)] active:scale-95">
+                                        <span>Open Artifact Workspace</span>
+                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                    </a>
+                                `;
+                                statusListEl.appendChild(ctaLi);
+                            }
                         }
 
                         stepIndex++;
