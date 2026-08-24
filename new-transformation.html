@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>TransformAI - New Transformation</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-surface": "#d4e4fa",
+                        "on-primary": "#002a78",
+                        "surface-dim": "#051424",
+                        "surface-container-high": "#1c2b3c",
+                        "primary": "#b4c5ff",
+                        "tertiary": "#c5c6cb",
+                        "on-primary-fixed": "#00174b",
+                        "on-tertiary-fixed": "#191c1f",
+                        "surface-variant": "#273647",
+                        "surface-container": "#122131",
+                        "secondary-container": "#0566d9",
+                        "background": "#051424",
+                        "on-secondary-container": "#e6ecff",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-tint": "#b4c5ff",
+                        "on-tertiary-fixed-variant": "#44474b",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-surface": "#d4e4fa",
+                        "secondary": "#adc6ff",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-container-low": "#0d1c2d",
+                        "tertiary-fixed-dim": "#c5c6cb",
+                        "on-surface-variant": "#c3c6d7",
+                        "surface": "#051424",
+                        "on-primary-container": "#eeefff",
+                        "on-secondary-fixed": "#001a42",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-container": "#6b6d71",
+                        "surface-bright": "#2c3a4c",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-lowest": "#010f1f",
+                        "tertiary-fixed": "#e1e2e7",
+                        "secondary-fixed": "#d8e2ff",
+                        "inverse-on-surface": "#233143",
+                        "outline": "#8d90a0",
+                        "primary-container": "#2563eb",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#434655",
+                        "surface-container-highest": "#273647",
+                        "on-background": "#d4e4fa",
+                        "on-secondary": "#002e6a",
+                        "on-error": "#690005",
+                        "on-tertiary": "#2e3134",
+                        "on-tertiary-container": "#eff0f5",
+                        "inverse-primary": "#0053db",
+                        "base": "#030712",
+                        "level-1": "#0B0F14",
+                        "level-2": "#161B22",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "2xl": "64px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "xl": "40px"
+                    },
+                    fontFamily: {
+                        "body-sm": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "label-md": ["Inter", "sans-serif"],
+                        "code-sm": ["JetBrains Mono", "monospace"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"]
+                    },
+                    fontSize: {
+                        "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+                        "code-sm": ["13px", { lineHeight: "20px", fontWeight: "400" }],
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #030712;
+            color: #d4e4fa;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+          font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2); 
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #2563eb;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        /* Interactive Elastic Expanding Grid Canvas */
+        #grid-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .interactive-card {
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .interactive-card:hover {
+            transform: translateY(-2px) scale(1.008);
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex selection:bg-primary-container selection:text-white bg-[#030712]">
+    <!-- Expanding Grid Canvas -->
+    <canvas id="grid-canvas"></canvas>
+
+    <!-- SideNavBar -->
+    <aside class="hidden md:flex bg-[#0a1020]/95 backdrop-blur-md h-screen w-64 border-r border-indigo-500/10 fixed left-0 top-0 flex-col z-50 shadow-[4px_0_24px_rgba(0,0,0,0.4)]">
+        <!-- Header -->
+        <div class="p-md border-b border-white/8 flex items-center gap-sm">
+            <div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-white font-bold shadow-[0_0_12px_rgba(37,99,235,0.3)]">
+                T
+            </div>
+            <div>
+                <h1 class="text-headline-md font-headline-md font-bold text-primary leading-tight">TransformAI</h1>
+                <p class="font-label-md text-label-md text-slate-400">Enterprise Console</p>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="p-md">
+            <a href="new-transformation.html" class="w-full bg-primary-container hover:bg-blue-500 text-white rounded-lg py-sm px-md flex items-center justify-center gap-sm transition-all duration-200 group shadow-[0_0_12px_rgba(37,99,235,0.3)]">
+                <span class="material-symbols-outlined text-body-md transition-transform group-hover:rotate-90">add</span>
+                <span class="font-body-md text-body-md font-semibold">New Transformation</span>
+            </a>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex-1 overflow-y-auto py-sm">
+            <ul class="space-y-xs px-sm">
+                <li>
+                    <a class="flex items-center gap-md px-md py-sm rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors duration-200" href="dashboard.html">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <span class="font-body-md text-body-md font-medium">Workspace</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="flex items-center gap-md px-md py-sm rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors duration-200" href="#">
+                        <span class="material-symbols-outlined">settings</span>
+                        <span class="font-body-md text-body-md">System</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-sm border-t border-white/8">
+            <ul class="space-y-xs">
+                <li>
+                    <a class="flex items-center gap-md px-md py-sm rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors duration-200" href="#">
+                        <span class="material-symbols-outlined">help_outline</span>
+                        <span class="font-body-md text-body-md">Help</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="flex items-center gap-md px-md py-sm rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors duration-200" href="index.html">
+                        <span class="material-symbols-outlined">logout</span>
+                        <span class="font-body-md text-body-md">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-0 md:ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-transparent relative z-10">
+        <!-- Top App Bar -->
+        <header class="h-16 border-b border-indigo-500/10 flex items-center justify-between px-lg bg-[#0a1020]/90 backdrop-blur-md sticky top-0 z-40 shrink-0">
+            <div class="flex items-center gap-sm">
+                <a href="dashboard.html" class="text-slate-400 hover:text-white transition-colors flex items-center gap-xs font-body-sm text-body-sm">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span>
+                    Workspace
+                </a>
+                <span class="text-slate-600">/</span>
+                <h2 class="font-headline-md text-headline-md font-semibold text-white">New Transformation</h2>
+            </div>
+            <div class="flex items-center gap-md">
+                <button class="text-slate-400 hover:text-white transition-all p-sm rounded-full hover:bg-white/5">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-300 font-semibold text-xs">
+                    TA
+                </div>
+            </div>
+        </header>
+
+        <!-- Two Column Layout -->
+        <div class="flex-1 overflow-y-auto p-lg lg:p-margin-desktop flex flex-col lg:flex-row gap-xl">
+            <!-- Left Column (60%) - Source Content -->
+            <div class="w-full lg:w-[60%] flex flex-col gap-lg">
+                <div class="flex items-center gap-sm">
+                    <span class="material-symbols-outlined text-primary">data_object</span>
+                    <h3 class="font-headline-md text-headline-md text-white">Source Content</h3>
+                </div>
+
+                <!-- Upload Area -->
+                <div class="interactive-card bg-level-1/90 backdrop-blur-md border border-white/8 rounded-xl p-lg flex flex-col items-center justify-center gap-md hover:border-primary/50 transition-colors border-dashed relative overflow-hidden group cursor-pointer">
+                    <div class="absolute inset-0 bg-primary-container/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="w-16 h-16 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container mb-sm">
+                        <span class="material-symbols-outlined text-[32px]">cloud_upload</span>
+                    </div>
+                    <div class="text-center">
+                        <p class="font-body-lg text-body-lg text-white font-semibold">Drop your files here</p>
+                        <p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Supports PDF, DOCX, TXT, CSV (Max 50MB)</p>
+                    </div>
+                    <button class="mt-sm bg-transparent border border-primary-container text-white px-md py-sm rounded-lg hover:bg-level-2 transition-colors font-body-sm text-body-sm">
+                        Browse Files
+                    </button>
+                </div>
+
+                <!-- File Card (Uploaded State) -->
+                <div class="interactive-card bg-level-1/90 backdrop-blur-md border border-white/8 rounded-xl p-md flex items-center justify-between group">
+                    <div class="flex items-center gap-md">
+                        <div class="w-10 h-10 rounded bg-red-500/10 flex items-center justify-center text-red-400">
+                            <span class="material-symbols-outlined">picture_as_pdf</span>
+                        </div>
+                        <div>
+                            <p class="font-body-md text-body-md text-white font-medium">Threat_Intelligence_Report.pdf</p>
+                            <div class="flex items-center gap-sm mt-xs">
+                                <span class="font-label-md text-label-md text-on-surface-variant">24.8 MB · 94 pages</span>
+                                <span class="w-1 h-1 rounded-full bg-on-surface-variant"></span>
+                                <span class="font-label-md text-label-md text-primary flex items-center gap-xs">
+                                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                    Ready to analyze
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="text-on-surface-variant hover:text-error transition-colors p-sm rounded hover:bg-white/5">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </div>
+
+                <!-- Paste Content -->
+                <div class="interactive-card bg-level-1/90 backdrop-blur-md border border-white/8 rounded-xl overflow-hidden flex flex-col focus-within:border-primary-container transition-all">
+                    <div class="px-md py-sm border-b border-white/8 bg-level-2/50 flex justify-between items-center">
+                        <label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Paste Content</label>
+                        <button class="text-on-surface-variant hover:text-white p-xs rounded hover:bg-white/5 transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">content_paste</span>
+                        </button>
+                    </div>
+                    <textarea class="w-full bg-transparent border-none text-white font-body-md text-body-md p-md min-h-[150px] resize-y placeholder:text-on-surface-variant/50 focus:ring-0" placeholder="Enter text, JSON, code, or raw data..."></textarea>
+                </div>
+
+                <!-- URL Input -->
+                <div class="interactive-card bg-level-1/90 backdrop-blur-md border border-white/8 rounded-xl overflow-hidden flex focus-within:border-primary-container transition-all">
+                    <div class="px-md py-sm bg-level-2/50 border-r border-white/8 flex items-center justify-center">
+                        <label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Import from URL</label>
+                    </div>
+                    <input class="w-full bg-transparent border-none text-white font-body-md text-body-md px-md py-sm placeholder:text-on-surface-variant/50 focus:ring-0" placeholder="https://..." type="url">
+                    <button class="px-md text-primary-container hover:text-white transition-colors bg-level-2/30 hover:bg-primary-container/20 flex items-center">
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column (40%) - Configure AI -->
+            <div class="w-full lg:w-[40%] flex flex-col gap-lg bg-level-1/90 backdrop-blur-md border border-white/8 rounded-xl p-lg h-fit sticky top-24">
+                <div class="flex items-center gap-sm mb-sm border-b border-white/8 pb-md">
+                    <span class="material-symbols-outlined text-primary">tune</span>
+                    <h3 class="font-headline-md text-headline-md text-white">Configure AI</h3>
+                </div>
+
+                <div class="space-y-md">
+                    <!-- Target Audience -->
+                    <div>
+                        <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Target Audience</label>
+                        <div class="relative">
+                            <select class="w-full bg-level-2 border border-white/8 rounded-lg px-md py-sm text-white font-body-md text-body-md appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
+                                <option>Executive</option>
+                                <option>Technical Team</option>
+                                <option>General Public</option>
+                                <option>Investors</option>
+                            </select>
+                            <span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+                        </div>
+                    </div>
+
+                    <!-- Tone -->
+                    <div>
+                        <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Tone</label>
+                        <div class="flex flex-wrap gap-sm">
+                            <button type="button" class="px-md py-xs rounded-full border border-primary-container bg-primary-container/10 text-primary font-body-sm text-body-sm transition-all">Professional</button>
+                            <button type="button" class="px-md py-xs rounded-full border border-white/8 bg-level-2 text-on-surface-variant hover:text-white hover:border-white/20 font-body-sm text-body-sm transition-all">Formal</button>
+                            <button type="button" class="px-md py-xs rounded-full border border-white/8 bg-level-2 text-on-surface-variant hover:text-white hover:border-white/20 font-body-sm text-body-sm transition-all">Concise</button>
+                        </div>
+                    </div>
+
+                    <!-- Language & Communication Objective (Grid) -->
+                    <div class="grid grid-cols-2 gap-md">
+                        <div>
+                            <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Language</label>
+                            <div class="relative">
+                                <select class="w-full bg-level-2 border border-white/8 rounded-lg px-sm py-sm text-white font-body-sm text-body-sm appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
+                                    <option>English</option>
+                                    <option>Spanish</option>
+                                    <option>French</option>
+                                    <option>German</option>
+                                </select>
+                                <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px] pointer-events-none">expand_more</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Objective</label>
+                            <div class="relative">
+                                <select class="w-full bg-level-2 border border-white/8 rounded-lg px-sm py-sm text-white font-body-sm text-body-sm appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
+                                    <option>Inform</option>
+                                    <option>Persuade</option>
+                                    <option>Alert</option>
+                                    <option>Summarize</option>
+                                </select>
+                                <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px] pointer-events-none">expand_more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detail Level -->
+                    <div class="pt-sm">
+                        <label class="font-label-md text-label-md text-on-surface-variant block mb-md">Detail Level</label>
+                        <div class="px-sm">
+                            <input class="w-full" max="3" min="1" type="range" value="2">
+                            <div class="flex justify-between mt-sm font-label-md text-label-md text-on-surface-variant">
+                                <span>Brief</span>
+                                <span>Balanced</span>
+                                <span>Detailed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Choose Deliverables -->
+                <div class="pt-md border-t border-white/8 mt-sm">
+                    <label class="font-label-md text-label-md text-on-surface-variant block mb-md flex items-center gap-xs">
+                        Choose Deliverables
+                        <span class="material-symbols-outlined text-[14px]">info</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-sm">
+                        <!-- Selected Cards -->
+                        <div class="bg-primary-container/10 border border-primary-container rounded-lg p-sm flex items-start gap-sm cursor-pointer relative overflow-hidden group">
+                            <div class="absolute top-sm right-sm text-primary-container"><span class="material-symbols-outlined text-[16px] fill">check_circle</span></div>
+                            <span class="material-symbols-outlined text-primary mt-xs text-[20px]">summarize</span>
+                            <div>
+                                <p class="font-body-sm text-body-sm text-white font-medium">Executive Summary</p>
+                            </div>
+                        </div>
+                        <div class="bg-primary-container/10 border border-primary-container rounded-lg p-sm flex items-start gap-sm cursor-pointer relative group">
+                            <div class="absolute top-sm right-sm text-primary-container"><span class="material-symbols-outlined text-[16px] fill">check_circle</span></div>
+                            <span class="material-symbols-outlined text-primary mt-xs text-[20px]">policy</span>
+                            <div>
+                                <p class="font-body-sm text-body-sm text-white font-medium">Advisory</p>
+                            </div>
+                        </div>
+                        <div class="bg-primary-container/10 border border-primary-container rounded-lg p-sm flex items-start gap-sm cursor-pointer relative group">
+                            <div class="absolute top-sm right-sm text-primary-container"><span class="material-symbols-outlined text-[16px] fill">check_circle</span></div>
+                            <span class="material-symbols-outlined text-primary mt-xs text-[20px]">co_present</span>
+                            <div>
+                                <p class="font-body-sm text-body-sm text-white font-medium">Presentation</p>
+                            </div>
+                        </div>
+                        <div class="bg-primary-container/10 border border-primary-container rounded-lg p-sm flex items-start gap-sm cursor-pointer relative group">
+                            <div class="absolute top-sm right-sm text-primary-container"><span class="material-symbols-outlined text-[16px] fill">check_circle</span></div>
+                            <span class="material-symbols-outlined text-primary mt-xs text-[20px]">feed</span>
+                            <div>
+                                <p class="font-body-sm text-body-sm text-white font-medium">LinkedIn Post</p>
+                            </div>
+                        </div>
+                        <!-- Unselected Card -->
+                        <div class="bg-level-2 border border-white/8 rounded-lg p-sm flex items-start gap-sm cursor-pointer hover:border-white/20 transition-colors">
+                            <span class="material-symbols-outlined text-on-surface-variant mt-xs text-[20px]">forum</span>
+                            <div>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant font-medium group-hover:text-white transition-colors">X Thread</p>
+                            </div>
+                        </div>
+                        <!-- Selected Card -->
+                        <div class="bg-primary-container/10 border border-primary-container rounded-lg p-sm flex items-start gap-sm cursor-pointer relative group">
+                            <div class="absolute top-sm right-sm text-primary-container"><span class="material-symbols-outlined text-[16px] fill">check_circle</span></div>
+                            <span class="material-symbols-outlined text-primary mt-xs text-[20px]">insert_chart</span>
+                            <div>
+                                <p class="font-body-sm text-body-sm text-white font-medium">Infographic</p>
+                            </div>
+                        </div>
+                        <!-- Full Width Selected Card -->
+                        <div class="col-span-2 bg-primary-container/10 border border-primary-container rounded-lg p-sm flex items-center justify-between cursor-pointer relative group">
+                            <div class="flex items-center gap-sm">
+                                <span class="material-symbols-outlined text-primary text-[20px]">movie</span>
+                                <p class="font-body-sm text-body-sm text-white font-medium">Video Package</p>
+                            </div>
+                            <span class="material-symbols-outlined text-primary-container text-[20px] fill">check_circle</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Summary & CTA -->
+                <div class="mt-auto pt-lg border-t border-white/8 flex flex-col gap-md">
+                    <div class="flex justify-between items-center">
+                        <span class="font-body-sm text-body-sm text-white font-medium">6 Deliverables Selected</span>
+                        <span class="font-label-md text-label-md text-on-surface-variant flex items-center gap-xs">
+                            <span class="material-symbols-outlined text-[14px]">timer</span>
+                            Estimated processing: ~30 seconds
+                        </span>
+                    </div>
+                    <button class="w-full bg-primary-container text-white rounded-lg py-md px-lg flex items-center justify-center gap-sm hover:bg-blue-600 transition-all duration-300 group overflow-hidden relative shadow-[0_0_15px_rgba(37,99,235,0.3)]">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+                        <span class="font-body-lg text-body-lg font-semibold relative z-10">Generate Content</span>
+                        <span class="material-symbols-outlined relative z-10 transition-transform group-hover:translate-x-1">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Interactive Expanding Elastic Grid Simulation
+        (function() {
+            const canvas = document.getElementById('grid-canvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let width = 0, height = 0;
+            const cellSize = 38;
+            
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            let targetMouse = { x: -1000, y: -1000 };
+            let mouse = { x: -1000, y: -1000 };
+            let isInside = false;
+
+            window.addEventListener('mousemove', (e) => {
+                targetMouse.x = e.clientX;
+                targetMouse.y = e.clientY;
+                isInside = true;
+            });
+
+            window.addEventListener('mouseleave', () => {
+                isInside = false;
+            });
+
+            const distortionRadius = 110;
+            const maxDisplacement = 10;
+
+            function getDistortedPoint(x, y) {
+                const dx = x - mouse.x;
+                const dy = y - mouse.y;
+                const dist = Math.hypot(dx, dy);
+
+                if (dist < distortionRadius && dist > 0) {
+                    const factor = Math.cos((dist / distortionRadius) * (Math.PI / 2));
+                    const displacement = maxDisplacement * factor;
+                    const angle = Math.atan2(dy, dx);
+                    
+                    return {
+                        x: x + Math.cos(angle) * displacement,
+                        y: y + Math.sin(angle) * displacement,
+                        intensity: factor
+                    };
+                }
+                return { x, y, intensity: 0 };
+            }
+
+            function drawGrid() {
+                ctx.clearRect(0, 0, width, height);
+
+                if (isInside) {
+                    mouse.x += (targetMouse.x - mouse.x) * 0.12;
+                    mouse.y += (targetMouse.y - mouse.y) * 0.12;
+                } else {
+                    mouse.x += (-1000 - mouse.x) * 0.05;
+                    mouse.y += (-1000 - mouse.y) * 0.05;
+                }
+
+                const cols = Math.ceil(width / cellSize) + 1;
+                const rows = Math.ceil(height / cellSize) + 1;
+
+                ctx.lineWidth = 1;
+
+                for (let r = 0; r <= rows; r++) {
+                    const basePy = r * cellSize;
+                    ctx.beginPath();
+                    for (let c = 0; c <= cols; c++) {
+                        const p = getDistortedPoint(c * cellSize, basePy);
+                        if (c === 0) ctx.moveTo(p.x, p.y);
+                        else ctx.lineTo(p.x, p.y);
+                    }
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
+                    ctx.stroke();
+                }
+
+                for (let c = 0; c <= cols; c++) {
+                    const basePx = c * cellSize;
+                    ctx.beginPath();
+                    for (let r = 0; r <= rows; r++) {
+                        const p = getDistortedPoint(basePx, r * cellSize);
+                        if (r === 0) ctx.moveTo(p.x, p.y);
+                        else ctx.lineTo(p.x, p.y);
+                    }
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
+                    ctx.stroke();
+                }
+
+                requestAnimationFrame(drawGrid);
+            }
+
+            drawGrid();
+        })();
+    </script>
+</body>
+</html>

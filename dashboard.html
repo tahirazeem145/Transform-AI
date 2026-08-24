@@ -271,10 +271,10 @@
                 <span class="material-symbols-outlined text-sm">logout</span>
                 Sign Out
             </a>
-            <button class="w-full bg-primary-container hover:bg-blue-500 text-white rounded-lg p-sm font-label-md text-label-md transition-all active:scale-95 duration-200 flex items-center justify-center gap-sm">
+            <a href="new-transformation.html" class="w-full bg-primary-container hover:bg-blue-500 text-white rounded-lg p-sm font-label-md text-label-md transition-all active:scale-95 duration-200 flex items-center justify-center gap-sm shadow-[0_0_12px_rgba(37,99,235,0.3)]">
                 <span class="material-symbols-outlined text-sm">add</span>
                 New Transformation
-            </button>
+            </a>
         </div>
     </aside>
 
@@ -326,10 +326,10 @@
                         </div>
                     </div>
                 </div>
-                <button class="bg-primary-container text-white px-lg py-md rounded-lg font-label-md text-label-md transition-all flex items-center gap-sm active:scale-95">
+                <a href="new-transformation.html" class="bg-primary-container hover:bg-blue-500 text-white px-lg py-md rounded-lg font-label-md text-label-md transition-all flex items-center gap-sm active:scale-95 shadow-[0_0_12px_rgba(37,99,235,0.3)]">
                     <span class="material-symbols-outlined">add</span>
                     New Transformation
-                </button>
+                </a>
             </section>
 
             <!-- Metrics Grid -->
@@ -392,35 +392,58 @@
                                     <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors group cursor-pointer">
                                         <td class="p-md font-medium text-white group-hover:text-primary transition-colors">Cybersecurity Threat Intelligence Report</td>
                                         <td class="p-md"><span class="flex items-center gap-xs"><span class="material-symbols-outlined text-sm text-on-surface-variant">picture_as_pdf</span> PDF</span></td>
-                                        <td class="p-md"><span class="bg-surface-container-highest px-2 py-1 rounded text-xs">6</span></td>
                                         <td class="p-md">
-                                            <span class="inline-flex items-center gap-xs bg-primary-container/10 text-primary px-2 py-1 rounded-full text-xs font-semibold border border-primary/20">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                                                Completed
-                                            </span>
+                                            <div class="flex items-center gap-xs">
+                                                <span class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface-variant">DOC</span>
+                                                <span class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface-variant">PPT</span>
+                                                <span class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface-variant">+3</span>
+                                            </div>
                                         </td>
-                                        <td class="p-md text-right text-on-surface-variant">Today, 2:34 PM</td>
+                                        <td class="p-md"><span class="bg-emerald-500/10 text-emerald-400 px-sm py-xs rounded-full font-label-md text-[11px] border border-emerald-500/20">Completed</span></td>
+                                        <td class="p-md text-right text-on-surface-variant">10m ago</td>
                                     </tr>
                                     <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors group cursor-pointer">
-                                        <td class="p-md font-medium text-white group-hover:text-primary transition-colors">Q3 Enterprise Earnings Call Transcript</td>
+                                        <td class="p-md font-medium text-white group-hover:text-primary transition-colors">Q3 Financial Earnings Call Audio</td>
                                         <td class="p-md"><span class="flex items-center gap-xs"><span class="material-symbols-outlined text-sm text-on-surface-variant">audio_file</span> Audio</span></td>
-                                        <td class="p-md"><span class="bg-surface-container-highest px-2 py-1 rounded text-xs">4</span></td>
                                         <td class="p-md">
-                                            <span class="inline-flex items-center gap-xs bg-primary-container/10 text-primary px-2 py-1 rounded-full text-xs font-semibold border border-primary/20">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                                                Completed
+                                            <div class="flex items-center gap-xs">
+                                                <span class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface-variant">TXT</span>
+                                                <span class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface-variant">XLS</span>
+                                            </div>
+                                        </td>
+                                        <td class="p-md"><span class="bg-emerald-500/10 text-emerald-400 px-sm py-xs rounded-full font-label-md text-[11px] border border-emerald-500/20">Completed</span></td>
+                                        <td class="p-md text-right text-on-surface-variant">2h ago</td>
+                                    </tr>
+                                    <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors group cursor-pointer">
+                                        <td class="p-md font-medium text-white group-hover:text-primary transition-colors">Product Architecture Whitepaper</td>
+                                        <td class="p-md"><span class="flex items-center gap-xs"><span class="material-symbols-outlined text-sm text-on-surface-variant">description</span> DOCX</span></td>
+                                        <td class="p-md">
+                                            <div class="flex items-center gap-xs">
+                                                <span class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface-variant">PDF</span>
+                                                <span class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface-variant">MD</span>
+                                                <span class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface-variant">+4</span>
+                                            </div>
+                                        </td>
+                                        <td class="p-md">
+                                            <span class="bg-blue-500/10 text-blue-400 px-sm py-xs rounded-full font-label-md text-[11px] border border-blue-500/20 flex items-center gap-xs w-fit">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                                                Indexed
                                             </span>
                                         </td>
-                                        <td class="p-md text-right text-on-surface-variant">Yesterday, 5:12 PM</td>
+                                        <td class="p-md text-right text-on-surface-variant">5h ago</td>
                                     </tr>
                                     <tr class="hover:bg-white/[0.02] transition-colors group cursor-pointer">
-                                        <td class="p-md font-medium text-white group-hover:text-primary transition-colors">API Architecture Whitepaper v2</td>
-                                        <td class="p-md"><span class="flex items-center gap-xs"><span class="material-symbols-outlined text-sm text-on-surface-variant">description</span> DOCX</span></td>
-                                        <td class="p-md"><span class="bg-surface-container-highest px-2 py-1 rounded text-xs">8</span></td>
+                                        <td class="p-md font-medium text-white group-hover:text-primary transition-colors">Customer Sentiment Feedback Batch #104</td>
+                                        <td class="p-md"><span class="flex items-center gap-xs"><span class="material-symbols-outlined text-sm text-on-surface-variant">table_chart</span> CSV</span></td>
                                         <td class="p-md">
-                                            <span class="inline-flex items-center gap-xs bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded-full text-xs font-semibold border border-emerald-500/20">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                                                Indexed
+                                            <div class="flex items-center gap-xs">
+                                                <span class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface-variant">JSON</span>
+                                                <span class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface-variant">HTML</span>
+                                            </div>
+                                        </td>
+                                        <td class="p-md">
+                                            <span class="bg-emerald-500/10 text-emerald-400 px-sm py-xs rounded-full font-label-md text-[11px] border border-emerald-500/20">
+                                                Completed
                                             </span>
                                         </td>
                                         <td class="p-md text-right text-on-surface-variant">2 days ago</td>
@@ -437,18 +460,18 @@
                     <div class="space-y-md">
                         <h3 class="font-headline-md text-headline-md text-on-surface">Quick Start</h3>
                         <div class="grid grid-cols-2 gap-md">
-                            <button class="glass-panel p-md rounded-xl flex flex-col items-center justify-center gap-sm hover:bg-white/[0.04] hover:border-primary/50 transition-all group text-center aspect-square cursor-pointer">
+                            <a href="new-transformation.html" class="glass-panel p-md rounded-xl flex flex-col items-center justify-center gap-sm hover:bg-white/[0.04] hover:border-primary/50 transition-all group text-center aspect-square cursor-pointer">
                                 <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-container group-hover:text-white transition-colors text-on-surface-variant">
                                     <span class="material-symbols-outlined">upload_file</span>
                                 </div>
                                 <span class="font-label-md text-label-md text-on-surface">Upload Document</span>
-                            </button>
-                            <button class="glass-panel p-md rounded-xl flex flex-col items-center justify-center gap-sm hover:bg-white/[0.04] hover:border-primary/50 transition-all group text-center aspect-square cursor-pointer">
+                            </a>
+                            <a href="new-transformation.html" class="glass-panel p-md rounded-xl flex flex-col items-center justify-center gap-sm hover:bg-white/[0.04] hover:border-primary/50 transition-all group text-center aspect-square cursor-pointer">
                                 <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-container group-hover:text-white transition-colors text-on-surface-variant">
                                     <span class="material-symbols-outlined">content_paste</span>
                                 </div>
                                 <span class="font-label-md text-label-md text-on-surface">Paste Content</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </section>
