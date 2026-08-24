@@ -427,101 +427,108 @@
 
             <!-- Two Column Layout -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
-                <!-- Left Column (65% / 8 cols) - Neural Quantum Synthesizer Visualizer -->
+                <!-- Left Column (65% / 8 cols) - Enterprise Transformation Roadmap Studio -->
                 <div class="lg:col-span-8 space-y-lg">
-                    <div class="glass-panel rounded-2xl p-xl flex flex-col items-center justify-center relative overflow-hidden min-h-[500px]">
-                        <!-- Neural Quantum Core Orbital Centerpiece -->
-                        <div class="relative w-64 h-64 mb-lg flex items-center justify-center">
-                            <!-- Outer Rotating Particle Radar Ring -->
-                            <div class="absolute inset-0 rounded-full border border-dashed border-blue-500/25 animate-radar"></div>
-                            
-                            <!-- Middle Counter-Rotating Gyroscopic Ring -->
-                            <div class="absolute inset-3 rounded-full border border-indigo-400/30 border-t-transparent border-b-transparent animate-reverse-radar shadow-[0_0_20px_rgba(99,102,241,0.25)]"></div>
-                            
-                            <!-- Inner Glowing SVG Arc Ring -->
-                            <svg class="w-full h-full transform -rotate-90 relative z-10" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" fill="none" r="44" stroke="rgba(255,255,255,0.04)" stroke-width="2.5"></circle>
-                                <circle id="progressCircle" class="transition-all duration-700 ease-out" cx="50" cy="50" fill="none" r="44" stroke="url(#quantumGradient)" stroke-dasharray="276" stroke-dashoffset="276" stroke-width="3" stroke-linecap="round"></circle>
-                                <defs>
-                                    <linearGradient id="quantumGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#60A5FA" />
-                                        <stop offset="50%" stop-color="#3B82F6" />
-                                        <stop offset="100%" stop-color="#A855F7" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-
-                            <!-- Center Holographic Telemetry Core -->
-                            <div class="absolute inset-0 flex flex-col items-center justify-center z-20 animate-quantum-core">
-                                <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-blue-600/30 via-indigo-500/20 to-purple-500/30 backdrop-blur-md border border-blue-400/40 flex flex-col items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.5)]">
-                                    <span class="font-display-lg text-[28px] font-bold text-white leading-none font-mono" id="progressPercent">0%</span>
-                                    <span class="text-[9px] font-mono text-blue-300 uppercase tracking-widest mt-0.5">Quantum</span>
+                    <div class="glass-panel rounded-2xl p-xl flex flex-col justify-between relative overflow-hidden min-h-[520px]">
+                        <!-- Roadmap Top Telemetry Header -->
+                        <div class="w-full flex items-center justify-between border-b border-white/8 pb-md mb-lg">
+                            <div class="flex items-center gap-md">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-400/30 flex items-center justify-center text-primary shadow-[0_0_15px_rgba(37,99,235,0.3)]">
+                                    <span class="material-symbols-outlined text-[22px]">route</span>
                                 </div>
-                                <span class="font-label-md text-[11px] text-primary mt-sm tracking-widest uppercase font-semibold bg-blue-500/10 px-md py-0.5 rounded-full border border-blue-400/20" id="pipelinePhaseLabel">
-                                    Initializing
-                                </span>
+                                <div>
+                                    <h3 class="font-headline-md text-[18px] text-white font-bold tracking-tight">Transformation Roadmap</h3>
+                                    <p class="text-on-surface-variant font-mono text-[12px] flex items-center gap-xs mt-0.5">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                        Stage: <span id="pipelinePhaseLabel" class="text-primary font-bold uppercase">Analyze</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Real-time Progress & Token Velocity Counter -->
+                            <div class="flex items-center gap-lg">
+                                <div class="text-right">
+                                    <span class="font-display-lg text-[32px] font-bold text-white leading-none font-mono tracking-tight" id="progressPercent">0%</span>
+                                    <p class="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider">Overall Progress</p>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Real-time Synthesis Spectrum & Telemetry HUD -->
-                        <div class="w-full max-w-lg mb-xl px-md py-sm bg-[#060a12]/80 border border-white/8 rounded-xl flex items-center justify-between gap-md text-[12px] font-mono">
-                            <div class="flex items-center gap-xs text-on-surface-variant">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                                <span>Tokens/s:</span>
-                                <span class="text-emerald-400 font-bold" id="liveTokensRate">142 tk/s</span>
+                        <!-- Horizontal Interactive Roadmap Track -->
+                        <div class="relative w-full my-xl py-lg px-xs">
+                            <!-- Background Milestone Connecting Rail -->
+                            <div class="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-1.5 bg-[#05070a] rounded-full overflow-hidden z-0">
+                                <div id="roadmapProgressBar" class="h-full bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 rounded-full transition-all duration-700 ease-out shadow-[0_0_12px_rgba(99,102,241,0.6)]" style="width: 0%;"></div>
                             </div>
+
+                            <!-- 4 Milestone Nodes -->
+                            <div class="relative z-10 flex justify-between items-center w-full">
+                                <!-- Milestone 1: Ingestion & Analysis -->
+                                <div id="milestone-1" class="flex flex-col items-center group cursor-pointer">
+                                    <div class="milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-primary text-primary flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.6)] transition-all duration-300 transform scale-110">
+                                        <span class="material-symbols-outlined text-[20px] animate-spin">sync</span>
+                                    </div>
+                                    <div class="mt-md text-center">
+                                        <span class="font-label-md text-[13px] text-white font-bold block">01. Analyze</span>
+                                        <span class="text-[11px] text-primary font-mono block mt-0.5 milestone-label font-medium">Extracting Entities</span>
+                                    </div>
+                                </div>
+
+                                <!-- Milestone 2: Semantic Synthesis -->
+                                <div id="milestone-2" class="flex flex-col items-center opacity-40 group cursor-pointer transition-all duration-500">
+                                    <div class="milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-white/10 text-on-surface-variant flex items-center justify-center transition-all duration-300">
+                                        <span class="material-symbols-outlined text-[20px]">psychology</span>
+                                    </div>
+                                    <div class="mt-md text-center">
+                                        <span class="font-label-md text-[13px] text-on-surface-variant font-bold block">02. Understand</span>
+                                        <span class="text-[11px] text-on-surface-variant font-mono block mt-0.5 milestone-label">Pending</span>
+                                    </div>
+                                </div>
+
+                                <!-- Milestone 3: Multi-format Transformation -->
+                                <div id="milestone-3" class="flex flex-col items-center opacity-40 group cursor-pointer transition-all duration-500">
+                                    <div class="milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-white/10 text-on-surface-variant flex items-center justify-center transition-all duration-300">
+                                        <span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+                                    </div>
+                                    <div class="mt-md text-center">
+                                        <span class="font-label-md text-[13px] text-on-surface-variant font-bold block">03. Transform</span>
+                                        <span class="text-[11px] text-on-surface-variant font-mono block mt-0.5 milestone-label">Pending</span>
+                                    </div>
+                                </div>
+
+                                <!-- Milestone 4: Grounding & Validation -->
+                                <div id="milestone-4" class="flex flex-col items-center opacity-40 group cursor-pointer transition-all duration-500">
+                                    <div class="milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-white/10 text-on-surface-variant flex items-center justify-center transition-all duration-300">
+                                        <span class="material-symbols-outlined text-[20px]">verified</span>
+                                    </div>
+                                    <div class="mt-md text-center">
+                                        <span class="font-label-md text-[13px] text-on-surface-variant font-bold block">04. Validate</span>
+                                        <span class="text-[11px] text-on-surface-variant font-mono block mt-0.5 milestone-label">Pending</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Telemetry Matrix & Waveform HUD -->
+                        <div class="w-full bg-[#060a12]/90 border border-white/8 rounded-xl p-md flex items-center justify-between gap-md text-[12px] font-mono mt-lg">
+                            <div class="flex items-center gap-sm">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                <span class="text-on-surface-variant">Throughput:</span>
+                                <span class="text-emerald-400 font-bold" id="liveTokensRate">148 tk/s</span>
+                            </div>
+
+                            <!-- Animated Tensor Waveform -->
                             <div class="flex items-center gap-1.5 h-6">
-                                <div class="w-1 bg-blue-500/80 rounded-full animate-[waveFloat_1.2s_ease-in-out_infinite]"></div>
-                                <div class="w-1 bg-indigo-500/80 rounded-full animate-[waveFloat_0.8s_ease-in-out_infinite_0.2s]"></div>
-                                <div class="w-1 bg-purple-500/80 rounded-full animate-[waveFloat_1.4s_ease-in-out_infinite_0.4s]"></div>
-                                <div class="w-1 bg-cyan-400/80 rounded-full animate-[waveFloat_1.0s_ease-in-out_infinite_0.1s]"></div>
-                                <div class="w-1 bg-blue-400/80 rounded-full animate-[waveFloat_1.3s_ease-in-out_infinite_0.3s]"></div>
-                            </div>
-                            <div class="text-on-surface-variant">
-                                <span>Memory:</span>
-                                <span class="text-primary font-bold" id="liveMemoryUsage">1.2 GB</span>
-                            </div>
-                        </div>
-
-                        <!-- Vertical Pipeline Stage Nodes -->
-                        <div class="flex flex-col gap-lg items-center relative z-10 w-full max-w-md" id="pipelineNodes">
-                            <!-- Connecting Line -->
-                            <div class="absolute left-1/2 top-4 bottom-4 w-px bg-white/10 -translate-x-1/2 z-0"></div>
-
-                            <!-- Node 1: Analyze -->
-                            <div id="node-analyze" class="flex items-center w-full gap-md transition-all duration-500">
-                                <div class="flex-1 text-right font-label-md text-label-md text-white tracking-wider uppercase font-semibold">Analyze</div>
-                                <div class="node-icon w-8 h-8 rounded-full bg-primary-container border border-primary flex items-center justify-center z-10 node-active shadow-[0_0_15px_rgba(37,99,235,0.6)]">
-                                    <span class="material-symbols-outlined text-white text-[16px] animate-spin">sync</span>
-                                </div>
-                                <div class="node-status flex-1 text-left font-body-sm text-body-sm text-primary font-medium">Parsing input document...</div>
+                                <div class="w-1.5 bg-blue-500/80 rounded-full animate-[waveFloat_1.2s_ease-in-out_infinite]"></div>
+                                <div class="w-1.5 bg-indigo-500/80 rounded-full animate-[waveFloat_0.8s_ease-in-out_infinite_0.2s]"></div>
+                                <div class="w-1.5 bg-purple-500/80 rounded-full animate-[waveFloat_1.4s_ease-in-out_infinite_0.4s]"></div>
+                                <div class="w-1.5 bg-cyan-400/80 rounded-full animate-[waveFloat_1.0s_ease-in-out_infinite_0.1s]"></div>
+                                <div class="w-1.5 bg-blue-400/80 rounded-full animate-[waveFloat_1.3s_ease-in-out_infinite_0.3s]"></div>
                             </div>
 
-                            <!-- Node 2: Understand -->
-                            <div id="node-understand" class="flex items-center w-full gap-md opacity-30 transition-all duration-500">
-                                <div class="flex-1 text-right font-label-md text-label-md text-on-surface-variant tracking-wider uppercase">Understand</div>
-                                <div class="node-icon w-8 h-8 rounded-full bg-surface-container border border-white/10 flex items-center justify-center z-10">
-                                    <span class="material-symbols-outlined text-on-surface-variant text-[16px]">psychology</span>
-                                </div>
-                                <div class="node-status flex-1 text-left font-body-sm text-body-sm text-on-surface-variant">Pending</div>
-                            </div>
-
-                            <!-- Node 3: Transform -->
-                            <div id="node-transform" class="flex items-center w-full gap-md opacity-30 transition-all duration-500">
-                                <div class="flex-1 text-right font-label-md text-label-md text-on-surface-variant tracking-wider uppercase">Transform</div>
-                                <div class="node-icon w-8 h-8 rounded-full bg-surface-container border border-white/10 flex items-center justify-center z-10">
-                                    <span class="material-symbols-outlined text-on-surface-variant text-[16px]">auto_awesome</span>
-                                </div>
-                                <div class="node-status flex-1 text-left font-body-sm text-body-sm text-on-surface-variant">Pending</div>
-                            </div>
-
-                            <!-- Node 4: Validate -->
-                            <div id="node-validate" class="flex items-center w-full gap-md opacity-30 transition-all duration-500">
-                                <div class="flex-1 text-right font-label-md text-label-md text-on-surface-variant tracking-wider uppercase">Validate</div>
-                                <div class="node-icon w-8 h-8 rounded-full bg-surface-container border border-white/10 flex items-center justify-center z-10">
-                                    <span class="material-symbols-outlined text-on-surface-variant text-[16px]">fact_check</span>
-                                </div>
-                                <div class="node-status flex-1 text-left font-body-sm text-body-sm text-on-surface-variant">Pending</div>
+                            <div class="flex items-center gap-sm">
+                                <span class="text-on-surface-variant">Memory Allocation:</span>
+                                <span class="text-primary font-bold" id="liveMemoryUsage">1.25 GB</span>
                             </div>
                         </div>
                     </div>
@@ -791,6 +798,13 @@
                 if (progress < 100) {
                     progress += 1;
                     if (progressPercent) progressPercent.innerText = `${progress}%`;
+                    
+                    // Update Roadmap Progress Connecting Bar
+                    const progressBar = document.getElementById('roadmapProgressBar');
+                    if (progressBar) {
+                        progressBar.style.width = `${progress}%`;
+                    }
+
                     if (progressCircle) {
                         const offset = 276 - (276 * (progress / 100));
                         progressCircle.style.strokeDashoffset = offset;
@@ -830,6 +844,72 @@
                                 <span class="font-body-sm text-body-sm text-on-surface">${step.log}</span>
                             `;
                             statusListEl.appendChild(li);
+                        }
+
+                        // Milestone 1 (Analyze) completed -> Milestone 2 (Understand) starts
+                        if (step.at >= 35) {
+                            const m1 = document.getElementById('milestone-1');
+                            if (m1) {
+                                const dot = m1.querySelector('.milestone-dot');
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.4)]';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span>';
+                                const lbl = m1.querySelector('.milestone-label');
+                                if (lbl) lbl.innerText = 'Completed';
+                            }
+
+                            const m2 = document.getElementById('milestone-2');
+                            if (m2 && step.at < 60) {
+                                m2.classList.remove('opacity-40');
+                                const dot = m2.querySelector('.milestone-dot');
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-primary text-primary flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.6)] transform scale-110';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span>';
+                                const lbl = m2.querySelector('.milestone-label');
+                                if (lbl) { lbl.innerText = 'Mapping Knowledge'; lbl.className = 'text-[11px] text-primary font-mono block mt-0.5 milestone-label font-medium'; }
+                            }
+                        }
+
+                        // Milestone 2 completed -> Milestone 3 (Transform) starts
+                        if (step.at >= 60) {
+                            const m2 = document.getElementById('milestone-2');
+                            if (m2) {
+                                const dot = m2.querySelector('.milestone-dot');
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.4)]';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span>';
+                                const lbl = m2.querySelector('.milestone-label');
+                                if (lbl) lbl.innerText = 'Completed';
+                            }
+
+                            const m3 = document.getElementById('milestone-3');
+                            if (m3 && step.at < 92) {
+                                m3.classList.remove('opacity-40');
+                                const dot = m3.querySelector('.milestone-dot');
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-primary text-primary flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.6)] transform scale-110';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span>';
+                                const lbl = m3.querySelector('.milestone-label');
+                                if (lbl) { lbl.innerText = 'Synthesizing Assets'; lbl.className = 'text-[11px] text-primary font-mono block mt-0.5 milestone-label font-medium'; }
+                            }
+                        }
+
+                        // Milestone 3 completed -> Milestone 4 (Validate) starts
+                        if (step.at >= 92) {
+                            const m3 = document.getElementById('milestone-3');
+                            if (m3) {
+                                const dot = m3.querySelector('.milestone-dot');
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.4)]';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span>';
+                                const lbl = m3.querySelector('.milestone-label');
+                                if (lbl) lbl.innerText = 'Completed';
+                            }
+
+                            const m4 = document.getElementById('milestone-4');
+                            if (m4) {
+                                m4.classList.remove('opacity-40');
+                                const dot = m4.querySelector('.milestone-dot');
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-[#090d15] border-2 border-primary text-primary flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.6)] transform scale-110';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span>';
+                                const lbl = m4.querySelector('.milestone-label');
+                                if (lbl) { lbl.innerText = 'Verifying Grounding'; lbl.className = 'text-[11px] text-primary font-mono block mt-0.5 milestone-label font-medium'; }
+                            }
                         }
 
                         // Activate node
@@ -880,6 +960,15 @@
                         }
 
                         if (step.final) {
+                            const m4 = document.getElementById('milestone-4');
+                            if (m4) {
+                                const dot = m4.querySelector('.milestone-dot');
+                                dot.className = 'milestone-dot w-12 h-12 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.4)]';
+                                dot.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span>';
+                                const lbl = m4.querySelector('.milestone-label');
+                                if (lbl) lbl.innerText = 'Completed';
+                            }
+
                             const jobStatus = document.getElementById('activeJobStatus');
                             if (jobStatus) {
                                 jobStatus.className = 'text-emerald-400 font-mono text-[11px]';
