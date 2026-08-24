@@ -299,124 +299,109 @@
             </div>
         </header>
 
-        <!-- 3-Column Studio Content -->
-        <div class="flex-1 flex overflow-hidden">
-            <!-- Column 1: Artifacts Explorer Navigation (20%) -->
-            <aside class="w-[20%] min-w-[240px] max-w-[300px] border-r border-white/8 flex flex-col p-md gap-lg overflow-y-auto bg-[#05070a]/90 backdrop-blur-md shrink-0">
-                <!-- Source Card -->
-                <div>
-                    <h3 class="font-label-md text-on-surface-variant mb-sm uppercase tracking-wider text-[11px]">Source Material</h3>
-                    <div class="glass-panel rounded-lg p-sm flex items-start gap-sm cursor-pointer hover:border-white/20 transition-all">
-                        <div class="w-8 h-8 rounded bg-error-container/20 flex items-center justify-center shrink-0 mt-xs">
-                            <span class="material-symbols-outlined text-red-400 text-[18px]">picture_as_pdf</span>
+        <!-- Studio Subheader Bar: Artifact Pill Switcher & Quick Tools -->
+        <div class="bg-[#070b12] border-b border-white/8 px-lg py-sm flex items-center justify-between shrink-0 z-30">
+            <!-- Deliverables Tab Pills -->
+            <div class="flex items-center gap-xs overflow-x-auto custom-scrollbar py-0.5" id="artifactPillList">
+                <!-- Dynamically populated pills -->
+            </div>
+
+            <!-- Editor Quick Tools -->
+            <div class="flex items-center gap-xs">
+                <button onclick="formatDoc('bold')" title="Bold" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-white/5 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">format_bold</span>
+                </button>
+                <button onclick="formatDoc('italic')" title="Italic" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-white/5 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">format_italic</span>
+                </button>
+                <button onclick="formatDoc('formatBlock', '<h3>')" title="Heading" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-white/5 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">format_h1</span>
+                </button>
+                <div class="w-px h-5 bg-white/10 mx-xs"></div>
+                <button onclick="triggerAiImprove()" class="px-md py-1 rounded-lg bg-primary-container/20 border border-primary/30 text-primary font-label-md text-[12px] hover:bg-primary-container/30 transition-all flex items-center gap-xs active:scale-95">
+                    <span class="material-symbols-outlined text-[15px]">auto_awesome</span>
+                    AI Refine
+                </button>
+                <button onclick="toggleInspector()" id="inspectorToggleBtn" class="px-sm py-1 rounded-lg border border-white/10 text-on-surface-variant hover:text-white hover:border-white/20 font-label-md text-[12px] transition-colors flex items-center gap-xs ml-xs">
+                    <span class="material-symbols-outlined text-[16px]">tune</span>
+                    <span id="inspectorToggleLabel">Inspector</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Studio Workspace Canvas & Inspector Drawer -->
+        <div class="flex-1 flex overflow-hidden relative">
+            <!-- Center Document Canvas (Expansive, clean, uncluttered paper view) -->
+            <section class="flex-1 flex flex-col items-center overflow-y-auto p-xl custom-scrollbar bg-[#05070a]">
+                <div class="w-full max-w-[840px] my-md bg-[#0a0f18] border border-white/10 rounded-2xl p-2xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] min-h-[640px] relative">
+                    <!-- Grounding Badge Header -->
+                    <div class="flex items-center justify-between pb-lg mb-xl border-b border-white/8">
+                        <div class="flex items-center gap-sm">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                            <span class="font-label-md text-[12px] text-emerald-400 font-semibold uppercase tracking-wider">Source Grounded</span>
                         </div>
-                        <div class="min-w-0">
-                            <p class="font-label-md text-on-surface truncate" id="sourceFilename">Document_Source.pdf</p>
-                            <p class="text-[11px] text-on-surface-variant mt-0.5" id="sourceFileDetails">Uploaded • Ready</p>
+                        <div class="text-[12px] text-on-surface-variant font-mono flex items-center gap-md">
+                            <span><strong class="text-white" id="factsExtractedCount">94</strong> Facts verified</span>
+                            <span>•</span>
+                            <span class="text-emerald-400 font-semibold" id="groundingConfidence">96% Grounding</span>
                         </div>
                     </div>
-                </div>
 
-                <!-- Generated Deliverables List -->
-                <div class="flex-1 flex flex-col">
-                    <h3 class="font-label-md text-on-surface-variant mb-sm uppercase tracking-wider text-[11px] flex justify-between items-center">
-                        <span>Generated Artifacts</span>
-                        <span class="font-mono text-primary text-[11px]" id="artifactNavCount">4 Items</span>
-                    </h3>
-                    <div class="flex flex-col gap-xs" id="artifactNavList">
-                        <!-- Populated dynamically via JS -->
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Column 2: Interactive Document Studio & Editor (55%) -->
-            <section class="flex-1 min-w-[500px] flex flex-col relative border-r border-white/8 bg-[#090d14]">
-                <!-- Floating AI Formatting Toolbar -->
-                <div class="absolute top-md left-1/2 -translate-x-1/2 bg-[#0c1017] border border-white/10 px-md py-xs rounded-full flex items-center gap-sm shadow-[0_8px_24px_rgba(0,0,0,0.6)] z-20">
-                    <button onclick="formatDoc('bold')" title="Bold" class="w-7 h-7 rounded-full flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-white/10 transition-colors">
-                        <span class="material-symbols-outlined text-[16px]">format_bold</span>
-                    </button>
-                    <button onclick="formatDoc('italic')" title="Italic" class="w-7 h-7 rounded-full flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-white/10 transition-colors">
-                        <span class="material-symbols-outlined text-[16px]">format_italic</span>
-                    </button>
-                    <div class="w-px h-4 bg-white/10 mx-xs"></div>
-                    <button onclick="formatDoc('formatBlock', '<h3>')" title="Heading" class="w-7 h-7 rounded-full flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-white/10 transition-colors">
-                        <span class="material-symbols-outlined text-[16px]">format_h1</span>
-                    </button>
-                    <div class="w-px h-4 bg-white/10 mx-xs"></div>
-                    <button onclick="triggerAiImprove()" class="px-sm py-xs rounded-full bg-primary-container/20 border border-primary/30 text-primary font-label-md text-[11px] hover:bg-primary-container/30 transition-colors flex items-center gap-xs">
-                        <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
-                        AI Refine
-                    </button>
-                </div>
-
-                <!-- Editor Workspace Area -->
-                <div class="flex-1 overflow-y-auto p-xl custom-scrollbar outline-none" id="editorContainer">
-                    <div class="max-w-[760px] mx-auto pt-lg pb-2xl" id="documentContent" contenteditable="true" spellcheck="false">
-                        <!-- Populated dynamically with grounded artifact content -->
+                    <!-- Editable Document Body -->
+                    <div class="outline-none space-y-lg text-on-surface leading-relaxed" id="documentContent" contenteditable="true" spellcheck="false">
+                        <!-- Populated dynamically with active artifact content -->
                     </div>
                 </div>
             </section>
 
-            <!-- Column 3: AI Assistant & Grounding Validation Inspector (25%) -->
-            <aside class="w-[25%] min-w-[300px] max-w-[360px] bg-[#05070a]/90 backdrop-blur-md flex flex-col overflow-y-auto p-md gap-lg shrink-0">
-                <!-- AI Assistant Actions -->
+            <!-- Right Slide-out Inspector Drawer -->
+            <aside id="inspectorDrawer" class="w-[340px] border-l border-white/8 bg-[#090d15]/95 backdrop-blur-md flex flex-col overflow-y-auto p-lg gap-lg shrink-0 transition-all duration-300">
+                <!-- Source Overview Card -->
+                <div>
+                    <h3 class="font-label-md text-on-surface-variant mb-sm uppercase tracking-wider text-[11px]">Source Context</h3>
+                    <div class="glass-panel rounded-xl p-md flex items-start gap-sm">
+                        <div class="w-8 h-8 rounded bg-error-container/20 flex items-center justify-center shrink-0 mt-0.5">
+                            <span class="material-symbols-outlined text-red-400 text-[18px]">picture_as_pdf</span>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="font-label-md text-on-surface text-[13px] font-semibold truncate" id="sourceFilename">Document_Source.pdf</p>
+                            <p class="text-[11px] text-on-surface-variant mt-0.5" id="sourceFileDetails">Uploaded • Grounded</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Quick Actions -->
                 <div>
                     <h3 class="font-label-md text-on-surface-variant mb-sm uppercase tracking-wider text-[11px] flex items-center gap-xs">
                         <span class="material-symbols-outlined text-[16px] text-primary">auto_awesome</span>
                         AI Actions
                     </h3>
                     <div class="flex flex-col gap-sm">
-                        <button onclick="aiAction('improve')" class="w-full flex items-center justify-between px-md py-sm rounded-lg glass-panel text-on-surface hover:border-white/20 transition-colors group text-left">
-                            <span class="font-label-md text-label-md">Improve Clarity & Flow</span>
+                        <button onclick="aiAction('improve')" class="w-full flex items-center justify-between px-md py-sm rounded-xl glass-panel text-on-surface hover:border-white/20 transition-all group text-left">
+                            <span class="font-label-md text-[13px]">Improve Clarity</span>
                             <span class="material-symbols-outlined text-[16px] text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
                         </button>
-                        <button onclick="aiAction('concise')" class="w-full flex items-center justify-between px-md py-sm rounded-lg glass-panel text-on-surface hover:border-white/20 transition-colors group text-left">
-                            <span class="font-label-md text-label-md">Make More Concise</span>
+                        <button onclick="aiAction('concise')" class="w-full flex items-center justify-between px-md py-sm rounded-xl glass-panel text-on-surface hover:border-white/20 transition-all group text-left">
+                            <span class="font-label-md text-[13px]">Make More Concise</span>
                             <span class="material-symbols-outlined text-[16px] text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
                         </button>
-                        <button onclick="aiAction('executive')" class="w-full flex items-center justify-between px-md py-sm rounded-lg glass-panel text-on-surface hover:border-white/20 transition-colors group text-left">
-                            <span class="font-label-md text-label-md">Adjust Tone (Executive)</span>
+                        <button onclick="aiAction('executive')" class="w-full flex items-center justify-between px-md py-sm rounded-xl glass-panel text-on-surface hover:border-white/20 transition-all group text-left">
+                            <span class="font-label-md text-[13px]">Executive Tone</span>
                             <span class="material-symbols-outlined text-[16px] text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="w-full h-px bg-white/8"></div>
-
-                <!-- Source Traceability Metrics -->
-                <div>
-                    <h3 class="font-label-md text-on-surface-variant mb-sm uppercase tracking-wider text-[11px] flex items-center gap-xs">
-                        <span class="material-symbols-outlined text-[16px] text-primary">hub</span>
-                        Source Traceability
-                    </h3>
-                    <div class="glass-panel p-md rounded-lg flex flex-col gap-md">
-                        <div class="flex items-end justify-between">
-                            <div>
-                                <p class="text-display-lg font-display-lg text-on-surface leading-none font-bold" id="factsExtractedCount">94</p>
-                                <p class="font-label-md text-on-surface-variant mt-1 text-[11px]">Facts Grounded</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-headline-md font-headline-md text-emerald-400 leading-none font-bold" id="groundingConfidence">96%</p>
-                                <p class="font-label-md text-on-surface-variant mt-1 text-[11px]">Confidence Score</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w-full h-px bg-white/8"></div>
-
-                <!-- Content Validation Inspector -->
+                <!-- Validation Health Inspector -->
                 <div>
                     <h3 class="font-label-md text-on-surface-variant mb-sm uppercase tracking-wider text-[11px] flex items-center gap-xs">
                         <span class="material-symbols-outlined text-[16px] text-emerald-400">verified</span>
                         Validation Health
                     </h3>
-                    <div class="glass-panel p-md rounded-lg flex flex-col gap-md">
-                        <!-- Grounding Bar -->
+                    <div class="glass-panel p-md rounded-xl space-y-md">
                         <div>
-                            <div class="flex justify-between font-label-md text-label-md mb-xs">
-                                <span class="text-on-surface">Grounding</span>
+                            <div class="flex justify-between font-label-md text-[12px] mb-xs">
+                                <span class="text-on-surface">Grounding Alignment</span>
                                 <span class="text-emerald-400 font-semibold">96%</span>
                             </div>
                             <div class="w-full h-1.5 bg-[#05070a] rounded-full overflow-hidden">
@@ -424,10 +409,9 @@
                             </div>
                         </div>
 
-                        <!-- Consistency Bar -->
                         <div>
-                            <div class="flex justify-between font-label-md text-label-md mb-xs">
-                                <span class="text-on-surface">Consistency</span>
+                            <div class="flex justify-between font-label-md text-[12px] mb-xs">
+                                <span class="text-on-surface">Semantic Consistency</span>
                                 <span class="text-primary font-semibold">98%</span>
                             </div>
                             <div class="w-full h-1.5 bg-[#05070a] rounded-full overflow-hidden">
@@ -435,11 +419,11 @@
                             </div>
                         </div>
 
-                        <div class="p-sm rounded bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-sm mt-xs">
+                        <div class="p-sm rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-sm">
                             <span class="material-symbols-outlined text-emerald-400 text-[18px] shrink-0 mt-0.5">verified_user</span>
                             <div>
-                                <p class="font-label-md text-on-surface text-[12px] font-medium">All Citations Grounded</p>
-                                <p class="text-[11px] text-on-surface-variant mt-0.5">Zero unverified hallucinations detected against source material.</p>
+                                <p class="font-label-md text-on-surface text-[12px] font-semibold">Zero Hallucinations</p>
+                                <p class="text-[11px] text-on-surface-variant mt-0.5">All claims are cited against source material.</p>
                             </div>
                         </div>
                     </div>
@@ -651,20 +635,20 @@
 
         let currentArtifactId = 'exec-summary';
 
-        function renderArtifactNav() {
-            const listEl = document.getElementById('artifactNavList');
-            if (!listEl) return;
+        function renderArtifactPills() {
+            const pillListEl = document.getElementById('artifactPillList');
+            if (!pillListEl) return;
 
-            listEl.innerHTML = artifactData.map(art => {
+            pillListEl.innerHTML = artifactData.map(art => {
                 const isActive = art.id === currentArtifactId;
                 const activeClass = isActive 
-                    ? 'bg-primary-container/20 border-l-2 border-primary text-white shadow-[0_0_12px_rgba(37,99,235,0.2)]' 
-                    : 'text-on-surface-variant hover:text-white hover:bg-white/5 border-l-2 border-transparent';
+                    ? 'bg-primary-container text-white shadow-[0_0_12px_rgba(37,99,235,0.4)] font-semibold' 
+                    : 'bg-surface-container text-on-surface-variant hover:text-white hover:bg-white/5 border border-white/5';
                 
                 return `
-                    <button onclick="selectArtifact('${art.id}')" class="w-full flex items-center gap-sm px-sm py-sm rounded-lg ${activeClass} transition-all text-left">
-                        <span class="material-symbols-outlined text-[18px] ${isActive ? 'text-primary' : 'text-on-surface-variant'}">${art.icon}</span>
-                        <span class="font-label-md text-label-md flex-1 truncate">${art.title}</span>
+                    <button onclick="selectArtifact('${art.id}')" class="px-md py-1.5 rounded-lg ${activeClass} transition-all text-[13px] font-label-md flex items-center gap-xs shrink-0 active:scale-95">
+                        <span class="material-symbols-outlined text-[16px]">${art.icon}</span>
+                        <span>${art.title}</span>
                     </button>
                 `;
             }).join('');
@@ -675,7 +659,7 @@
             const art = artifactData.find(a => a.id === id);
             if (!art) return;
 
-            renderArtifactNav();
+            renderArtifactPills();
 
             const docContent = document.getElementById('documentContent');
             const activeTitle = document.getElementById('activeArtifactTitle');
@@ -686,6 +670,22 @@
             if (activeTitle) activeTitle.innerText = art.title;
             if (factsCount) factsCount.innerText = art.facts;
             if (confidenceScore) confidenceScore.innerText = art.confidence;
+        }
+
+        let isInspectorOpen = true;
+        function toggleInspector() {
+            const drawer = document.getElementById('inspectorDrawer');
+            const toggleBtn = document.getElementById('inspectorToggleBtn');
+            if (!drawer) return;
+
+            isInspectorOpen = !isInspectorOpen;
+            if (isInspectorOpen) {
+                drawer.classList.remove('hidden');
+                toggleBtn?.classList.add('bg-white/5', 'text-white');
+            } else {
+                drawer.classList.add('hidden');
+                toggleBtn?.classList.remove('bg-white/5', 'text-white');
+            }
         }
 
         // Editor Toolbar Formatter
