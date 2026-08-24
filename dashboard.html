@@ -188,14 +188,12 @@
             overflow-x: hidden;
         }
 
-        /* Static clean grid */
-        .dashboard-bg-grid {
+        /* Interactive Elastic Expanding Grid Canvas */
+        #grid-canvas {
             position: fixed;
             inset: 0;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 36px 36px;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 0;
         }
@@ -243,8 +241,8 @@
     </style>
 </head>
 <body class="font-body-md text-body-md antialiased overflow-x-hidden min-h-screen flex bg-[#030712]">
-    <!-- Background Static Grid -->
-    <div class="dashboard-bg-grid"></div>
+    <!-- Interactive Expanding Grid Canvas -->
+    <canvas id="grid-canvas"></canvas>
 
     <!-- SideNavBar -->
     <aside class="bg-surface-container-low h-screen w-64 fixed left-0 top-0 border-r border-white/10 flex flex-col p-md z-50">
@@ -469,5 +467,158 @@
             </div>
         </main>
     </div>
+    <script>
+        // Interactive Expanding Elastic Grid Simulation
+        (function() {
+            const canvas = document.getElementById('grid-canvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let width = 0, height = 0;
+            const cellSize = 38; // Base grid cell size
+            
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            let targetMouse = { x: -1000, y: -1000 };
+            let mouse = { x: -1000, y: -1000 };
+            let isInside = false;
+
+            window.addEventListener('mousemove', (e) => {
+                targetMouse.x = e.clientX;
+                targetMouse.y = e.clientY;
+                isInside = true;
+            });
+
+            window.addEventListener('mouseleave', () => {
+                isInside = false;
+            });
+
+            const distortionRadius = 180; // Radius of grid expansion zone
+            const maxDisplacement = 28;   // Maximum outward expansion stretch
+
+            function getDistortedPoint(x, y) {
+                const dx = x - mouse.x;
+                const dy = y - mouse.y;
+                const dist = Math.hypot(dx, dy);
+
+                if (dist < distortionRadius && dist > 0) {
+                    // Outward magnification / expansion curve (lens bulge)
+                    const factor = Math.cos((dist / distortionRadius) * (Math.PI / 2));
+                    const displacement = maxDisplacement * factor;
+                    const angle = Math.atan2(dy, dx);
+                    
+                    return {
+                        x: x + Math.cos(angle) * displacement,
+                        y: y + Math.sin(angle) * displacement,
+                        intensity: factor
+                    };
+                }
+                return { x, y, intensity: 0 };
+            }
+
+            function drawGrid() {
+                ctx.clearRect(0, 0, width, height);
+
+                // Smooth mouse interpolation
+                if (isInside) {
+                    mouse.x += (targetMouse.x - mouse.x) * 0.12;
+                    mouse.y += (targetMouse.y - mouse.y) * 0.12;
+                } else {
+                    mouse.x += (-1000 - mouse.x) * 0.05;
+                    mouse.y += (-1000 - mouse.y) * 0.05;
+                }
+
+                const cols = Math.ceil(width / cellSize) + 1;
+                const rows = Math.ceil(height / cellSize) + 1;
+
+                ctx.lineWidth = 1;
+
+                // Draw Horizontal Grid Lines with local expansion
+                for (let r = 0; r <= rows; r++) {
+                    const basePy = r * cellSize;
+                    ctx.beginPath();
+                    
+                    for (let c = 0; c <= cols; c++) {
+                        const basePx = c * cellSize;
+                        const p = getDistortedPoint(basePx, basePy);
+                        
+                        if (c === 0) {
+                            ctx.moveTo(p.x, p.y);
+                        } else {
+                            ctx.lineTo(p.x, p.y);
+                        }
+                    }
+                    
+                    // Subtle bright tint near the cursor expansion point
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+                    ctx.stroke();
+                }
+
+                // Draw Vertical Grid Lines with local expansion
+                for (let c = 0; c <= cols; c++) {
+                    const basePx = c * cellSize;
+                    ctx.beginPath();
+                    
+                    for (let r = 0; r <= rows; r++) {
+                        const basePy = r * cellSize;
+                        const p = getDistortedPoint(basePx, basePy);
+                        
+                        if (r === 0) {
+                            ctx.moveTo(p.x, p.y);
+                        } else {
+                            ctx.lineTo(p.x, p.y);
+                        }
+                    }
+                    
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+                    ctx.stroke();
+                }
+
+                // Highlighted expanded grid lines near cursor
+                if (isInside) {
+                    const minCol = Math.max(0, Math.floor((mouse.x - distortionRadius) / cellSize));
+                    const maxCol = Math.min(cols, Math.ceil((mouse.x + distortionRadius) / cellSize));
+                    const minRow = Math.max(0, Math.floor((mouse.y - distortionRadius) / cellSize));
+                    const maxRow = Math.min(rows, Math.ceil((mouse.y + distortionRadius) / cellSize));
+
+                    ctx.strokeStyle = 'rgba(59, 130, 246, 0.18)';
+                    ctx.lineWidth = 1.2;
+
+                    // Highlighted horizontal segments
+                    for (let r = minRow; r <= maxRow; r++) {
+                        const basePy = r * cellSize;
+                        ctx.beginPath();
+                        for (let c = minCol; c <= maxCol; c++) {
+                            const p = getDistortedPoint(c * cellSize, basePy);
+                            if (c === minCol) ctx.moveTo(p.x, p.y);
+                            else ctx.lineTo(p.x, p.y);
+                        }
+                        ctx.stroke();
+                    }
+
+                    // Highlighted vertical segments
+                    for (let c = minCol; c <= maxCol; c++) {
+                        const basePx = c * cellSize;
+                        ctx.beginPath();
+                        for (let r = minRow; r <= maxRow; r++) {
+                            const p = getDistortedPoint(basePx, r * cellSize);
+                            if (r === minRow) ctx.moveTo(p.x, p.y);
+                            else ctx.lineTo(p.x, p.y);
+                        }
+                        ctx.stroke();
+                    }
+                }
+
+                requestAnimationFrame(drawGrid);
+            }
+
+            drawGrid();
+        })();
+    </script>
 </body>
 </html>
