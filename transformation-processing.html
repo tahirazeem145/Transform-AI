@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>TransformAI - Analysis & Transformation</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#273647",
+                      "on-secondary-fixed-variant": "#004395",
+                      "on-secondary": "#002e6a",
+                      "surface-container-low": "#0d1c2d",
+                      "secondary-container": "#0566d9",
+                      "inverse-on-surface": "#233143",
+                      "outline": "#8d90a0",
+                      "on-secondary-container": "#e6ecff",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "surface-container": "#122131",
+                      "on-background": "#d4e4fa",
+                      "error": "#ffb4ab",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "primary-fixed": "#dbe1ff",
+                      "surface-tint": "#b4c5ff",
+                      "on-error-container": "#ffdad6",
+                      "inverse-primary": "#0053db",
+                      "tertiary-container": "#6b6d71",
+                      "surface-dim": "#051424",
+                      "on-tertiary-container": "#eff0f5",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-primary-container": "#eeefff",
+                      "surface-container-lowest": "#010f1f",
+                      "surface-variant": "#273647",
+                      "error-container": "#93000a",
+                      "on-tertiary": "#2e3134",
+                      "primary": "#b4c5ff",
+                      "secondary": "#adc6ff",
+                      "on-primary": "#002a78",
+                      "on-secondary-fixed": "#001a42",
+                      "background": "#051424",
+                      "outline-variant": "#434655",
+                      "on-error": "#690005",
+                      "surface": "#051424",
+                      "on-surface": "#d4e4fa",
+                      "surface-container-high": "#1c2b3c",
+                      "secondary-fixed": "#d8e2ff",
+                      "tertiary-fixed": "#e1e2e7",
+                      "primary-container": "#2563eb",
+                      "on-surface-variant": "#c3c6d7",
+                      "inverse-surface": "#d4e4fa",
+                      "tertiary": "#c5c6cb",
+                      "surface-bright": "#2c3a4c",
+                      "tertiary-fixed-dim": "#c5c6cb",
+                      "on-tertiary-fixed-variant": "#44474b",
+                      "on-primary-fixed": "#00174b",
+                      "on-tertiary-fixed": "#191c1f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "base": "4px",
+                      "margin-desktop": "48px",
+                      "sm": "8px",
+                      "lg": "24px",
+                      "md": "16px",
+                      "xl": "40px",
+                      "2xl": "64px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter", "sans-serif"
+                      ],
+                      "body-lg": [
+                              "Inter", "sans-serif"
+                      ],
+                      "headline-md": [
+                              "Inter", "sans-serif"
+                      ],
+                      "label-md": [
+                              "Inter", "sans-serif"
+                      ],
+                      "display-lg": [
+                              "Inter", "sans-serif"
+                      ],
+                      "code-sm": [
+                              "JetBrains Mono", "monospace"
+                      ],
+                      "body-sm": [
+                              "Inter", "sans-serif"
+                      ],
+                      "headline-lg": [
+                              "Inter", "sans-serif"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter", "sans-serif"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "code-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            },
+          },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #030712;
+            color: #d4e4fa;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Interactive Elastic Expanding Grid Canvas */
+        #grid-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glass-panel {
+            background: #0b0f14;
+            border-radius: 12px;
+            position: relative;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+            z-index: 2;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Pure Perimeter Border Glow Beams running around the outer edge ONLY */
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent 78deg,
+                rgba(96, 165, 250, 0.9) 88deg,
+                rgba(255, 255, 255, 1) 90deg,
+                rgba(96, 165, 250, 0.9) 92deg,
+                transparent 102deg,
+                transparent 258deg,
+                rgba(96, 165, 250, 0.9) 268deg,
+                rgba(255, 255, 255, 1) 270deg,
+                rgba(96, 165, 250, 0.9) 272deg,
+                transparent 282deg,
+                transparent 360deg
+            );
+            animation: chasingOrbit 8s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 100% Solid Opaque Inner Card Mask with Slow White Shade Sweeping inside Left <-> Right with 12s gap */
+        .glass-panel::after {
+            content: '';
+            position: absolute;
+            inset: 1.5px;
+            background-color: #0c1017;
+            background-image: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.02) 20%,
+                rgba(255, 255, 255, 0.12) 50%,
+                rgba(255, 255, 255, 0.02) 80%,
+                transparent 100%
+            );
+            background-size: 150px 100%;
+            background-repeat: no-repeat;
+            background-position: -200px 0;
+            border-radius: calc(12px - 1.5px);
+            animation: innerShadeSweep 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Ensure card contents render crisp and clean on top of mask */
+        .glass-panel > * {
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Continuous Chase Orbit Animation */
+        @keyframes chasingOrbit {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Slow sweep Left -> Right (4s), returns Right -> Left (4s), then rests for 12 seconds */
+        @keyframes innerShadeSweep {
+            0% {
+                background-position: -200px 0;
+            }
+            20% {
+                background-position: calc(100% + 200px) 0;
+            }
+            22% {
+                background-position: calc(100% + 200px) 0;
+            }
+            42% {
+                background-position: -200px 0;
+            }
+            44% {
+                background-position: -200px 0;
+            }
+            100% {
+                background-position: -200px 0;
+            }
+        }
+
+        /* Subtle, gentle pop-up on cursor hover */
+        .glass-panel:hover {
+            transform: translateY(-2px) scale(1.008);
+            border-color: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.5), 0 0 20px -4px rgba(255, 255, 255, 0.12);
+            z-index: 10;
+        }
+
+        /* Pulse glow for active processing nodes */
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px rgba(37, 99, 235, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.6); }
+            100% { box-shadow: 0 0 10px rgba(37, 99, 235, 0.2); }
+        }
+        .node-active {
+            animation: pulseGlow 2s infinite;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased overflow-x-hidden min-h-screen flex bg-[#030712]">
+    <!-- Expanding Grid Canvas -->
+    <canvas id="grid-canvas"></canvas>
+
+    <!-- SideNavBar -->
+    <aside class="bg-[#0a1020]/95 backdrop-blur-md h-screen w-64 fixed left-0 top-0 border-r border-indigo-500/10 flex flex-col p-md z-50 shadow-[4px_0_24px_rgba(0,0,0,0.4)]">
+        <div class="mb-xl flex items-center gap-sm">
+            <div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-white font-bold shadow-[0_0_12px_rgba(37,99,235,0.3)]">
+                T
+            </div>
+            <div>
+                <h1 class="font-headline-md text-headline-md font-bold text-primary leading-tight">TransformAI</h1>
+                <p class="font-label-md text-label-md text-slate-400">Enterprise AI</p>
+            </div>
+        </div>
+        <nav class="flex-1 space-y-sm">
+            <a class="text-slate-400 hover:text-white hover:bg-white/5 transition-colors rounded-lg flex items-center gap-sm p-sm font-label-md text-label-md active:scale-95 duration-200" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                Workspace
+            </a>
+            <a class="text-slate-400 hover:text-white hover:bg-white/5 transition-colors rounded-lg flex items-center gap-sm p-sm font-label-md text-label-md active:scale-95 duration-200" href="new-transformation.html">
+                <span class="material-symbols-outlined">auto_awesome</span>
+                New Transformation
+            </a>
+            <a class="bg-blue-600/20 text-blue-300 border border-blue-500/30 rounded-lg flex items-center gap-sm p-sm font-label-md text-label-md active:scale-95 duration-200" href="transformation-processing.html">
+                <span class="material-symbols-outlined text-blue-400 animate-spin" style="animation-duration: 4s;">sync</span>
+                Transformation
+            </a>
+            <a class="text-slate-400 hover:text-white hover:bg-white/5 transition-colors rounded-lg flex items-center gap-sm p-sm font-label-md text-label-md active:scale-95 duration-200" href="#">
+                <span class="material-symbols-outlined">settings</span>
+                System
+            </a>
+        </nav>
+        
+        <div class="mt-auto space-y-sm">
+            <a href="index.html" class="w-full text-slate-400 hover:text-white hover:bg-white/5 rounded-lg p-sm font-label-md text-label-md transition-all flex items-center justify-center gap-sm">
+                <span class="material-symbols-outlined text-sm">logout</span>
+                Sign Out
+            </a>
+            <a href="new-transformation.html" class="w-full bg-primary-container hover:bg-blue-500 text-white rounded-lg p-sm font-label-md text-label-md transition-all active:scale-95 duration-200 flex items-center justify-center gap-sm shadow-[0_0_12px_rgba(37,99,235,0.3)]">
+                <span class="material-symbols-outlined text-sm">add</span>
+                New Transformation
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="ml-64 flex-1 flex flex-col min-h-screen">
+        <!-- TopNavBar -->
+        <header class="bg-[#0a1020]/90 backdrop-blur-md fixed top-0 right-0 w-[calc(100%-16rem)] h-16 border-b border-indigo-500/10 flex items-center justify-between px-lg z-40">
+            <div class="flex items-center gap-sm text-on-surface-variant font-label-md text-label-md">
+                <a href="dashboard.html" class="hover:text-white transition-colors flex items-center gap-xs">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span>
+                    Workspace
+                </a>
+                <span class="material-symbols-outlined text-sm">chevron_right</span>
+                <span class="text-on-surface flex items-center gap-xs">
+                    <span class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span>
+                    Processing Pipeline
+                </span>
+            </div>
+            <div class="flex items-center gap-md">
+                <a href="new-transformation.html" class="bg-surface-container-high/60 border border-white/10 text-on-surface-variant px-md py-xs rounded-lg font-label-md text-label-md hover:text-white hover:border-white/20 transition-colors">
+                    Cancel Job
+                </a>
+                <div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-white/10 ml-sm cursor-pointer">
+                    <div class="w-full h-full bg-primary-container/30 flex items-center justify-center text-primary font-semibold text-xs">
+                        TA
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Canvas Main Content -->
+        <main class="flex-1 mt-16 p-margin-desktop space-y-xl max-w-[1600px] mx-auto w-full">
+            <!-- Header Section -->
+            <section class="flex items-center justify-between">
+                <div>
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs flex items-center gap-sm">
+                        <span class="material-symbols-outlined text-primary animate-spin" style="animation-duration: 3s;">sync</span>
+                        Processing Source Material
+                    </h2>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">Synthesizing source context and generating selected enterprise artifacts.</p>
+                </div>
+            </section>
+
+            <!-- Two Column Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+                <!-- Left Column (65% / 8 cols) - Main Pipeline & Progress -->
+                <div class="lg:col-span-8 space-y-lg">
+                    <div class="glass-panel rounded-xl p-2xl flex flex-col items-center justify-center relative overflow-hidden min-h-[460px]">
+                        <!-- Main Progress Ring / Indicator -->
+                        <div class="relative w-48 h-48 mb-xl flex items-center justify-center">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" fill="none" r="45" stroke="rgba(255,255,255,0.06)" stroke-width="3"></circle>
+                                <circle id="progressCircle" class="transition-all duration-1000" cx="50" cy="50" fill="none" r="45" stroke="#2563EB" stroke-dasharray="283" stroke-dashoffset="79" stroke-width="3" stroke-linecap="round"></circle>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span class="font-display-lg text-display-lg text-white font-bold" id="progressPercent">72%</span>
+                                <span class="font-label-md text-label-md text-primary mt-xs tracking-widest uppercase font-semibold">Transforming</span>
+                            </div>
+                        </div>
+
+                        <!-- Vertical Pipeline Nodes -->
+                        <div class="flex flex-col gap-lg items-center relative z-10 w-full max-w-md">
+                            <!-- Connecting Line -->
+                            <div class="absolute left-1/2 top-4 bottom-4 w-px bg-white/10 -translate-x-1/2 z-0"></div>
+
+                            <!-- Node 1: Completed -->
+                            <div class="flex items-center w-full gap-md opacity-60">
+                                <div class="flex-1 text-right font-label-md text-label-md text-on-surface-variant tracking-wider uppercase">Analyze</div>
+                                <div class="w-8 h-8 rounded-full bg-surface-container border border-primary/50 flex items-center justify-center z-10">
+                                    <span class="material-symbols-outlined text-primary text-[16px]">check</span>
+                                </div>
+                                <div class="flex-1 text-left font-body-sm text-body-sm text-on-surface-variant">100% Complete</div>
+                            </div>
+
+                            <!-- Node 2: Completed -->
+                            <div class="flex items-center w-full gap-md opacity-60">
+                                <div class="flex-1 text-right font-label-md text-label-md text-on-surface-variant tracking-wider uppercase">Understand</div>
+                                <div class="w-8 h-8 rounded-full bg-surface-container border border-primary/50 flex items-center justify-center z-10">
+                                    <span class="material-symbols-outlined text-primary text-[16px]">check</span>
+                                </div>
+                                <div class="flex-1 text-left font-body-sm text-body-sm text-on-surface-variant">Entities mapped</div>
+                            </div>
+
+                            <!-- Node 3: Active -->
+                            <div class="flex items-center w-full gap-md">
+                                <div class="flex-1 text-right font-label-md text-label-md text-white tracking-wider uppercase font-semibold">Transform</div>
+                                <div class="w-8 h-8 rounded-full bg-primary-container border border-primary flex items-center justify-center z-10 node-active shadow-[0_0_15px_rgba(37,99,235,0.6)]">
+                                    <span class="material-symbols-outlined text-white text-[16px] animate-pulse">auto_awesome</span>
+                                </div>
+                                <div class="flex-1 text-left font-body-sm text-body-sm text-primary font-medium">Generating Artifacts...</div>
+                            </div>
+
+                            <!-- Node 4: Pending -->
+                            <div class="flex items-center w-full gap-md opacity-30">
+                                <div class="flex-1 text-right font-label-md text-label-md text-on-surface-variant tracking-wider uppercase">Validate</div>
+                                <div class="w-8 h-8 rounded-full bg-surface-container border border-white/10 flex items-center justify-center z-10">
+                                    <span class="material-symbols-outlined text-on-surface-variant text-[16px]">fact_check</span>
+                                </div>
+                                <div class="flex-1 text-left font-body-sm text-body-sm text-on-surface-variant">Pending</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column (35% / 4 cols) - Pipeline Status & Artifact Checklist -->
+                <div class="lg:col-span-4 space-y-lg">
+                    <!-- Pipeline Status Checklist -->
+                    <div class="glass-panel rounded-xl p-lg space-y-md">
+                        <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest border-b border-white/10 pb-sm">Pipeline Status</h3>
+                        <ul class="space-y-sm mt-sm">
+                            <li class="flex items-start gap-sm">
+                                <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+                                <span class="font-body-sm text-body-sm text-on-surface">Source document parsed & indexed</span>
+                            </li>
+                            <li class="flex items-start gap-sm">
+                                <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+                                <span class="font-body-sm text-body-sm text-on-surface">Key entities & concepts extracted</span>
+                            </li>
+                            <li class="flex items-start gap-sm">
+                                <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+                                <span class="font-body-sm text-body-sm text-on-surface">Ontology mapping verified</span>
+                            </li>
+                            <li class="flex items-start gap-sm opacity-70">
+                                <span class="material-symbols-outlined text-primary text-[18px] animate-spin">progress_activity</span>
+                                <span class="font-body-sm text-body-sm text-on-surface">Applying transformation models...</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Artifact Generation Grid -->
+                    <div class="glass-panel rounded-xl p-lg space-y-md">
+                        <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest border-b border-white/10 pb-sm">Artifact Generation</h3>
+                        <div class="grid grid-cols-1 gap-sm mt-sm">
+                            <div class="bg-surface-container border border-primary/20 rounded-lg p-sm flex items-center justify-between">
+                                <div class="flex items-center gap-sm">
+                                    <span class="material-symbols-outlined text-primary text-[18px]">description</span>
+                                    <span class="font-body-sm text-body-sm text-on-surface font-medium truncate">Executive Summary</span>
+                                </div>
+                                <span class="font-label-md text-[11px] bg-emerald-500/10 text-emerald-400 px-sm py-xs rounded border border-emerald-500/20">Done</span>
+                            </div>
+                            <div class="bg-surface-container border border-primary/20 rounded-lg p-sm flex items-center justify-between">
+                                <div class="flex items-center gap-sm">
+                                    <span class="material-symbols-outlined text-primary text-[18px]">campaign</span>
+                                    <span class="font-body-sm text-body-sm text-on-surface font-medium truncate">Advisory Document</span>
+                                </div>
+                                <span class="font-label-md text-[11px] bg-emerald-500/10 text-emerald-400 px-sm py-xs rounded border border-emerald-500/20">Done</span>
+                            </div>
+                            <div class="bg-surface-container border border-white/10 rounded-lg p-sm flex items-center justify-between opacity-85">
+                                <div class="flex items-center gap-sm">
+                                    <span class="material-symbols-outlined text-on-surface-variant text-[18px]">slideshow</span>
+                                    <span class="font-body-sm text-body-sm text-on-surface font-medium truncate">Presentation</span>
+                                </div>
+                                <span class="material-symbols-outlined text-primary text-[18px] animate-spin">sync</span>
+                            </div>
+                            <div class="bg-surface-container border border-white/10 rounded-lg p-sm flex items-center justify-between opacity-85">
+                                <div class="flex items-center gap-sm">
+                                    <span class="material-symbols-outlined text-on-surface-variant text-[18px]">feed</span>
+                                    <span class="font-body-sm text-body-sm text-on-surface font-medium truncate">LinkedIn Post</span>
+                                </div>
+                                <span class="material-symbols-outlined text-primary text-[18px] animate-spin">sync</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Interactive Expanding Elastic Grid Simulation
+        (function() {
+            const canvas = document.getElementById('grid-canvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let width = 0, height = 0;
+            const cellSize = 38;
+            
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            let targetMouse = { x: -1000, y: -1000 };
+            let mouse = { x: -1000, y: -1000 };
+            let isInside = false;
+
+            window.addEventListener('mousemove', (e) => {
+                targetMouse.x = e.clientX;
+                targetMouse.y = e.clientY;
+                isInside = true;
+            });
+
+            window.addEventListener('mouseleave', () => {
+                isInside = false;
+            });
+
+            const distortionRadius = 110;
+            const maxDisplacement = 10;
+
+            function getDistortedPoint(x, y) {
+                const dx = x - mouse.x;
+                const dy = y - mouse.y;
+                const dist = Math.hypot(dx, dy);
+
+                if (dist < distortionRadius && dist > 0) {
+                    const factor = Math.cos((dist / distortionRadius) * (Math.PI / 2));
+                    const displacement = maxDisplacement * factor;
+                    const angle = Math.atan2(dy, dx);
+                    
+                    return {
+                        x: x + Math.cos(angle) * displacement,
+                        y: y + Math.sin(angle) * displacement,
+                        intensity: factor
+                    };
+                }
+                return { x, y, intensity: 0 };
+            }
+
+            function drawGrid() {
+                ctx.clearRect(0, 0, width, height);
+
+                if (isInside) {
+                    mouse.x += (targetMouse.x - mouse.x) * 0.12;
+                    mouse.y += (targetMouse.y - mouse.y) * 0.12;
+                } else {
+                    mouse.x += (-1000 - mouse.x) * 0.05;
+                    mouse.y += (-1000 - mouse.y) * 0.05;
+                }
+
+                const cols = Math.ceil(width / cellSize) + 1;
+                const rows = Math.ceil(height / cellSize) + 1;
+
+                ctx.lineWidth = 1;
+
+                for (let r = 0; r <= rows; r++) {
+                    const basePy = r * cellSize;
+                    ctx.beginPath();
+                    for (let c = 0; c <= cols; c++) {
+                        const p = getDistortedPoint(c * cellSize, basePy);
+                        if (c === 0) ctx.moveTo(p.x, p.y);
+                        else ctx.lineTo(p.x, p.y);
+                    }
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
+                    ctx.stroke();
+                }
+
+                for (let c = 0; c <= cols; c++) {
+                    const basePx = c * cellSize;
+                    ctx.beginPath();
+                    for (let r = 0; r <= rows; r++) {
+                        const p = getDistortedPoint(basePx, r * cellSize);
+                        if (r === 0) ctx.moveTo(p.x, p.y);
+                        else ctx.lineTo(p.x, p.y);
+                    }
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
+                    ctx.stroke();
+                }
+
+                requestAnimationFrame(drawGrid);
+            }
+
+            drawGrid();
+        })();
+
+        // Progress Simulation
+        (function() {
+            let progress = 72;
+            const progressCircle = document.getElementById('progressCircle');
+            const progressPercent = document.getElementById('progressPercent');
+            
+            const interval = setInterval(() => {
+                if (progress < 98) {
+                    progress += 1;
+                    if (progressPercent) progressPercent.innerText = `${progress}%`;
+                    if (progressCircle) {
+                        const offset = 283 - (283 * (progress / 100));
+                        progressCircle.style.strokeDashoffset = offset;
+                    }
+                }
+            }, 800);
+        })();
+    </script>
+</body>
+</html>
