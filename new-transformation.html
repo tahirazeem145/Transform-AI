@@ -211,89 +211,59 @@
             overflow: hidden;
         }
 
-        /* Inside Card White Shade Glow (Sweeps Left to Right and returns Right to Left with 10s quiet gap) */
+        /* Top Border Glow: Moves Left to Right continuously (Never disappears) */
         .glass-panel::before {
             content: '';
             position: absolute;
             top: 0;
-            bottom: 0;
             left: 0;
-            width: 140px;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0.02) 20%,
-                rgba(255, 255, 255, 0.12) 50%,
-                rgba(255, 255, 255, 0.02) 80%,
-                transparent 100%
-            );
-            transform: translateX(-180px);
-            animation: cardShadeSweep 18s ease-in-out infinite;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(96, 165, 250, 0.7) 20%, rgba(255, 255, 255, 1) 50%, rgba(96, 165, 250, 0.7) 80%, transparent 100%);
+            animation: topBorderGlow 5s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 6px rgba(147, 197, 253, 1)) drop-shadow(0 0 12px rgba(59, 130, 246, 0.8));
             pointer-events: none;
-            z-index: 1;
+            z-index: 4;
         }
 
-        /* Moving Border Glow (Luminous Top & Bottom Border Beams continuously moving L->R and R->L WITHOUT DISAPPEARING) */
+        /* Bottom Border Glow: Moves in OPPOSITE direction (Right to Left continuously) */
         .glass-panel::after {
             content: '';
             position: absolute;
-            top: 0;
             bottom: 0;
             left: 0;
-            width: 90px;
-            /* Top and Bottom border beam runner lines */
-            background-image: 
-                linear-gradient(90deg, transparent 0%, rgba(96, 165, 250, 0.7) 25%, rgba(255, 255, 255, 1) 50%, rgba(96, 165, 250, 0.7) 75%, transparent 100%),
-                linear-gradient(90deg, transparent 0%, rgba(96, 165, 250, 0.7) 25%, rgba(255, 255, 255, 1) 50%, rgba(96, 165, 250, 0.7) 75%, transparent 100%);
-            background-position: top left, bottom left;
-            background-size: 100% 2px, 100% 2px;
-            background-repeat: no-repeat;
-            transform: translateX(0);
-            animation: borderBeamContinuous 5s ease-in-out infinite alternate;
-            filter: drop-shadow(0 0 8px rgba(147, 197, 253, 0.95)) drop-shadow(0 0 14px rgba(59, 130, 246, 0.8));
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(96, 165, 250, 0.7) 20%, rgba(255, 255, 255, 1) 50%, rgba(96, 165, 250, 0.7) 80%, transparent 100%);
+            animation: bottomBorderGlow 5s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 6px rgba(147, 197, 253, 1)) drop-shadow(0 0 12px rgba(59, 130, 246, 0.8));
             pointer-events: none;
-            z-index: 3;
+            z-index: 4;
         }
 
-        /* Continuous Visible Border Glow: Ping-pongs Left <-> Right within visible edges */
-        @keyframes borderBeamContinuous {
+        /* Top border: Left (0) <-> Right (100% - 100px) */
+        @keyframes topBorderGlow {
             0% {
-                transform: translateX(0);
+                left: 0%;
             }
             100% {
-                transform: translateX(calc(100% - 90px));
+                left: calc(100% - 100px);
             }
         }
 
-        /* Inside Card Glow Animation: Sweeps slowly L->R (4s), returns R->L (4s), then rests for 10 seconds */
-        @keyframes cardShadeSweep {
+        /* Bottom border: Starts at Right (100% - 100px) <-> Left (0%) in OPPOSITE direction */
+        @keyframes bottomBorderGlow {
             0% {
-                transform: translateX(-180px);
-                opacity: 0;
-            }
-            2% {
-                opacity: 1;
-            }
-            22% {
-                transform: translateX(1100px);
-                opacity: 1;
-            }
-            24% {
-                transform: translateX(1100px);
-                opacity: 1;
-            }
-            44% {
-                transform: translateX(-180px);
-                opacity: 1;
-            }
-            46% {
-                opacity: 0;
-                transform: translateX(-180px);
+                left: calc(100% - 100px);
             }
             100% {
-                transform: translateX(-180px);
-                opacity: 0;
+                left: 0%;
             }
+        }
+
+        /* Inside card soft ambient glow */
+        .glass-panel {
+            background-image: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
         }
 
         .glass-panel:hover {
