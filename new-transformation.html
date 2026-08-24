@@ -211,52 +211,79 @@
             overflow: hidden;
         }
 
-        /* Interior White Shade Glow Light sweeping inside card Left-to-Right & Right-to-Left every 3s in parallel loop */
+        /* Compact White Shade Glow Light sweeping inside card with 10s cycle gap */
         .glass-panel::before {
             content: '';
             position: absolute;
-            inset: 0;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 80px;
             background: linear-gradient(
                 90deg,
                 transparent 0%,
-                rgba(255, 255, 255, 0.02) 20%,
-                rgba(255, 255, 255, 0.12) 45%,
-                rgba(255, 255, 255, 0.22) 50%,
-                rgba(255, 255, 255, 0.12) 55%,
-                rgba(255, 255, 255, 0.02) 80%,
+                rgba(255, 255, 255, 0.04) 30%,
+                rgba(255, 255, 255, 0.12) 50%,
+                rgba(255, 255, 255, 0.04) 70%,
                 transparent 100%
             );
-            transform: translateX(-100%);
-            animation: whiteShadeSweep 3s ease-in-out infinite;
+            transform: translateX(-150px);
+            animation: whiteShadeSweep 12s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
         }
 
-        /* Top Border Glowing Highlight Beam in exact 3s parallel sync */
+        /* Narrow Top Border Glowing Highlight Beam in exact 10s cycle sync */
         .glass-panel::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 1.5px;
-            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 30%, rgba(255, 255, 255, 0.95) 50%, rgba(255, 255, 255, 0.4) 70%, transparent 100%);
-            animation: whiteShadeSweep 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+            width: 70px;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 30%,
+                rgba(255, 255, 255, 0.9) 50%,
+                rgba(255, 255, 255, 0.4) 70%,
+                transparent 100%
+            );
+            transform: translateX(-150px);
+            animation: whiteShadeSweep 12s ease-in-out infinite;
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
             pointer-events: none;
             z-index: 3;
         }
 
-        /* 3-second continuous loop: Left to Right -> Right to Left */
+        /* 12s total duration: Sweeps L->R and R->L in ~2s, then rests for ~10 seconds */
         @keyframes whiteShadeSweep {
             0% {
-                transform: translateX(-100%);
+                transform: translateX(-150px);
+                opacity: 0;
             }
-            50% {
-                transform: translateX(100%);
+            2% {
+                opacity: 1;
+            }
+            8% {
+                transform: translateX(calc(100vw));
+                opacity: 1;
+            }
+            9% {
+                transform: translateX(calc(100vw));
+                opacity: 1;
+            }
+            15% {
+                transform: translateX(-150px);
+                opacity: 1;
+            }
+            17% {
+                opacity: 0;
+                transform: translateX(-150px);
             }
             100% {
-                transform: translateX(-100%);
+                transform: translateX(-150px);
+                opacity: 0;
             }
         }
 
