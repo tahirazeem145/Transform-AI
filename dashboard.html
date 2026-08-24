@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>TransformAI - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#273647",
+                      "on-secondary-fixed-variant": "#004395",
+                      "on-secondary": "#002e6a",
+                      "surface-container-low": "#0d1c2d",
+                      "secondary-container": "#0566d9",
+                      "inverse-on-surface": "#233143",
+                      "outline": "#8d90a0",
+                      "on-secondary-container": "#e6ecff",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "surface-container": "#122131",
+                      "on-background": "#d4e4fa",
+                      "error": "#ffb4ab",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "primary-fixed": "#dbe1ff",
+                      "surface-tint": "#b4c5ff",
+                      "on-error-container": "#ffdad6",
+                      "inverse-primary": "#0053db",
+                      "tertiary-container": "#6b6d71",
+                      "surface-dim": "#051424",
+                      "on-tertiary-container": "#eff0f5",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-primary-container": "#eeefff",
+                      "surface-container-lowest": "#010f1f",
+                      "surface-variant": "#273647",
+                      "error-container": "#93000a",
+                      "on-tertiary": "#2e3134",
+                      "primary": "#b4c5ff",
+                      "secondary": "#adc6ff",
+                      "on-primary": "#002a78",
+                      "on-secondary-fixed": "#001a42",
+                      "background": "#051424",
+                      "outline-variant": "#434655",
+                      "on-error": "#690005",
+                      "surface": "#051424",
+                      "on-surface": "#d4e4fa",
+                      "surface-container-high": "#1c2b3c",
+                      "secondary-fixed": "#d8e2ff",
+                      "tertiary-fixed": "#e1e2e7",
+                      "primary-container": "#2563eb",
+                      "on-surface-variant": "#c3c6d7",
+                      "inverse-surface": "#d4e4fa",
+                      "tertiary": "#c5c6cb",
+                      "surface-bright": "#2c3a4c",
+                      "tertiary-fixed-dim": "#c5c6cb",
+                      "on-tertiary-fixed-variant": "#44474b",
+                      "on-primary-fixed": "#00174b",
+                      "on-tertiary-fixed": "#191c1f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "base": "4px",
+                      "margin-desktop": "48px",
+                      "sm": "8px",
+                      "lg": "24px",
+                      "md": "16px",
+                      "xl": "40px",
+                      "2xl": "64px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter", "sans-serif"
+                      ],
+                      "body-lg": [
+                              "Inter", "sans-serif"
+                      ],
+                      "headline-md": [
+                              "Inter", "sans-serif"
+                      ],
+                      "label-md": [
+                              "Inter", "sans-serif"
+                      ],
+                      "display-lg": [
+                              "Inter", "sans-serif"
+                      ],
+                      "code-sm": [
+                              "JetBrains Mono", "monospace"
+                      ],
+                      "body-sm": [
+                              "Inter", "sans-serif"
+                      ],
+                      "headline-lg": [
+                              "Inter", "sans-serif"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter", "sans-serif"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "code-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            },
+          },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #05070A;
+            color: #d4e4fa;
+        }
+        .glass-panel {
+            background-color: #0B0F14;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-blue {
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
+        }
+        .hover-glow-blue:hover {
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.25);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased overflow-x-hidden min-h-screen flex">
+    <!-- SideNavBar -->
+    <aside class="bg-surface-container-low h-screen w-64 fixed left-0 top-0 border-r border-white/10 flex flex-col p-md z-50">
+        <div class="mb-xl flex items-center gap-sm">
+            <div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center glow-blue text-white font-bold">
+                T
+            </div>
+            <div>
+                <h1 class="font-headline-md text-headline-md font-bold text-primary leading-tight">TransformAI</h1>
+                <p class="font-label-md text-label-md text-on-surface-variant">Enterprise AI</p>
+            </div>
+        </div>
+        <nav class="flex-1 space-y-sm">
+            <a class="bg-secondary-container text-on-secondary-container rounded-lg flex items-center gap-sm p-sm font-label-md text-label-md active:scale-95 duration-200" href="dashboard.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                Workspace
+            </a>
+            <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors rounded-lg flex items-center gap-sm p-sm font-label-md text-label-md active:scale-95 duration-200" href="#">
+                <span class="material-symbols-outlined">folder_open</span>
+                Resources
+            </a>
+            <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors rounded-lg flex items-center gap-sm p-sm font-label-md text-label-md active:scale-95 duration-200" href="#">
+                <span class="material-symbols-outlined">insights</span>
+                Insights
+            </a>
+            <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors rounded-lg flex items-center gap-sm p-sm font-label-md text-label-md active:scale-95 duration-200" href="#">
+                <span class="material-symbols-outlined">settings</span>
+                System
+            </a>
+        </nav>
+        
+        <div class="mt-auto space-y-sm">
+            <a href="index.html" class="w-full text-on-surface-variant hover:text-white hover:bg-surface-variant/40 rounded-lg p-sm font-label-md text-label-md transition-all flex items-center justify-center gap-sm">
+                <span class="material-symbols-outlined text-sm">logout</span>
+                Sign Out
+            </a>
+            <button class="w-full bg-primary-container text-white rounded-lg p-sm font-label-md text-label-md hover-glow-blue transition-all active:scale-95 duration-200 flex items-center justify-center gap-sm">
+                <span class="material-symbols-outlined text-sm">add</span>
+                New Transformation
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="ml-64 flex-1 flex flex-col min-h-screen">
+        <!-- TopNavBar -->
+        <header class="bg-surface fixed top-0 right-0 w-[calc(100%-16rem)] h-16 border-b border-white/10 flex items-center justify-between px-lg z-40">
+            <div class="flex items-center gap-sm text-on-surface-variant font-label-md text-label-md">
+                <span>Workspace</span>
+                <span class="material-symbols-outlined text-sm">chevron_right</span>
+                <span class="text-on-surface">Dashboard</span>
+            </div>
+            <div class="flex items-center gap-md">
+                <button class="text-on-surface-variant hover:text-primary transition-all p-sm rounded-full hover:bg-surface-variant/50">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <button class="text-on-surface-variant hover:text-primary transition-all p-sm rounded-full hover:bg-surface-variant/50">
+                    <span class="material-symbols-outlined">help_outline</span>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-white/10 ml-sm cursor-pointer">
+                    <div class="w-full h-full bg-primary-container/30 flex items-center justify-center text-primary font-semibold text-xs">
+                        TA
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Canvas -->
+        <main class="flex-1 mt-16 p-margin-desktop space-y-xl max-w-[1600px] mx-auto w-full">
+            <!-- Welcome Section -->
+            <section class="flex items-end justify-between">
+                <div>
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Good evening, Tahir.</h2>
+                    <!-- Transformation Visualizer Rail -->
+                    <div class="flex items-center gap-sm text-on-surface-variant font-label-md text-label-md mt-md">
+                        <div class="flex items-center gap-xs bg-surface-container-highest px-sm py-xs rounded border border-white/10">
+                            <span class="material-symbols-outlined text-sm">description</span>
+                            One Source
+                        </div>
+                        <div class="w-8 h-px bg-primary/30"></div>
+                        <div class="flex items-center gap-xs bg-primary-container/20 text-primary px-sm py-xs rounded border border-primary/30 glow-blue">
+                            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">psychology</span>
+                            AI
+                        </div>
+                        <div class="w-8 h-px bg-primary/30"></div>
+                        <div class="flex items-center gap-xs bg-surface-container-highest px-sm py-xs rounded border border-white/10">
+                            <span class="material-symbols-outlined text-sm">hub</span>
+                            Outputs
+                        </div>
+                    </div>
+                </div>
+                <button class="bg-primary-container text-white px-lg py-md rounded-lg font-label-md text-label-md hover-glow-blue transition-all flex items-center gap-sm active:scale-95">
+                    <span class="material-symbols-outlined">add</span>
+                    New Transformation
+                </button>
+            </section>
+
+            <!-- Metrics Grid -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+                <!-- Metric 1 -->
+                <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-primary/10 transition-colors"></div>
+                    <span class="font-label-md text-label-md text-on-surface-variant">Total Transformations</span>
+                    <div class="flex items-baseline gap-sm">
+                        <span class="font-display-lg text-display-lg text-on-surface">1,248</span>
+                        <span class="font-label-md text-label-md text-emerald-400 flex items-center"><span class="material-symbols-outlined text-sm">trending_up</span> +18.4%</span>
+                    </div>
+                </div>
+                <!-- Metric 2 -->
+                <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-primary/10 transition-colors"></div>
+                    <span class="font-label-md text-label-md text-on-surface-variant">Documents Processed</span>
+                    <div class="flex items-baseline gap-sm">
+                        <span class="font-display-lg text-display-lg text-on-surface">3,842</span>
+                        <span class="font-label-md text-label-md text-emerald-400 flex items-center"><span class="material-symbols-outlined text-sm">trending_up</span> +12.7%</span>
+                    </div>
+                </div>
+                <!-- Metric 3 -->
+                <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-primary/10 transition-colors"></div>
+                    <span class="font-label-md text-label-md text-on-surface-variant">Artifacts Generated</span>
+                    <div class="flex items-baseline gap-sm">
+                        <span class="font-display-lg text-display-lg text-on-surface">8,921</span>
+                        <span class="font-label-md text-label-md text-on-surface-variant">7 formats</span>
+                    </div>
+                </div>
+                <!-- Metric 4 -->
+                <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-primary/10 transition-colors"></div>
+                    <span class="font-label-md text-label-md text-on-surface-variant">Time Saved</span>
+                    <div class="flex items-baseline gap-sm">
+                        <span class="font-display-lg text-display-lg text-on-surface">426</span>
+                        <span class="font-label-md text-label-md text-on-surface-variant">hrs</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Two Columns -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+                <!-- Left Column (65%) -->
+                <section class="lg:col-span-8 space-y-md">
+                    <div class="glass-panel rounded-xl overflow-hidden flex flex-col h-full">
+                        <div class="p-lg border-b border-white/10 flex items-center justify-between">
+                            <h3 class="font-headline-md text-headline-md text-on-surface">Recent Transformations</h3>
+                            <button class="text-primary font-label-md text-label-md hover:text-white transition-colors">View All</button>
+                        </div>
+                        <div class="p-0 overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-white/10 bg-surface-container-lowest">
+                                        <th class="p-md font-label-md text-label-md text-on-surface-variant font-normal">Project</th>
+                                        <th class="p-md font-label-md text-label-md text-on-surface-variant font-normal">Source</th>
+                                        <th class="p-md font-label-md text-label-md text-on-surface-variant font-normal">Outputs</th>
+                                        <th class="p-md font-label-md text-label-md text-on-surface-variant font-normal">Status</th>
+                                        <th class="p-md font-label-md text-label-md text-on-surface-variant font-normal text-right">Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="font-body-sm text-body-sm text-on-surface">
+                                    <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors group cursor-pointer">
+                                        <td class="p-md font-medium text-white group-hover:text-primary transition-colors">Cybersecurity Threat Intelligence Report</td>
+                                        <td class="p-md"><span class="flex items-center gap-xs"><span class="material-symbols-outlined text-sm text-on-surface-variant">picture_as_pdf</span> PDF</span></td>
+                                        <td class="p-md"><span class="bg-surface-container-highest px-2 py-1 rounded text-xs">6</span></td>
+                                        <td class="p-md">
+                                            <span class="inline-flex items-center gap-xs bg-primary-container/10 text-primary px-2 py-1 rounded-full text-xs font-semibold border border-primary/20">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                                Completed
+                                            </span>
+                                        </td>
+                                        <td class="p-md text-right text-on-surface-variant">Today, 2:34 PM</td>
+                                    </tr>
+                                    <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors group cursor-pointer">
+                                        <td class="p-md font-medium text-white group-hover:text-primary transition-colors">Q3 Enterprise Earnings Call Transcript</td>
+                                        <td class="p-md"><span class="flex items-center gap-xs"><span class="material-symbols-outlined text-sm text-on-surface-variant">audio_file</span> Audio</span></td>
+                                        <td class="p-md"><span class="bg-surface-container-highest px-2 py-1 rounded text-xs">4</span></td>
+                                        <td class="p-md">
+                                            <span class="inline-flex items-center gap-xs bg-primary-container/10 text-primary px-2 py-1 rounded-full text-xs font-semibold border border-primary/20">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                                Completed
+                                            </span>
+                                        </td>
+                                        <td class="p-md text-right text-on-surface-variant">Yesterday, 5:12 PM</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/[0.02] transition-colors group cursor-pointer">
+                                        <td class="p-md font-medium text-white group-hover:text-primary transition-colors">API Architecture Whitepaper v2</td>
+                                        <td class="p-md"><span class="flex items-center gap-xs"><span class="material-symbols-outlined text-sm text-on-surface-variant">description</span> DOCX</span></td>
+                                        <td class="p-md"><span class="bg-surface-container-highest px-2 py-1 rounded text-xs">8</span></td>
+                                        <td class="p-md">
+                                            <span class="inline-flex items-center gap-xs bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded-full text-xs font-semibold border border-emerald-500/20">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                                Indexed
+                                            </span>
+                                        </td>
+                                        <td class="p-md text-right text-on-surface-variant">2 days ago</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Right Column (35%) -->
+                <section class="lg:col-span-4 space-y-xl">
+                    <!-- Quick Start Bento -->
+                    <div class="space-y-md">
+                        <h3 class="font-headline-md text-headline-md text-on-surface">Quick Start</h3>
+                        <div class="grid grid-cols-2 gap-md">
+                            <button class="glass-panel p-md rounded-xl flex flex-col items-center justify-center gap-sm hover:bg-white/[0.04] hover:border-primary/50 transition-all group text-center aspect-square cursor-pointer">
+                                <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-container group-hover:text-white transition-colors text-on-surface-variant">
+                                    <span class="material-symbols-outlined">upload_file</span>
+                                </div>
+                                <span class="font-label-md text-label-md text-on-surface">Upload Document</span>
+                            </button>
+                            <button class="glass-panel p-md rounded-xl flex flex-col items-center justify-center gap-sm hover:bg-white/[0.04] hover:border-primary/50 transition-all group text-center aspect-square cursor-pointer">
+                                <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-container group-hover:text-white transition-colors text-on-surface-variant">
+                                    <span class="material-symbols-outlined">content_paste</span>
+                                </div>
+                                <span class="font-label-md text-label-md text-on-surface">Paste Content</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

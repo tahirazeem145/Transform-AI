@@ -506,7 +506,7 @@
             <span class="font-label-md text-label-md text-blue-400 tracking-widest uppercase mb-sm font-semibold">Welcome Back</span>
             <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-bold mb-xl text-white">Sign in to TransformAI</h2>
             
-            <form class="flex flex-col gap-lg" onsubmit="event.preventDefault();">
+            <form class="flex flex-col gap-lg" onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
                 <!-- Email -->
                 <div class="flex flex-col gap-xs">
                     <label class="font-label-md text-label-md text-slate-300 font-medium" for="email">Email</label>
@@ -556,7 +556,7 @@
             </div>
 
             <!-- SSO -->
-            <button class="btn-secondary rounded-lg py-sm px-lg font-label-md text-label-md flex items-center justify-center gap-md w-full h-12 cursor-pointer font-semibold">
+            <button onclick="window.location.href='dashboard.html'" class="btn-secondary rounded-lg py-sm px-lg font-label-md text-label-md flex items-center justify-center gap-md w-full h-12 cursor-pointer font-semibold">
                 <svg aria-hidden="true" class="w-5 h-5" viewBox="0 0 24 24">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
@@ -568,7 +568,7 @@
 
             <!-- Try Demo Link -->
             <div class="mt-xl text-center">
-                <a class="font-body-sm text-body-sm text-slate-300 hover:text-white transition-colors flex items-center justify-center gap-xs group font-medium" href="#">
+                <a class="font-body-sm text-body-sm text-slate-300 hover:text-white transition-colors flex items-center justify-center gap-xs group font-medium" href="dashboard.html">
                     Want to explore the platform? <span class="text-blue-400 group-hover:text-blue-300 font-semibold transition-colors ml-1">Try Demo</span>
                     <span class="material-symbols-outlined text-sm text-blue-400 group-hover:text-blue-300 group-hover:translate-x-1 transition-all">arrow_forward</span>
                 </a>
