@@ -332,10 +332,10 @@
         <!-- Studio Workspace Canvas & Inspector Drawer -->
         <div class="flex-1 flex overflow-hidden relative">
             <!-- Center Document Canvas (Expansive, clean, uncluttered paper view) -->
-            <section class="flex-1 flex flex-col items-center overflow-y-auto p-xl custom-scrollbar bg-[#05070a]">
-                <div class="w-full max-w-[840px] my-md bg-[#0a0f18] border border-white/10 rounded-2xl p-2xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] min-h-[640px] relative">
+            <section class="flex-1 flex flex-col items-center overflow-y-auto px-xl py-lg custom-scrollbar bg-[#05070a]">
+                <div class="w-full max-w-[840px] my-md bg-[#0a0f18] border border-white/10 rounded-2xl p-2xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] relative pb-2xl">
                     <!-- Grounding Badge Header -->
-                    <div class="flex items-center justify-between pb-lg mb-xl border-b border-white/8">
+                    <div class="flex items-center justify-between pb-md mb-xl border-b border-white/8">
                         <div class="flex items-center gap-sm">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
                             <span class="font-label-md text-[12px] text-emerald-400 font-semibold uppercase tracking-wider">Source Grounded</span>
@@ -348,7 +348,7 @@
                     </div>
 
                     <!-- Editable Document Body -->
-                    <div class="outline-none space-y-lg text-on-surface leading-relaxed" id="documentContent" contenteditable="true" spellcheck="false">
+                    <div class="outline-none space-y-xl text-on-surface leading-relaxed" id="documentContent" contenteditable="true" spellcheck="false">
                         <!-- Populated dynamically with active artifact content -->
                     </div>
                 </div>
@@ -546,32 +546,50 @@
                 facts: '94',
                 confidence: '96%',
                 content: `
-                    <h2 class="font-headline-lg text-headline-lg text-white mb-md font-bold">Executive Overview</h2>
-                    <p class="font-body-lg text-on-surface-variant mb-lg leading-relaxed">
-                        The synthesized source intelligence highlights strategic digital transformation imperatives across core infrastructure. The evaluation identifies precision optimization pathways designed to accelerate enterprise workflow throughput while maintaining rigorous security standards <span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-primary-container/20 text-primary text-[10px] font-mono font-bold cursor-pointer hover:bg-primary-container/40 transition-colors" contenteditable="false">[S1]</span>.
-                    </p>
+                    <div class="space-y-md">
+                        <h2 class="font-headline-lg text-headline-lg text-white font-bold tracking-tight">Executive Overview</h2>
+                        <p class="font-body-lg text-on-surface-variant leading-relaxed">
+                            The synthesized source intelligence highlights strategic digital transformation imperatives across core infrastructure. The evaluation identifies precision optimization pathways designed to accelerate enterprise workflow throughput while maintaining rigorous security standards <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-blue-500/15 border border-blue-400/25 text-blue-300 text-[11px] font-mono font-semibold cursor-pointer hover:bg-blue-500/25 transition-colors align-middle" contenteditable="false">S1</span>.
+                        </p>
+                    </div>
                     
-                    <h3 class="font-headline-md text-headline-md text-white mb-md mt-xl font-semibold">Key Transformation Insights</h3>
-                    <div class="flex flex-col gap-md mb-lg">
-                        <div class="flex gap-md group">
-                            <div class="font-mono text-primary/50 group-hover:text-primary transition-colors font-bold">01</div>
-                            <p class="font-body-md text-on-surface-variant"><strong class="text-white">Workflow Automation:</strong> Automated pipeline orchestrations reduced cross-functional latency across operational nodes <span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-primary-container/20 text-primary text-[10px] font-mono font-bold cursor-pointer hover:bg-primary-container/40 transition-colors" contenteditable="false">[S4]</span>.</p>
-                        </div>
-                        <div class="flex gap-md group">
-                            <div class="font-mono text-primary/50 group-hover:text-primary transition-colors font-bold">02</div>
-                            <p class="font-body-md text-on-surface-variant"><strong class="text-white">Semantic Knowledge Mapping:</strong> High-density entity extraction enables structured grounding against enterprise ontologies <span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-primary-container/20 text-primary text-[10px] font-mono font-bold cursor-pointer hover:bg-primary-container/40 transition-colors" contenteditable="false">[S9]</span>.</p>
-                        </div>
-                        <div class="flex gap-md group">
-                            <div class="font-mono text-primary/50 group-hover:text-primary transition-colors font-bold">03</div>
-                            <p class="font-body-md text-on-surface-variant"><strong class="text-white">Cross-Format Deliverables:</strong> Synthesized multi-format outputs ensure consistency across executive, tactical, and communication channels <span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-primary-container/20 text-primary text-[10px] font-mono font-bold cursor-pointer hover:bg-primary-container/40 transition-colors" contenteditable="false">[S15]</span>.</p>
+                    <div class="space-y-md pt-lg">
+                        <h3 class="font-headline-md text-headline-md text-white font-semibold">Key Transformation Insights</h3>
+                        <div class="space-y-sm">
+                            <div class="p-md rounded-xl bg-surface-container/60 border border-white/5 flex gap-md items-start hover:border-white/10 transition-colors">
+                                <span class="font-mono text-primary font-bold text-[14px] mt-0.5">01</span>
+                                <p class="font-body-md text-on-surface-variant leading-relaxed">
+                                    <strong class="text-white">Workflow Automation:</strong> Automated pipeline orchestrations reduced cross-functional latency across operational nodes <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-blue-500/15 border border-blue-400/25 text-blue-300 text-[11px] font-mono font-semibold cursor-pointer hover:bg-blue-500/25 transition-colors align-middle" contenteditable="false">S4</span>.
+                                </p>
+                            </div>
+                            <div class="p-md rounded-xl bg-surface-container/60 border border-white/5 flex gap-md items-start hover:border-white/10 transition-colors">
+                                <span class="font-mono text-primary font-bold text-[14px] mt-0.5">02</span>
+                                <p class="font-body-md text-on-surface-variant leading-relaxed">
+                                    <strong class="text-white">Semantic Knowledge Mapping:</strong> High-density entity extraction enables structured grounding against enterprise ontologies <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-blue-500/15 border border-blue-400/25 text-blue-300 text-[11px] font-mono font-semibold cursor-pointer hover:bg-blue-500/25 transition-colors align-middle" contenteditable="false">S9</span>.
+                                </p>
+                            </div>
+                            <div class="p-md rounded-xl bg-surface-container/60 border border-white/5 flex gap-md items-start hover:border-white/10 transition-colors">
+                                <span class="font-mono text-primary font-bold text-[14px] mt-0.5">03</span>
+                                <p class="font-body-md text-on-surface-variant leading-relaxed">
+                                    <strong class="text-white">Cross-Format Deliverables:</strong> Synthesized multi-format outputs ensure consistency across executive, tactical, and communication channels <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-blue-500/15 border border-blue-400/25 text-blue-300 text-[11px] font-mono font-semibold cursor-pointer hover:bg-blue-500/25 transition-colors align-middle" contenteditable="false">S15</span>.
+                                </p>
+                            </div>
                         </div>
                     </div>
 
-                    <h3 class="font-headline-md text-headline-md text-white mb-md mt-xl font-semibold">Strategic Recommendations</h3>
-                    <ul class="list-disc pl-lg text-on-surface-variant font-body-md space-y-sm marker:text-primary">
-                        <li>Deploy automated continuous synthesis routines for incoming source repositories <span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-primary-container/20 text-primary text-[10px] font-mono font-bold cursor-pointer hover:bg-primary-container/40 transition-colors" contenteditable="false">[S21]</span>.</li>
-                        <li>Integrate verification health gates into final deliverable review workflows <span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-primary-container/20 text-primary text-[10px] font-mono font-bold cursor-pointer hover:bg-primary-container/40 transition-colors" contenteditable="false">[S22]</span>.</li>
-                    </ul>
+                    <div class="space-y-md pt-lg">
+                        <h3 class="font-headline-md text-headline-md text-white font-semibold">Strategic Recommendations</h3>
+                        <ul class="space-y-sm">
+                            <li class="flex items-start gap-sm text-on-surface-variant font-body-md">
+                                <span class="material-symbols-outlined text-primary text-[18px] mt-0.5 shrink-0">check_circle</span>
+                                <span>Deploy automated continuous synthesis routines for incoming source repositories <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-blue-500/15 border border-blue-400/25 text-blue-300 text-[11px] font-mono font-semibold cursor-pointer hover:bg-blue-500/25 transition-colors align-middle" contenteditable="false">S21</span>.</span>
+                            </li>
+                            <li class="flex items-start gap-sm text-on-surface-variant font-body-md">
+                                <span class="material-symbols-outlined text-primary text-[18px] mt-0.5 shrink-0">check_circle</span>
+                                <span>Integrate verification health gates into final deliverable review workflows <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-blue-500/15 border border-blue-400/25 text-blue-300 text-[11px] font-mono font-semibold cursor-pointer hover:bg-blue-500/25 transition-colors align-middle" contenteditable="false">S22</span>.</span>
+                            </li>
+                        </ul>
+                    </div>
                 `
             },
             {
@@ -581,14 +599,21 @@
                 facts: '68',
                 confidence: '98%',
                 content: `
-                    <h2 class="font-headline-lg text-headline-lg text-white mb-md font-bold">Strategic Advisory Guidance</h2>
-                    <p class="font-body-lg text-on-surface-variant mb-lg leading-relaxed">
-                        This advisory briefing articulates tactical recommendations tailored for executive decision-makers. The objective is to mitigate operational friction and establish resilient GenAI transformation architectures <span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-primary-container/20 text-primary text-[10px] font-mono font-bold cursor-pointer" contenteditable="false">[A1]</span>.
-                    </p>
-                    <h3 class="font-headline-md text-headline-md text-white mb-md mt-xl font-semibold">Execution Timeline & Milestones</h3>
-                    <p class="font-body-md text-on-surface-variant leading-relaxed">
-                        Phase 1 prioritizes core schema validation followed by automated multi-channel dissemination in Phase 2 <span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-primary-container/20 text-primary text-[10px] font-mono font-bold cursor-pointer" contenteditable="false">[A4]</span>.
-                    </p>
+                    <div class="space-y-md">
+                        <h2 class="font-headline-lg text-headline-lg text-white font-bold tracking-tight">Strategic Advisory Guidance</h2>
+                        <p class="font-body-lg text-on-surface-variant leading-relaxed">
+                            This advisory briefing articulates tactical recommendations tailored for executive decision-makers. The objective is to mitigate operational friction and establish resilient GenAI transformation architectures <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-blue-500/15 border border-blue-400/25 text-blue-300 text-[11px] font-mono font-semibold cursor-pointer align-middle" contenteditable="false">A1</span>.
+                        </p>
+                    </div>
+
+                    <div class="space-y-md pt-lg">
+                        <h3 class="font-headline-md text-headline-md text-white font-semibold">Execution Timeline & Milestones</h3>
+                        <div class="p-md rounded-xl bg-surface-container/60 border border-white/5">
+                            <p class="font-body-md text-on-surface-variant leading-relaxed">
+                                Phase 1 prioritizes core schema validation followed by automated multi-channel dissemination in Phase 2 <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-blue-500/15 border border-blue-400/25 text-blue-300 text-[11px] font-mono font-semibold cursor-pointer align-middle" contenteditable="false">A4</span>.
+                            </p>
+                        </div>
+                    </div>
                 `
             },
             {
