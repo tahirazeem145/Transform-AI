@@ -117,6 +117,43 @@ app.post('/api/auth/login', async (req, res) => {
     }
 });
 
+app.get('/api/auth/google', async (req, res) => {
+    try {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: `${req.protocol}://${req.get('host')}/api/auth/callback`
+            }
+        });
+
+        if (error) {
+            return res.status(400).send(`OAuth initialization failed: ${error.message}`);
+        }
+
+        res.redirect(data.url);
+    } catch (err) {
+        res.status(500).send(`OAuth initialization error: ${err.message}`);
+    }
+});
+
+app.get('/api/auth/callback', async (req, res) => {
+    const code = req.query.code;
+    if (code) {
+        try {
+            const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+            if (error) {
+                return res.status(400).send(`OAuth callback failed: ${error.message}`);
+            }
+            if (data.session) {
+                res.cookie('token', data.session.access_token, { httpOnly: true, secure: false });
+            }
+        } catch (err) {
+            return res.status(500).send(`OAuth callback error: ${err.message}`);
+        }
+    }
+    res.redirect('/dashboard.html');
+});
+
 app.post('/api/auth/logout', async (req, res) => {
     const token = req.cookies.token;
     if (token) {
