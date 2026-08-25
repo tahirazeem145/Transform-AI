@@ -404,8 +404,8 @@
                 <div>
                     <h3 class="font-label-md text-on-surface-variant mb-sm uppercase tracking-wider text-[11px]">Source Context</h3>
                     <div class="glass-panel rounded-xl p-md flex items-start gap-sm">
-                        <div class="w-8 h-8 rounded bg-error-container/20 flex items-center justify-center shrink-0 mt-0.5">
-                            <span class="material-symbols-outlined text-red-400 text-[18px]">picture_as_pdf</span>
+                        <div id="sourceIconBg" class="w-8 h-8 rounded bg-error-container/20 flex items-center justify-center shrink-0 mt-0.5">
+                            <span id="sourceIcon" class="material-symbols-outlined text-red-400 text-[18px]">picture_as_pdf</span>
                         </div>
                         <div class="min-w-0 flex-1">
                             <p class="font-label-md text-on-surface text-[13px] font-semibold truncate" id="sourceFilename">Document_Source.pdf</p>
@@ -880,6 +880,39 @@
                         const data = await response.json();
                         if (data.results && Object.keys(data.results).length > 0) {
                             artifactData = Object.values(data.results);
+                        }
+
+                        // Update Source Context Drawer UI dynamically
+                        const source = data.source || {};
+                        const filenameEl = document.getElementById('sourceFilename');
+                        const detailsEl = document.getElementById('sourceFileDetails');
+                        const iconEl = document.getElementById('sourceIcon');
+                        const iconBgEl = document.getElementById('sourceIconBg');
+
+                        if (source.type === 'file') {
+                            if (filenameEl) filenameEl.innerText = source.fileName || 'document.pdf';
+                            if (detailsEl) detailsEl.innerText = `${source.fileSize ? source.fileSize + ' • ' : ''}Uploaded File`;
+                            if (iconEl) {
+                                iconEl.innerText = 'picture_as_pdf';
+                                iconEl.className = 'material-symbols-outlined text-red-400 text-[18px]';
+                            }
+                            if (iconBgEl) iconBgEl.className = 'w-8 h-8 rounded bg-error-container/20 flex items-center justify-center shrink-0 mt-0.5';
+                        } else if (source.type === 'url') {
+                            if (filenameEl) filenameEl.innerText = source.sourceUrl || 'Reference Link';
+                            if (detailsEl) detailsEl.innerText = 'Grounded Web URL';
+                            if (iconEl) {
+                                iconEl.innerText = 'link';
+                                iconEl.className = 'material-symbols-outlined text-blue-400 text-[18px]';
+                            }
+                            if (iconBgEl) iconBgEl.className = 'w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center shrink-0 mt-0.5';
+                        } else {
+                            if (filenameEl) filenameEl.innerText = 'Raw Text Snippet';
+                            if (detailsEl) detailsEl.innerText = `${source.sourceTextLength || 0} characters`;
+                            if (iconEl) {
+                                iconEl.innerText = 'description';
+                                iconEl.className = 'material-symbols-outlined text-indigo-400 text-[18px]';
+                            }
+                            if (iconBgEl) iconBgEl.className = 'w-8 h-8 rounded bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0 mt-0.5';
                         }
                     }
                 } catch (err) {
