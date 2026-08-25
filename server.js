@@ -1,135 +1,140 @@
+require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const fs = require('fs');
+const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'transform-ai-super-secret-key-123456';
-const USERS_FILE = path.join(__dirname, 'users.json');
+
+// Initialize Supabase Client
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your-project-id')) {
+    console.warn('WARNING: Supabase URL or Anon Key is missing or using placeholder values in .env. Please configure them to get Supabase integration working.');
+}
+
+const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseKey || 'placeholder-key');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Initialize users.json if it doesn't exist
-if (!fs.existsSync(USERS_FILE)) {
-    const defaultUsers = [
-        {
-            id: 1,
-            email: 'demo@company.com',
-            passwordHash: bcrypt.hashSync('password123', 10),
-            name: 'Demo User'
-        }
-    ];
-    fs.writeFileSync(USERS_FILE, JSON.stringify(defaultUsers, null, 2));
-}
-
-function getUsers() {
-    try {
-        const data = fs.readFileSync(USERS_FILE, 'utf8');
-        return JSON.parse(data);
-    } catch (err) {
-        return [];
-    }
-}
-
-function saveUsers(users) {
-    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
-}
-
 // Authentication Middleware for API requests
-function authenticateToken(req, res, next) {
+async function authenticateToken(req, res, next) {
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).json({ error: 'Unauthorized: No token provided' });
     }
-    jwt.verify(token, JWT_SECRET, (err, user) => {
-        if (err) {
-            return res.status(403).json({ error: 'Forbidden: Invalid token' });
+    try {
+        const { data: { user }, error } = await supabase.auth.getUser(token);
+        if (error || !user) {
+            return res.status(403).json({ error: 'Forbidden: Invalid session' });
         }
         req.user = user;
         next();
-    });
+    } catch (err) {
+        return res.status(500).json({ error: 'Internal server error during auth verification' });
+    }
 }
 
 // Authentication Middleware for Page requests (HTML files)
-function requireAuth(req, res, next) {
+async function requireAuth(req, res, next) {
     const token = req.cookies.token;
     if (!token) {
         return res.redirect('/');
     }
-    jwt.verify(token, JWT_SECRET, (err, user) => {
-        if (err) {
+    try {
+        const { data: { user }, error } = await supabase.auth.getUser(token);
+        if (error || !user) {
             res.clearCookie('token');
             return res.redirect('/');
         }
         req.user = user;
         next();
-    });
+    } catch (err) {
+        res.clearCookie('token');
+        return res.redirect('/');
+    }
 }
 
 // API Routes
-app.post('/api/auth/register', (req, res) => {
+app.post('/api/auth/register', async (req, res) => {
     const { email, password, name } = req.body;
     if (!email || !password) {
         return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    const users = getUsers();
-    if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
-        return res.status(400).json({ error: 'User already exists' });
+    try {
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    name: name || email.split('@')[0]
+                }
+            }
+        });
+
+        if (error) {
+            return res.status(400).json({ error: error.message });
+        }
+
+        if (data.session) {
+            res.cookie('token', data.session.access_token, { httpOnly: true, secure: false });
+        }
+
+        res.status(201).json({ 
+            message: data.session ? 'Registration successful' : 'Registration successful! Please check your email for confirmation.', 
+            user: data.user 
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
-
-    const newUser = {
-        id: Date.now(),
-        email: email.toLowerCase(),
-        passwordHash: bcrypt.hashSync(password, 10),
-        name: name || email.split('@')[0]
-    };
-
-    users.push(newUser);
-    saveUsers(users);
-
-    const token = jwt.sign({ id: newUser.id, email: newUser.email }, JWT_SECRET, { expiresIn: '24h' });
-    res.cookie('token', token, { httpOnly: true, secure: false }); // secure: true in production
-
-    res.status(201).json({ message: 'User registered successfully', user: { id: newUser.id, email: newUser.email, name: newUser.name } });
 });
 
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    const users = getUsers();
-    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password
+        });
 
-    if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
-        return res.status(401).json({ error: 'Invalid email or password' });
+        if (error) {
+            return res.status(401).json({ error: error.message });
+        }
+
+        res.cookie('token', data.session.access_token, { httpOnly: true, secure: false });
+        res.status(200).json({ message: 'Login successful', user: data.user });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
-
-    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '24h' });
-    res.cookie('token', token, { httpOnly: true, secure: false });
-
-    res.status(200).json({ message: 'Login successful', user: { id: user.id, email: user.email, name: user.name } });
 });
 
-app.post('/api/auth/logout', (req, res) => {
+app.post('/api/auth/logout', async (req, res) => {
+    const token = req.cookies.token;
+    if (token) {
+        // Sign out from Supabase auth session
+        await supabase.auth.admin.signOut(token).catch(() => {});
+    }
     res.clearCookie('token');
     res.status(200).json({ message: 'Logout successful' });
 });
 
 app.get('/api/auth/me', authenticateToken, (req, res) => {
-    const users = getUsers();
-    const user = users.find(u => u.id === req.user.id);
-    if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-    }
-    res.status(200).json({ user: { id: user.id, email: user.email, name: user.name } });
+    res.status(200).json({ 
+        user: { 
+            id: req.user.id, 
+            email: req.user.email, 
+            name: req.user.user_metadata?.name || req.user.email.split('@')[0] 
+        } 
+    });
 });
 
 // Protect static HTML pages
@@ -148,16 +153,20 @@ protectedPages.forEach(page => {
 });
 
 // Redirect authenticated users trying to access root/login page
-app.get('/', (req, res, next) => {
+app.get('/', async (req, res, next) => {
     const token = req.cookies.token;
     if (token) {
-        jwt.verify(token, JWT_SECRET, (err, user) => {
-            if (!err) {
+        try {
+            const { data: { user }, error } = await supabase.auth.getUser(token);
+            if (!error && user) {
                 return res.redirect('/dashboard.html');
             }
             res.clearCookie('token');
             next();
-        });
+        } catch (err) {
+            res.clearCookie('token');
+            next();
+        }
     } else {
         next();
     }
