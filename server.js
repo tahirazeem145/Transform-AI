@@ -812,6 +812,27 @@ app.post('/api/transformations/:id/deliverables/:key', authenticateToken, (req, 
     }
 });
 
+app.post('/api/users/profile', authenticateToken, (req, res) => {
+    const { name, organization } = req.body;
+    try {
+        const usersFile = path.join(__dirname, 'users.json');
+        if (fs.existsSync(usersFile)) {
+            const users = JSON.parse(fs.readFileSync(usersFile, 'utf8'));
+            const index = users.findIndex(u => u.id === req.user.id);
+            if (index !== -1) {
+                users[index].name = name || users[index].name;
+                users[index].organization = organization || users[index].organization;
+                fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+                return res.status(200).json({ success: true, user: users[index] });
+            }
+        }
+        res.status(404).json({ error: 'User not found' });
+    } catch (err) {
+        console.error('[Users] Update profile error:', err);
+        res.status(500).json({ error: 'Failed to update profile: ' + err.message });
+    }
+});
+
 // Protect static HTML pages
 
 const protectedPages = [
