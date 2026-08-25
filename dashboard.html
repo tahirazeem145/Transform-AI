@@ -481,41 +481,41 @@
                 </a>
             </section>
 
-            <!-- Metrics Grid -->
-            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
-                <!-- Metric 1 -->
-                <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
-                    <span class="font-label-md text-label-md text-on-surface-variant">Total Transformations</span>
-                    <div class="flex items-baseline gap-sm">
-                        <span class="font-display-lg text-display-lg text-on-surface">0</span>
-                        <span class="font-label-md text-label-md text-slate-500">No activity yet</span>
-                    </div>
-                </div>
-                <!-- Metric 2 -->
-                <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
-                    <span class="font-label-md text-label-md text-on-surface-variant">Documents Processed</span>
-                    <div class="flex items-baseline gap-sm">
-                        <span class="font-display-lg text-display-lg text-on-surface">0</span>
-                        <span class="font-label-md text-label-md text-slate-500">0 MB processed</span>
-                    </div>
-                </div>
-                <!-- Metric 3 -->
-                <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
-                    <span class="font-label-md text-label-md text-on-surface-variant">Artifacts Generated</span>
-                    <div class="flex items-baseline gap-sm">
-                        <span class="font-display-lg text-display-lg text-on-surface">0</span>
-                        <span class="font-label-md text-label-md text-slate-500">0 formats</span>
-                    </div>
-                </div>
-                <!-- Metric 4 -->
-                <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
-                    <span class="font-label-md text-label-md text-on-surface-variant">Time Saved</span>
-                    <div class="flex items-baseline gap-sm">
-                        <span class="font-display-lg text-display-lg text-on-surface">0</span>
-                        <span class="font-label-md text-label-md text-slate-500">hrs</span>
-                    </div>
-                </div>
-            </section>
+             <!-- Metrics Grid -->
+             <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+                 <!-- Metric 1 -->
+                 <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
+                     <span class="font-label-md text-label-md text-on-surface-variant">Total Transformations</span>
+                     <div class="flex items-baseline gap-sm">
+                         <span id="metricTotalTrans" class="font-display-lg text-display-lg text-on-surface">0</span>
+                         <span id="metricTotalTransSub" class="font-label-md text-label-md text-slate-500">No activity yet</span>
+                     </div>
+                 </div>
+                 <!-- Metric 2 -->
+                 <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
+                     <span class="font-label-md text-label-md text-on-surface-variant">Documents Processed</span>
+                     <div class="flex items-baseline gap-sm">
+                         <span id="metricDocsProcessed" class="font-display-lg text-display-lg text-on-surface">0</span>
+                         <span id="metricDocsProcessedSub" class="font-label-md text-label-md text-slate-500">0 MB processed</span>
+                     </div>
+                 </div>
+                 <!-- Metric 3 -->
+                 <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
+                     <span class="font-label-md text-label-md text-on-surface-variant">Artifacts Generated</span>
+                     <div class="flex items-baseline gap-sm">
+                         <span id="metricArtifactsGenerated" class="font-display-lg text-display-lg text-on-surface">0</span>
+                         <span id="metricArtifactsGeneratedSub" class="font-label-md text-label-md text-slate-500">0 formats</span>
+                     </div>
+                 </div>
+                 <!-- Metric 4 -->
+                 <div class="glass-panel rounded-xl p-lg flex flex-col gap-sm relative overflow-hidden group">
+                     <span class="font-label-md text-label-md text-on-surface-variant">Active Pipeline Jobs</span>
+                     <div class="flex items-baseline gap-sm">
+                         <span id="metricActiveJobs" class="font-display-lg text-display-lg text-on-surface">0</span>
+                         <span id="metricActiveJobsSub" class="font-label-md text-label-md text-slate-500">running</span>
+                     </div>
+                 </div>
+             </section>
 
             <!-- Main Two Columns -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
@@ -525,16 +525,18 @@
                         <div class="p-lg border-b border-white/10 flex items-center justify-between">
                             <h3 class="font-headline-md text-headline-md text-on-surface">Recent Transformations</h3>
                         </div>
-                        <div class="p-xl flex flex-col items-center justify-center text-center my-auto py-2xl">
-                            <div class="w-14 h-14 rounded-full bg-surface-container-highest flex items-center justify-center text-slate-400 mb-md border border-white/5">
-                                <span class="material-symbols-outlined text-[28px]">history</span>
+                        <div id="recentTransformationsContainer" class="flex-1 flex flex-col justify-center">
+                            <div class="p-xl flex flex-col items-center justify-center text-center my-auto py-2xl">
+                                <div class="w-14 h-14 rounded-full bg-surface-container-highest flex items-center justify-center text-slate-400 mb-md border border-white/5">
+                                    <span class="material-symbols-outlined text-[28px]">history</span>
+                                </div>
+                                <h4 class="font-headline-md text-[18px] text-white font-medium mb-xs">No transformations yet</h4>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mb-lg">Start by uploading a document or pasting content to generate your first set of AI deliverables.</p>
+                                <a href="new-transformation.html" class="bg-primary-container hover:bg-blue-500 text-white px-md py-sm rounded-lg font-label-md text-label-md transition-all flex items-center gap-xs shadow-[0_0_12px_rgba(37,99,235,0.3)]">
+                                    <span class="material-symbols-outlined text-sm">add</span>
+                                    Create Transformation
+                                </a>
                             </div>
-                            <h4 class="font-headline-md text-[18px] text-white font-medium mb-xs">No transformations yet</h4>
-                            <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mb-lg">Start by uploading a document or pasting content to generate your first set of AI deliverables.</p>
-                            <a href="new-transformation.html" class="bg-primary-container hover:bg-blue-500 text-white px-md py-sm rounded-lg font-label-md text-label-md transition-all flex items-center gap-xs shadow-[0_0_12px_rgba(37,99,235,0.3)]">
-                                <span class="material-symbols-outlined text-sm">add</span>
-                                Create Transformation
-                            </a>
                         </div>
                     </div>
                 </section>
@@ -679,6 +681,130 @@
             }
 
             drawGrid();
+        })();
+
+        // Load transformations list and compile metrics
+        (async function loadDashboardData() {
+            const listContainer = document.getElementById('recentTransformationsContainer');
+            
+            const totalTransVal = document.getElementById('metricTotalTrans');
+            const totalTransSub = document.getElementById('metricTotalTransSub');
+            
+            const docsProcessedVal = document.getElementById('metricDocsProcessed');
+            const docsProcessedSub = document.getElementById('metricDocsProcessedSub');
+            
+            const artifactsGeneratedVal = document.getElementById('metricArtifactsGenerated');
+            const artifactsGeneratedSub = document.getElementById('metricArtifactsGeneratedSub');
+            
+            const activeJobsVal = document.getElementById('metricActiveJobs');
+            const activeJobsSub = document.getElementById('metricActiveJobsSub');
+
+            try {
+                const response = await fetch('/api/transformations');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch transformations');
+                }
+                const data = await response.json();
+
+                if (data.length > 0) {
+                    // 1. Update Metrics
+                    totalTransVal.innerText = data.length;
+                    totalTransSub.innerText = `Active workspace jobs`;
+
+                    // Calculate total docs/sources processed
+                    const fileCount = data.filter(t => t.source.type === 'file').length;
+                    const urlCount = data.filter(t => t.source.type === 'url').length;
+                    const pasteCount = data.filter(t => t.source.type === 'paste').length;
+                    docsProcessedVal.innerText = data.length;
+                    docsProcessedSub.innerText = `${fileCount} files, ${urlCount} links, ${pasteCount} text blocks`;
+
+                    // Artifact count (completed deliverables count)
+                    const completedTrans = data.filter(t => t.status === 'completed');
+                    const totalArtifacts = completedTrans.reduce((sum, current) => sum + (current.deliverables ? current.deliverables.length : 0), 0);
+                    artifactsGeneratedVal.innerText = totalArtifacts;
+                    artifactsGeneratedSub.innerText = `${completedTrans.length} jobs complete`;
+
+                    // Active pipeline jobs
+                    const activeJobs = data.filter(t => t.status === 'processing').length;
+                    activeJobsVal.innerText = activeJobs;
+                    activeJobsSub.innerText = activeJobs === 1 ? '1 job active' : `${activeJobs} jobs active`;
+
+                    // 2. Render List table
+                    let tableRows = data.map(tr => {
+                        const date = new Date(tr.createdAt).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+
+                        const sourceName = tr.source.type === 'file' 
+                            ? tr.source.fileName 
+                            : (tr.source.type === 'url' ? tr.source.sourceUrl : 'Pasted Text Snippet');
+
+                        const isProcessing = tr.status === 'processing';
+                        const badgeColor = isProcessing 
+                            ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' 
+                            : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                        
+                        const actionUrl = isProcessing 
+                            ? `transformation-processing.html?id=${tr.id}` 
+                            : `artifact-workspace.html?id=${tr.id}`;
+                        
+                        const actionLabel = isProcessing ? 'Monitor' : 'Workspace';
+
+                        return `
+                            <tr class="border-b border-white/5 hover:bg-white/[0.01] transition-colors">
+                                <td class="px-lg py-md font-body-sm text-body-sm text-white font-medium max-w-[200px] truncate" title="${sourceName}">
+                                    ${sourceName}
+                                </td>
+                                <td class="px-lg py-md font-body-sm text-body-sm text-on-surface-variant font-mono text-[12px] uppercase">
+                                    ${tr.source.type}
+                                </td>
+                                <td class="px-lg py-md font-body-sm text-body-sm text-on-surface-variant">
+                                    ${tr.deliverables ? tr.deliverables.length : 0} formats
+                                </td>
+                                <td class="px-lg py-md font-body-sm text-body-sm text-on-surface-variant">
+                                    ${date}
+                                </td>
+                                <td class="px-lg py-md">
+                                    <span class="px-sm py-0.5 rounded border text-[11px] font-mono font-semibold tracking-wider uppercase ${badgeColor}">
+                                        ${tr.status}
+                                    </span>
+                                </td>
+                                <td class="px-lg py-md text-right">
+                                    <a href="${actionUrl}" class="inline-flex items-center gap-xs text-primary hover:text-white transition-colors font-label-md text-xs font-semibold">
+                                        <span>${actionLabel}</span>
+                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+
+                    listContainer.innerHTML = `
+                        <div class="overflow-x-auto w-full">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-white/10 text-on-surface-variant font-label-md text-[11px] uppercase tracking-wider bg-surface-container-lowest/40">
+                                        <th class="px-lg py-sm font-semibold">Source</th>
+                                        <th class="px-lg py-sm font-semibold">Type</th>
+                                        <th class="px-lg py-sm font-semibold">Formats</th>
+                                        <th class="px-lg py-sm font-semibold">Created</th>
+                                        <th class="px-lg py-sm font-semibold">Status</th>
+                                        <th class="px-lg py-sm font-semibold text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableRows}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                console.error('Failed to load dashboard data:', err);
+            }
         })();
     </script>
 </body>

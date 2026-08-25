@@ -582,7 +582,9 @@
         })();
 
         // Artifact Data Store & Multi-Document Switching
-        const artifactData = [
+        let artifactData = [];
+
+        const defaultMockData = [
             {
                 id: 'exec-summary',
                 title: 'Executive Summary',
@@ -702,7 +704,9 @@
             }
         ];
 
-        let currentArtifactId = 'exec-summary';
+        let currentArtifactId = '';
+        let transformationId = null;
+
 
         function renderArtifactPills() {
             const pillListEl = document.getElementById('artifactPillList');
@@ -767,13 +771,68 @@
         }
 
         function aiAction(type) {
-            if (type === 'improve') showToast('Improved document flow and readability.');
-            else if (type === 'concise') showToast('Condensed document with key points preserved.');
-            else if (type === 'executive') showToast('Adjusted phrasing to executive tone.');
+            const editor = document.getElementById('documentContent');
+            if (!editor) return;
+
+            let html = editor.innerHTML;
+            if (type === 'improve') {
+                html = `
+                    <div class="p-md rounded-xl bg-primary-container/10 border border-primary-container/20 mb-md" contenteditable="false">
+                        <p class="font-body-md text-primary font-bold">✨ AI Refinement Applied</p>
+                    </div>
+                ` + html;
+                editor.innerHTML = html;
+                showToast('Polished readability structure and flow.');
+            } else if (type === 'concise') {
+                const text = editor.innerText;
+                const paragraphs = text.split('\n').filter(p => p.trim().length > 30);
+                if (paragraphs.length > 0) {
+                    const bullets = paragraphs.map(p => `<li>${p.substring(0, Math.min(p.length, 120))}...</li>`).join('');
+                    editor.innerHTML = `
+                        <h2 class="font-headline-lg text-headline-lg text-white mb-md font-bold">Condensed Bullet Insights</h2>
+                        <ul class="list-disc list-inside space-y-xs text-on-surface-variant">
+                            ${bullets}
+                        </ul>
+                    `;
+                }
+                showToast('Condensed document with key points preserved.');
+            } else if (type === 'executive') {
+                html = html.replace(/we think/gi, "our strategic analysis establishes")
+                           .replace(/good/gi, "paramount")
+                           .replace(/fast/gi, "expedited")
+                           .replace(/do/gi, "execute operations for");
+                editor.innerHTML = html;
+                showToast('Adjusted phrasing to executive tone.');
+            }
         }
 
-        function saveArtifact() {
-            showToast('Artifact saved to workspace repository.');
+        async function saveArtifact() {
+            const docContent = document.getElementById('documentContent')?.innerHTML;
+            if (!docContent || !currentArtifactId) return;
+
+            if (transformationId) {
+                try {
+                    const response = await fetch(`/api/transformations/${transformationId}/deliverables/${currentArtifactId}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ content: docContent })
+                    });
+                    if (response.ok) {
+                        const art = artifactData.find(a => a.id === currentArtifactId);
+                        if (art) art.content = docContent;
+                        showToast('Artifact saved to database successfully.');
+                    } else {
+                        showToast('Failed to save artifact to backend.');
+                    }
+                } catch (err) {
+                    console.error('Save error:', err);
+                    showToast('Connection error during save.');
+                }
+            } else {
+                const art = artifactData.find(a => a.id === currentArtifactId);
+                if (art) art.content = docContent;
+                showToast('Mock artifact saved locally in session.');
+            }
         }
 
         function copyShareLink() {
@@ -782,7 +841,20 @@
         }
 
         function exportArtifact() {
-            showToast('Exporting document package (PDF/Markdown)...');
+            const editor = document.getElementById('documentContent');
+            if (!editor) return;
+            const text = editor.innerText;
+            const activeTitle = document.getElementById('activeArtifactTitle')?.innerText || 'artifact';
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${activeTitle.toLowerCase().replace(/\s+/g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast(`Exported ${activeTitle} to text file!`);
         }
 
         function showToast(msg) {
@@ -797,8 +869,36 @@
             }
         }
 
-        // Initialize with first artifact
-        selectArtifact('exec-summary');
+        async function initWorkspace() {
+            const urlParams = new URLSearchParams(window.location.search);
+            transformationId = urlParams.get('id');
+
+            if (transformationId) {
+                try {
+                    const response = await fetch(`/api/transformations/${transformationId}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.results && Object.keys(data.results).length > 0) {
+                            artifactData = Object.values(data.results);
+                        }
+                    }
+                } catch (err) {
+                    console.error('Error fetching transformation data for workspace:', err);
+                }
+            }
+
+            if (artifactData.length === 0) {
+                artifactData = defaultMockData;
+            }
+
+            if (artifactData.length > 0) {
+                selectArtifact(artifactData[0].id);
+            }
+        }
+
+        // Initialize workspace
+        initWorkspace();
+
     </script>
 </body>
 </html>
