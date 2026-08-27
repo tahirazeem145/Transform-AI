@@ -574,17 +574,43 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
                     Secure Access Portal
                 </span>
-                <h2 class="font-headline-lg-mobile md:font-headline-lg text-2xl md:text-3xl font-extrabold text-white tracking-tight">Sign in to TransformAI</h2>
-                <p class="text-sm text-slate-400 mt-1">Enter your enterprise credentials to access your workspace.</p>
+                <h2 id="auth-title" class="font-headline-lg-mobile md:font-headline-lg text-2xl md:text-3xl font-extrabold text-white tracking-tight">Sign in to TransformAI</h2>
+                <p id="auth-subtitle" class="text-sm text-slate-400 mt-1">Enter your enterprise credentials to access your workspace.</p>
             </div>
             
-            <form class="flex flex-col gap-5" onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
+            <!-- Auth Toggle Tabs -->
+            <div class="flex border-b border-white/10 mb-6 font-label-md text-sm font-semibold select-none">
+                <button type="button" id="tab-signin" onclick="toggleAuthMode('signin')" class="flex-1 pb-3 text-center border-b-2 border-blue-500 text-white cursor-pointer transition-all focus:outline-none">Sign In</button>
+                <button type="button" id="tab-signup" onclick="toggleAuthMode('signup')" class="flex-1 pb-3 text-center border-b-2 border-transparent text-slate-400 hover:text-white cursor-pointer transition-all focus:outline-none">Sign Up</button>
+            </div>
+
+            <!-- Error Alert -->
+            <div id="error-message" class="hidden mb-6 p-4 rounded-xl bg-error-container/20 border border-error-container text-red-300 text-sm flex items-center gap-3">
+                <span class="material-symbols-outlined text-lg text-red-400">error</span>
+                <span id="error-text"></span>
+            </div>
+
+            <!-- Success Alert -->
+            <div id="success-message" class="hidden mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm flex items-center gap-3">
+                <span class="material-symbols-outlined text-lg text-emerald-400">check_circle</span>
+                <span id="success-text"></span>
+            </div>
+
+            <form id="login-form" class="flex flex-col gap-5">
+                <!-- Name Input (Only visible during Sign Up) -->
+                <div id="name-field" class="hidden flex flex-col gap-1.5">
+                    <label class="font-label-md text-xs text-slate-300 font-semibold" for="name">Full Name</label>
+                    <div class="glass-panel px-3.5 py-2.5 flex items-center">
+                        <span class="material-symbols-outlined text-slate-400 text-lg mr-2.5 transition-colors">person</span>
+                        <input class="bg-transparent border-none focus:ring-0 w-full text-white font-body-md text-sm p-0 placeholder-slate-500 focus:outline-none" id="name" placeholder="John Doe" type="text">
+                    </div>
+                </div>
                 <!-- Email Input Glow Card (exact same glass-panel glow effect as dashboard) -->
                 <div class="flex flex-col gap-1.5">
-                    <label class="font-label-md text-xs text-slate-300 font-semibold" for="email">Work Email</label>
+                    <label class="font-label-md text-xs text-slate-300 font-semibold" for="email">Email Address</label>
                     <div class="glass-panel px-3.5 py-2.5 flex items-center">
                         <span class="material-symbols-outlined text-slate-400 text-lg mr-2.5 transition-colors">mail</span>
-                        <input class="bg-transparent border-none focus:ring-0 w-full text-white font-body-md text-sm p-0 placeholder-slate-500 focus:outline-none" id="email" placeholder="name@company.com" type="email" required autocomplete="email">
+                        <input class="bg-transparent border-none focus:ring-0 w-full text-white font-body-md text-sm p-0 placeholder-slate-500 focus:outline-none" id="email" placeholder="name@email.com" type="email" required autocomplete="email">
                     </div>
                 </div>
 
@@ -616,8 +642,8 @@
                 </div>
 
                 <!-- Submit Button -->
-                <button class="btn-neon-glow rounded-xl py-3.5 px-6 font-label-md text-sm uppercase tracking-wider flex items-center justify-center gap-2 mt-2 cursor-pointer font-bold text-white shadow-lg" type="submit">
-                    <span>Sign In to Platform</span>
+                <button id="submit-btn" class="btn-neon-glow rounded-xl py-3.5 px-6 font-label-md text-sm uppercase tracking-wider flex items-center justify-center gap-2 mt-2 cursor-pointer font-bold text-white shadow-lg" type="submit">
+                    <span id="submit-btn-text">Sign In to Platform</span>
                     <span class="material-symbols-outlined text-base">arrow_forward</span>
                 </button>
             </form>
@@ -630,7 +656,7 @@
             </div>
 
             <!-- SSO -->
-            <button onclick="window.location.href='dashboard.html'" class="btn-secondary rounded-xl py-3 px-4 font-label-md text-sm flex items-center justify-center gap-3 w-full cursor-pointer font-semibold hover:border-white/25">
+            <button onclick="window.location.href='/api/auth/google'" class="btn-secondary rounded-xl py-3 px-4 font-label-md text-sm flex items-center justify-center gap-3 w-full cursor-pointer font-semibold hover:border-white/25">
                 <svg aria-hidden="true" class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
@@ -642,9 +668,9 @@
 
             <!-- Try Demo Link -->
             <div class="mt-6 text-center">
-                <a class="text-xs text-slate-300 hover:text-white transition-colors inline-flex items-center justify-center gap-1.5 group font-medium" href="dashboard.html">
+                <a class="text-xs text-slate-300 hover:text-white transition-colors inline-flex items-center justify-center gap-1.5 group font-medium" href="#" onclick="loginDemo(event)">
                     <span>Evaluating for your organization?</span>
-                    <span class="text-blue-400 group-hover:text-blue-300 font-semibold transition-colors">Launch Instant Demo</span>
+                    <span class="text-blue-400 group-hover:text-blue-300 font-semibold transition-colors ml-1">Launch Instant Demo</span>
                     <span class="material-symbols-outlined text-xs text-blue-400 group-hover:text-blue-300 group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </a>
             </div>
@@ -672,6 +698,167 @@
                 passwordInput.setAttribute('type', type);
                 toggleIcon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
             });
+        }
+
+        // Handle login/signup form submission
+        let authMode = 'signin';
+
+        function toggleAuthMode(mode) {
+            authMode = mode;
+            const tabSignin = document.getElementById('tab-signin');
+            const tabSignup = document.getElementById('tab-signup');
+            const nameField = document.getElementById('name-field');
+            const nameInput = document.getElementById('name');
+            const authTitle = document.getElementById('auth-title');
+            const authSubtitle = document.getElementById('auth-subtitle');
+            const submitBtnText = document.getElementById('submit-btn-text');
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+
+            errorMessage.classList.add('hidden');
+            successMessage.classList.add('hidden');
+
+            if (mode === 'signup') {
+                tabSignin.classList.remove('border-blue-500', 'text-white');
+                tabSignin.classList.add('border-transparent', 'text-slate-400');
+                tabSignup.classList.add('border-blue-500', 'text-white');
+                tabSignup.classList.remove('border-transparent', 'text-slate-400');
+                nameField.classList.remove('hidden');
+                nameInput.setAttribute('required', 'true');
+                authTitle.textContent = 'Create your account';
+                authSubtitle.textContent = 'Sign up to start transforming content with AI.';
+                submitBtnText.textContent = 'Create Free Account';
+            } else {
+                tabSignup.classList.remove('border-blue-500', 'text-white');
+                tabSignup.classList.add('border-transparent', 'text-slate-400');
+                tabSignin.classList.add('border-blue-500', 'text-white');
+                tabSignin.classList.remove('border-transparent', 'text-slate-400');
+                nameField.classList.add('hidden');
+                nameInput.removeAttribute('required');
+                authTitle.textContent = 'Sign in to TransformAI';
+                authSubtitle.textContent = 'Enter your enterprise credentials to access your workspace.';
+                submitBtnText.textContent = 'Sign In to Platform';
+            }
+        }
+
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+        const successMessage = document.getElementById('success-message');
+        const successText = document.getElementById('success-text');
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                errorMessage.classList.add('hidden');
+                successMessage.classList.add('hidden');
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const name = document.getElementById('name').value;
+
+                const endpoint = authMode === 'signup' ? '/api/auth/register' : '/api/auth/login';
+                const body = authMode === 'signup' 
+                    ? JSON.stringify({ email, password, name }) 
+                    : JSON.stringify({ email, password });
+
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Authentication failed');
+                    }
+
+                    if (authMode === 'signup') {
+                        successText.textContent = data.message || 'Registration successful!';
+                        successMessage.classList.remove('hidden');
+                        
+                        setTimeout(() => {
+                            if (data.user && !data.message.includes('confirm')) {
+                                // Logged in automatically
+                                window.location.href = 'dashboard.html';
+                            } else {
+                                toggleAuthMode('signin');
+                            }
+                        }, 2000);
+                    } else {
+                        // Success - redirect to dashboard
+                        window.location.href = 'dashboard.html';
+                    }
+                } catch (err) {
+                    errorText.textContent = err.message;
+                    errorMessage.classList.remove('hidden');
+                }
+            });
+        }
+
+        async function loginDemo(e) {
+            if (e) e.preventDefault();
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: 'demo@company.com', password: 'password123' })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert(data.error || 'Demo login failed');
+                }
+            } catch (err) {
+                console.error('Demo login failed', err);
+            }
+        }
+
+        async function loginGoogle() {
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        email: 'google-user@company.com', 
+                        password: 'google-sso-password-random-123',
+                        name: 'Google User'
+                    })
+                });
+                
+                // If user already exists (400), try logging them in
+                if (!response.ok) {
+                    await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email: 'google-user@company.com', password: 'google-sso-password-random-123' })
+                    });
+                } else {
+                    // Log in after successful registration
+                    await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email: 'google-user@company.com', password: 'google-sso-password-random-123' })
+                    });
+                }
+                window.location.href = 'dashboard.html';
+            } catch (err) {
+                console.error('Google login failed', err);
+            }
         }
 
         // Interactive Format Switcher on Left Side Showcase

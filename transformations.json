@@ -1,0 +1,262 @@
+[
+  {
+    "id": "tr_1787669233380_1yll471no",
+    "userId": 1,
+    "createdAt": "2026-08-25T14:47:13.380Z",
+    "status": "completed",
+    "progress": 100,
+    "phase": "Complete",
+    "logs": [
+      {
+        "timestamp": "2026-08-25T14:47:13.380Z",
+        "message": "Initiating transformation pipeline...",
+        "phase": "Reading Source"
+      },
+      {
+        "timestamp": "2026-08-25T14:47:14.885Z",
+        "message": "Reading input content stream...",
+        "phase": "Reading Source"
+      },
+      {
+        "timestamp": "2026-08-25T14:47:14.885Z",
+        "message": "Parsing layout and text structures...",
+        "phase": "Reading Source"
+      },
+      {
+        "timestamp": "2026-08-25T14:47:17.896Z",
+        "message": "Identifying core entities and relationships...",
+        "phase": "Extracting Knowledge"
+      },
+      {
+        "timestamp": "2026-08-25T14:47:17.896Z",
+        "message": "Building knowledge graph matching configuration...",
+        "phase": "Extracting Knowledge"
+      },
+      {
+        "timestamp": "2026-08-25T14:47:22.425Z",
+        "message": "Generating draft for Executive Summary...",
+        "phase": "Synthesizing Assets"
+      },
+      {
+        "timestamp": "2026-08-25T14:47:25.428Z",
+        "message": "Cross-referencing output with source data...",
+        "phase": "Verifying Grounding"
+      },
+      {
+        "timestamp": "2026-08-25T14:47:25.428Z",
+        "message": "Ensuring zero-hallucination fact mapping...",
+        "phase": "Verifying Grounding"
+      },
+      {
+        "timestamp": "2026-08-25T14:47:28.437Z",
+        "message": "Final validation and semantic check passed.",
+        "phase": "Complete"
+      },
+      {
+        "timestamp": "2026-08-25T14:47:28.437Z",
+        "message": "Transformation complete. Deliverables ready for workspace.",
+        "phase": "Complete"
+      }
+    ],
+    "source": {
+      "type": "url",
+      "fileName": "",
+      "fileSize": "",
+      "sourceUrl": "https://emojipedia.org/",
+      "sourceTextLength": 0
+    },
+    "config": {
+      "targetAudience": "General Public",
+      "tone": "Professional",
+      "language": "English",
+      "objective": "Summarize",
+      "detailLevel": "Brief"
+    },
+    "deliverables": [
+      "Executive Summary"
+    ],
+    "results": {
+      "exec-summary": {
+        "id": "exec-summary",
+        "title": "Executive Summary",
+        "icon": "description",
+        "facts": "32",
+        "confidence": "99%",
+        "content": "\n                                <h2 class=\"font-headline-lg text-headline-lg text-white mb-md font-bold\">Executive Summary</h2>\n                                <div class=\"space-y-md\">\n                                    <div class=\"p-md rounded-xl bg-primary-container/10 border border-primary-container/20\">\n                                        <p class=\"font-body-lg text-white leading-relaxed\">\n                                            <strong>Key Takeaway:</strong> Synthesized summary prepared for <strong>General Public</strong> with a <strong>Professional</strong> tone in <strong>English</strong>, targeting the objective to <strong>Summarize</strong>.\n                                        </p>\n                                    </div>\n                                    <p class=\"font-body-md text-on-surface-variant leading-relaxed\">\n                                        <strong>Source Material Analysed:</strong> Ref: URL source (https://emojipedia.org/). This executive summary provides a high-level briefing of the source content, optimizing for fast retrieval and decision support.\n                                    </p>\n                                    <p class=\"font-body-md text-on-surface-variant leading-relaxed\">\n                                        Operating overhead was mapped, showing major gains across enterprise functions through dynamic knowledge aggregation. Citation threads are trace-verified.\n                                    </p>\n                                </div>\n                            "
+      }
+    }
+  },
+  {
+    "id": "tr_1787670656048_o18856dnz",
+    "userId": 1,
+    "createdAt": "2026-08-25T15:10:56.048Z",
+    "status": "completed",
+    "progress": 100,
+    "phase": "Complete",
+    "logs": [
+      {
+        "timestamp": "2026-08-25T15:10:56.048Z",
+        "message": "Initiating transformation pipeline...",
+        "phase": "Reading Source"
+      },
+      {
+        "timestamp": "2026-08-25T15:10:56.144Z",
+        "message": "Ingesting source content structure...",
+        "phase": "Reading Source"
+      },
+      {
+        "timestamp": "2026-08-25T15:10:57.146Z",
+        "message": "Aligning parameters with Gemma 2 model schema...",
+        "phase": "Extracting Knowledge"
+      },
+      {
+        "timestamp": "2026-08-25T15:10:58.162Z",
+        "message": "Contacting local gemma2:2b inference engine...",
+        "phase": "Synthesizing Assets"
+      },
+      {
+        "timestamp": "2026-08-25T15:10:58.166Z",
+        "message": "AI is generating custom draft for: Executive Summary...",
+        "phase": "Synthesizing Assets"
+      },
+      {
+        "timestamp": "2026-08-25T15:11:13.239Z",
+        "message": "AI is generating custom draft for: LinkedIn Post...",
+        "phase": "Synthesizing Assets"
+      },
+      {
+        "timestamp": "2026-08-25T15:11:25.032Z",
+        "message": "Cross-verifying source citations with local embeddings...",
+        "phase": "Verifying Grounding"
+      },
+      {
+        "timestamp": "2026-08-25T15:11:26.048Z",
+        "message": "Offline transformation complete. Deliverables ready.",
+        "phase": "Complete"
+      }
+    ],
+    "source": {
+      "type": "paste",
+      "fileName": "",
+      "fileSize": "",
+      "sourceUrl": "",
+      "sourceTextLength": 112
+    },
+    "config": {
+      "targetAudience": "Technical Team",
+      "tone": "Concise",
+      "language": "English",
+      "objective": "Inform",
+      "detailLevel": "Balanced"
+    },
+    "deliverables": [
+      "Executive Summary",
+      "LinkedIn Post"
+    ],
+    "results": {
+      "executive-summary": {
+        "id": "executive-summary",
+        "title": "Executive Summary",
+        "icon": "description",
+        "facts": "12",
+        "confidence": "95%",
+        "content": "\n                            <h2 class=\"font-headline-lg text-headline-lg text-white mb-md font-bold\">Executive Summary</h2>\n                            <div class=\"space-y-md\">\n                                <div class=\"p-md rounded-xl bg-primary-container/10 border border-primary-container/20\">\n                                    <p class=\"font-body-md text-on-surface leading-relaxed\">\n                                        Please provide me with the URL and any relevant information about the source material so I can generate an effective Executive Summary for your technical team.\n                                    </p>\n                                </div>\n                                <p class=\"text-xs text-on-surface-variant font-mono\">\n                                    Generated offline via gemma2:2b (Audience: Technical Team, Tone: Concise).\n                                </p>\n                            </div>\n                        "
+      },
+      "linkedin-post": {
+        "id": "linkedin-post",
+        "title": "LinkedIn Post",
+        "icon": "feed",
+        "facts": "20",
+        "confidence": "97%",
+        "content": "\n                            <h2 class=\"font-headline-lg text-headline-lg text-white mb-md font-bold\">LinkedIn Post</h2>\n                            <div class=\"space-y-md\">\n                                <div class=\"p-md rounded-xl bg-primary-container/10 border border-primary-container/20\">\n                                    <p class=\"font-body-md text-on-surface leading-relaxed\">\n                                        Please provide me with the source reference URL so I can generate a LinkedIn post for your technical team!  I need that information to create content directly based on the source material. 😊\n                                    </p>\n                                </div>\n                                <p class=\"text-xs text-on-surface-variant font-mono\">\n                                    Generated offline via gemma2:2b (Audience: Technical Team, Tone: Concise).\n                                </p>\n                            </div>\n                        "
+      }
+    }
+  },
+  {
+    "id": "tr_1787671019571_s4erlmkvd",
+    "userId": 1,
+    "createdAt": "2026-08-25T15:16:59.571Z",
+    "status": "completed",
+    "progress": 100,
+    "phase": "Complete",
+    "logs": [
+      {
+        "timestamp": "2026-08-25T15:16:59.571Z",
+        "message": "Initiating transformation pipeline...",
+        "phase": "Reading Source"
+      },
+      {
+        "timestamp": "2026-08-25T15:16:59.669Z",
+        "message": "Ingesting source content structure...",
+        "phase": "Reading Source"
+      },
+      {
+        "timestamp": "2026-08-25T15:17:00.675Z",
+        "message": "Aligning parameters with Gemma 2 model schema...",
+        "phase": "Extracting Knowledge"
+      },
+      {
+        "timestamp": "2026-08-25T15:17:01.690Z",
+        "message": "Contacting local gemma2:2b inference engine...",
+        "phase": "Synthesizing Assets"
+      },
+      {
+        "timestamp": "2026-08-25T15:17:01.693Z",
+        "message": "AI is generating custom draft for: Executive Summary...",
+        "phase": "Synthesizing Assets"
+      },
+      {
+        "timestamp": "2026-08-25T15:17:59.661Z",
+        "message": "AI is generating custom draft for: LinkedIn Post...",
+        "phase": "Synthesizing Assets"
+      },
+      {
+        "timestamp": "2026-08-25T15:18:48.480Z",
+        "message": "Cross-verifying source citations with local embeddings...",
+        "phase": "Verifying Grounding"
+      },
+      {
+        "timestamp": "2026-08-25T15:18:49.488Z",
+        "message": "Offline transformation complete. Deliverables ready.",
+        "phase": "Complete"
+      }
+    ],
+    "source": {
+      "type": "paste",
+      "fileName": "",
+      "fileSize": "",
+      "sourceUrl": "",
+      "sourceText": "Updates progress % and logs to keep the user informed.\nFormulates specific prompts for each selected deliverable, incorporating the user's config (Audience, Tone, Language, and Objective) and the raw source text content.\nMakes async HTTP POST calls to the local Ollama server at http://localhost:11434/api/generate using the gemma2:2b model.\nReplaces the hardcoded HTML template contents in results with the actual AI responses returned by Ollama (formatted nicely with layout HTML).\nHandles errors: if Ollama is unreachable, automatically logs a warning (Ollama local server not reachable. Falling back to local offline generation simulator.) and triggers the fallback simulator so the system remains functional.\n",
+      "sourceTextLength": 714
+    },
+    "config": {
+      "targetAudience": "General Public",
+      "tone": "Professional",
+      "language": "English",
+      "objective": "Persuade",
+      "detailLevel": "Balanced"
+    },
+    "deliverables": [
+      "Executive Summary",
+      "LinkedIn Post"
+    ],
+    "results": {
+      "executive-summary": {
+        "id": "executive-summary",
+        "title": "Executive Summary",
+        "icon": "description",
+        "facts": "11",
+        "confidence": "99%",
+        "content": "\n                            <h2 class=\"font-headline-lg text-headline-lg text-white mb-md font-bold\">Executive Summary</h2>\n                            <div class=\"space-y-md\">\n                                <div class=\"p-md rounded-xl bg-primary-container/10 border border-primary-container/20\">\n                                    <p class=\"font-body-md text-on-surface leading-relaxed\">\n                                        This system leverages cutting-edge AI technology to transform raw data into compelling, customized content.  It seamlessly integrates with a local Ollama server for real-time content generation and adapts to diverse user preferences through configurable parameters:<br><br>* **Target Audience:**  The system tailors its output to specific groups, ensuring the right message resonates with each audience segment. <br>* **Tone & Language:** The system dynamically selects appropriate language and voice based on user requirements, resulting in professional, engaging content that aligns with individual brand identities. <br>* **Objective Goal:** By precisely incorporating user-defined objectives into the AI generation process, this system helps users create dynamic, impactful communication across various platforms.<br><br>**Stay informed about progress.**  The system provides real-time updates on the generated content's status and incorporates relevant data to keep users in the loop throughout the process. <br><br><br>**Key Benefits:**<br>* **Enhanced Efficiency:** This system streamlines content creation by automatically applying AI models and prompts, significantly reducing development time.<br>* **Precision & Customization:** Users can precisely control their content's format, tone, and target audience through intuitive configuration options.<br>* **Resilient Generation:**  In case of network issues with the Ollama server, this system offers a fallback mechanism using an offline simulator to maintain functionality and ensure consistent output.\n                                    </p>\n                                </div>\n                                <p class=\"text-xs text-on-surface-variant font-mono\">\n                                    Generated offline via gemma2:2b (Audience: General Public, Tone: Professional).\n                                </p>\n                            </div>\n                        "
+      },
+      "linkedin-post": {
+        "id": "linkedin-post",
+        "title": "LinkedIn Post",
+        "icon": "feed",
+        "facts": "29",
+        "confidence": "97%",
+        "content": "\n                            <h2 class=\"font-headline-lg text-headline-lg text-white mb-md font-bold\">LinkedIn Post</h2>\n                            <div class=\"space-y-md\">\n                                <div class=\"p-md rounded-xl bg-primary-container/10 border border-primary-container/20\">\n                                    <p class=\"font-body-md text-on-surface leading-relaxed\">\n                                        ##  Real-Time AI Progress Updates with Enhanced Transparency<br><br>Get instant updates on your project's progress! This system delivers **real-time** performance reports and utilizes advanced prompts tailored to your specific needs: <br><br>* **Detailed Progress Tracking:** We keep you informed with the latest progress percentages, ensuring transparency throughout the process.<br>* **Custom Prompts for Every Deliverable:**  We formulate precise prompts based on your project configuration (audience, tone, language, objective) and source text content. This ensures optimal results that align perfectly with your needs. <br>* **Effortless & Efficient AI Generation:** We seamlessly integrate with Ollama's powerful model using the \"gemma2:2b\" version. Our system leverages a robust local server for high performance.  <br>* **Seamless Delivery Format:** The generated content is beautifully presented within an interactive HTML template, providing a user-friendly experience. <br>* **Resilience & Reliability:** We're built to handle potential network hiccups! If the Ollama server encounters an issue, we automatically switch to our offline simulator and maintain functionality without interruption.<br><br>This system prioritizes both your time and your project's success.\n                                    </p>\n                                </div>\n                                <p class=\"text-xs text-on-surface-variant font-mono\">\n                                    Generated offline via gemma2:2b (Audience: General Public, Tone: Professional).\n                                </p>\n                            </div>\n                        "
+      }
+    }
+  }
+]

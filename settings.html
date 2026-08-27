@@ -5,6 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>TransformAI - Settings</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="auth-check.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
@@ -600,11 +601,77 @@
             }
         }
 
-        function saveSettings() {
+        // Load settings data on page startup
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const res = await fetch('/api/auth/me');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.user) {
+                        const user = data.user;
+                        if (document.getElementById('inputName')) document.getElementById('inputName').value = user.name || '';
+                        if (document.getElementById('inputEmail')) document.getElementById('inputEmail').value = user.email || '';
+                        if (document.getElementById('inputOrg')) document.getElementById('inputOrg').value = user.organization || '';
+                        
+                        if (document.getElementById('userDisplayName')) {
+                            document.getElementById('userDisplayName').innerText = user.name || 'User Profile';
+                        }
+
+                        // Initials for avatar letters
+                        let initials = 'US';
+                        if (user.name) {
+                            const parts = user.name.split(' ');
+                            initials = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : user.name.substring(0,2).toUpperCase();
+                        } else if (user.email) {
+                            initials = user.email.substring(0, 2).toUpperCase();
+                        }
+                        const settingsAv = document.querySelector('.w-16.h-16.rounded-2xl.bg-primary-container\\/20');
+                        if (settingsAv) settingsAv.innerText = initials;
+                    }
+                }
+            } catch (err) {
+                console.error('Failed to load settings profiles:', err);
+            }
+        });
+
+        async function saveSettings() {
             const name = document.getElementById('inputName')?.value;
-            const displayName = document.getElementById('userDisplayName');
-            if (name && displayName) displayName.innerText = name;
-            showToast('Settings saved successfully.');
+            const organization = document.getElementById('inputOrg')?.value;
+
+            try {
+                const response = await fetch('/api/users/profile', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, organization })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const displayName = document.getElementById('userDisplayName');
+                    if (displayName && name) displayName.innerText = name;
+                    
+                    // Update avatar letters
+                    let initials = 'US';
+                    if (name) {
+                        const parts = name.split(' ');
+                        initials = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : name.substring(0, 2).toUpperCase();
+                    }
+                    const settingsAv = document.querySelector('.w-16.h-16.rounded-2xl.bg-primary-container\\/20');
+                    if (settingsAv) settingsAv.innerText = initials;
+
+                    showToast('Profile settings saved successfully.');
+                    
+                    // Also trigger common UI update
+                    if (window.updateUserUI && data.user) {
+                        window.updateUserUI(data.user);
+                    }
+                } else {
+                    showToast('Failed to save profile settings.');
+                }
+            } catch (err) {
+                console.error('Save profile error:', err);
+                showToast('Error connecting to backend database.');
+            }
         }
 
         function showToast(msg) {

@@ -5,6 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>TransformAI - Analysis & Transformation</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="auth-check.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
@@ -748,14 +749,16 @@
             drawGrid();
         })();
 
-        // Dynamic Real-time Pipeline Simulation Engine
-        (function() {
-            const artifacts = [
-                { name: 'Executive Summary', icon: 'description', status: 'Queued' },
-                { name: 'Advisory Document', icon: 'campaign', status: 'Queued' },
-                { name: 'Presentation Deck', icon: 'slideshow', status: 'Queued' },
-                { name: 'Social Post', icon: 'feed', status: 'Queued' }
-            ];
+        // Dynamic Real-time Pipeline Fetching Engine
+        (async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const transformationId = urlParams.get('id');
+
+            if (!transformationId) {
+                console.warn('No transformation ID provided. Redirecting to dashboard...');
+                window.location.href = 'dashboard.html';
+                return;
+            }
 
             const artifactListEl = document.getElementById('artifactList');
             const artifactCountEl = document.getElementById('completedArtifactCount');
@@ -764,9 +767,22 @@
             const phaseLabel = document.getElementById('pipelinePhaseLabel');
             const statusListEl = document.getElementById('pipelineStatusList');
 
+            let artifacts = [];
+
+            function getIcon(name) {
+                const lower = name.toLowerCase();
+                if (lower.includes('summary')) return 'description';
+                if (lower.includes('advisory')) return 'campaign';
+                if (lower.includes('presentation')) return 'slideshow';
+                if (lower.includes('linkedin')) return 'feed';
+                if (lower.includes('x thread')) return 'forum';
+                if (lower.includes('infographic')) return 'insert_chart';
+                return 'movie';
+            }
+
             function renderArtifacts() {
                 if (!artifactListEl) return;
-                artifactListEl.innerHTML = artifacts.map((art, idx) => {
+                artifactListEl.innerHTML = artifacts.map((art) => {
                     let badge = '';
                     let opacity = 'opacity-50';
                     if (art.status === 'Done') {
@@ -782,7 +798,7 @@
                     return `
                         <div class="bg-surface-container border border-white/10 rounded-lg p-sm flex items-center justify-between transition-all ${opacity}">
                             <div class="flex items-center gap-sm">
-                                <span class="material-symbols-outlined text-${art.status === 'Done' ? 'primary' : 'on-surface-variant'} text-[18px]">${art.icon}</span>
+                                <span class="material-symbols-outlined text-${art.status === 'Done' ? 'primary' : 'on-surface-variant'} text-[18px]">${getIcon(art.name)}</span>
                                 <span class="font-body-sm text-body-sm text-on-surface font-medium truncate">${art.name}</span>
                             </div>
                             <div>${badge}</div>
@@ -794,90 +810,8 @@
                 if (artifactCountEl) artifactCountEl.innerText = `${doneCount} / ${artifacts.length}`;
             }
 
-            renderArtifacts();
-
-            let progress = 0;
-            const steps = [
-                {
-                    at: 10,
-                    phase: 'Analyzing',
-                    log: 'Parsing structured sections and extracting semantics...',
-                    node: 'node-analyze',
-                    nodeStatus: 'Parsing input document...'
-                },
-                {
-                    at: 25,
-                    phase: 'Analyzing',
-                    log: 'Document parsed successfully.',
-                    completeNode: 'node-analyze',
-                    nodeStatusDone: '100% Complete'
-                },
-                {
-                    at: 35,
-                    phase: 'Understanding',
-                    log: 'Extracting key concepts, domain ontology & relationships...',
-                    node: 'node-understand',
-                    nodeStatus: 'Mapping knowledge graph...'
-                },
-                {
-                    at: 55,
-                    phase: 'Understanding',
-                    log: 'Entities and context mapped.',
-                    completeNode: 'node-understand',
-                    nodeStatusDone: 'Concepts Mapped'
-                },
-                {
-                    at: 60,
-                    phase: 'Transforming',
-                    log: 'Applying enterprise transformation models...',
-                    node: 'node-transform',
-                    nodeStatus: 'Synthesizing artifacts...',
-                    updateArtifact: { idx: 0, status: 'Generating' }
-                },
-                {
-                    at: 72,
-                    phase: 'Transforming',
-                    log: 'Generated Executive Summary.',
-                    updateArtifact: [
-                        { idx: 0, status: 'Done' },
-                        { idx: 1, status: 'Generating' }
-                    ]
-                },
-                {
-                    at: 82,
-                    phase: 'Transforming',
-                    log: 'Generated Advisory Document.',
-                    updateArtifact: [
-                        { idx: 1, status: 'Done' },
-                        { idx: 2, status: 'Generating' },
-                        { idx: 3, status: 'Generating' }
-                    ]
-                },
-                {
-                    at: 92,
-                    phase: 'Validating',
-                    log: 'Synthesized all artifacts. Validating safety & alignment...',
-                    completeNode: 'node-transform',
-                    nodeStatusDone: 'Artifacts Created',
-                    node: 'node-validate',
-                    nodeStatus: 'Validating outputs...',
-                    updateArtifact: [
-                        { idx: 2, status: 'Done' },
-                        { idx: 3, status: 'Done' }
-                    ]
-                },
-                {
-                    at: 100,
-                    phase: 'Completed',
-                    log: 'Transformation complete. Ready for export.',
-                    completeNode: 'node-validate',
-                    nodeStatusDone: 'Verified',
-                    final: true
-                }
-            ];
-
             const milestoneState = {
-                1: 'active',
+                1: 'pending',
                 2: 'pending',
                 3: 'pending',
                 4: 'pending'
@@ -893,13 +827,11 @@
                 const lbl = mEl.querySelector('.milestone-label');
                 if (!dot) return;
 
-                // Animate old spinner fading out
                 const existingIcon = dot.querySelector('.material-symbols-outlined');
                 if (existingIcon) {
                     existingIcon.classList.add('animate-spinner-fade');
                 }
 
-                // Smoothly morph to clean emerald checkmark
                 setTimeout(() => {
                     dot.className = 'milestone-dot w-12 h-12 rounded-2xl border-2 text-emerald-400 flex items-center justify-center milestone-completed-box transition-all duration-300';
                     dot.innerHTML = '<span class="material-symbols-outlined text-[22px] font-bold animate-check-pop text-emerald-400">check</span>';
@@ -929,43 +861,60 @@
                 }
             }
 
-            const progressTimer = setInterval(() => {
-                if (progress < 100) {
-                    progress += 1;
+            let loggedMessages = new Set();
+
+            async function updateProgress() {
+                try {
+                    const response = await fetch(`/api/transformations/${transformationId}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch pipeline status');
+                    }
+                    const data = await response.json();
+
+                    // Initialize deliverables if not done
+                    if (artifacts.length === 0 && data.deliverables) {
+                        artifacts = data.deliverables.map(name => ({ name, status: 'Queued' }));
+                        renderArtifacts();
+                    }
+
+                    const progress = data.progress || 0;
                     if (progressPercent) progressPercent.innerText = `${progress}%`;
-                    
-                    // Update Roadmap Progress Connecting Bar
+
+                    // Update connecting bar
                     const progressBar = document.getElementById('roadmapProgressBar');
                     if (progressBar) {
                         progressBar.style.width = `${progress}%`;
                     }
 
+                    // Update circle offset
                     if (progressCircle) {
                         const offset = 276 - (276 * (progress / 100));
                         progressCircle.style.strokeDashoffset = offset;
                     }
 
-                    // Dynamic live telemetry fluctuations (Grounding Accuracy & ETA countdown)
+                    // Telemetry fluctuations
                     const groundingEl = document.getElementById('liveGroundingRate');
                     const etaEl = document.getElementById('liveEta');
                     if (groundingEl) {
                         const jitterRate = (98.8 + Math.random() * 0.9).toFixed(1);
-                        groundingEl.innerText = `${jitterRate}%`;
+                        groundingEl.innerText = progress >= 100 ? '99.8%' : `${jitterRate}%`;
                     }
                     if (etaEl) {
-                        const remainingSeconds = Math.max(0, Math.ceil((100 - progress) * 0.25));
+                        const remainingSeconds = Math.max(0, Math.ceil((100 - progress) * 0.15));
                         etaEl.innerText = remainingSeconds > 0 ? `${remainingSeconds}s` : 'Ready';
                     }
 
-                    // Milestone state transitions based on exact progress intervals
-                    if (progress >= 35 && progress < 60) {
+                    // Milestone state transitions based on server progress
+                    if (progress >= 0 && progress < 25) {
+                        setMilestoneActive(1, 'Reading Source');
+                    } else if (progress >= 25 && progress < 50) {
                         setMilestoneCompleted(1);
-                        setMilestoneActive(2, 'Mapping Knowledge');
-                    } else if (progress >= 60 && progress < 92) {
+                        setMilestoneActive(2, 'Understanding');
+                    } else if (progress >= 50 && progress < 75) {
                         setMilestoneCompleted(1);
                         setMilestoneCompleted(2);
                         setMilestoneActive(3, 'Synthesizing Assets');
-                    } else if (progress >= 92 && progress < 100) {
+                    } else if (progress >= 75 && progress < 100) {
                         setMilestoneCompleted(1);
                         setMilestoneCompleted(2);
                         setMilestoneCompleted(3);
@@ -977,73 +926,83 @@
                         setMilestoneCompleted(4);
                     }
 
-                    // Check pipeline log step triggers
-                    while (stepIndex < steps.length && progress >= steps[stepIndex].at) {
-                        const step = steps[stepIndex];
-                        if (phaseLabel) phaseLabel.innerText = step.phase;
-
-                        // Add to log
-                        if (step.log && statusListEl) {
-                            // Mark previous log items complete
-                            const prevSpinners = statusListEl.querySelectorAll('.animate-spin');
-                            prevSpinners.forEach(spin => {
-                                spin.classList.remove('animate-spin', 'text-primary');
-                                spin.classList.add('text-emerald-400');
-                                spin.innerText = 'check_circle';
-                            });
-
-                            const li = document.createElement('li');
-                            li.className = 'flex items-start gap-sm';
-                            li.innerHTML = `
-                                <span class="material-symbols-outlined ${step.final ? 'text-emerald-400' : 'text-primary animate-spin'} text-[18px]">${step.final ? 'check_circle' : 'progress_activity'}</span>
-                                <span class="font-body-sm text-body-sm text-on-surface">${step.log}</span>
-                            `;
-                            statusListEl.appendChild(li);
-                        }
-
-                        // Update Artifacts
-                        if (step.updateArtifact) {
-                            const updates = Array.isArray(step.updateArtifact) ? step.updateArtifact : [step.updateArtifact];
-                            updates.forEach(u => {
-                                if (artifacts[u.idx]) artifacts[u.idx].status = u.status;
-                            });
-                            renderArtifacts();
-                        }
-
-                        if (step.final) {
-                            setMilestoneCompleted(4);
-
-                            const jobStatus = document.getElementById('activeJobStatus');
-                            if (jobStatus) {
-                                jobStatus.className = 'text-emerald-400 font-mono text-[11px]';
-                                jobStatus.innerText = 'COMPLETE';
-                            }
-                            
-                            // Add completion banner button to proceed to artifact-workspace.html
-                            if (statusListEl) {
-                                const ctaLi = document.createElement('li');
-                                ctaLi.className = 'pt-md';
-                                ctaLi.innerHTML = `
-                                    <a href="artifact-workspace.html" class="btn-neon-glow w-full text-white rounded-xl py-sm px-md flex items-center justify-center gap-sm font-label-md text-label-md">
-                                        <span>Open Artifact Workspace</span>
-                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                    </a>
-                                `;
-                                statusListEl.appendChild(ctaLi);
-                            }
-                        }
-
-                        stepIndex++;
+                    // Update current phase label
+                    if (phaseLabel && data.phase) {
+                        phaseLabel.innerText = data.phase;
                     }
-                } else {
-                    setMilestoneCompleted(1);
-                    setMilestoneCompleted(2);
-                    setMilestoneCompleted(3);
-                    setMilestoneCompleted(4);
-                    clearInterval(progressTimer);
+
+                    // Update dynamic artifacts list states
+                    if (progress >= 50) {
+                        artifacts.forEach((art) => {
+                            if (progress >= 75) {
+                                art.status = 'Done';
+                            } else {
+                                art.status = 'Generating';
+                            }
+                        });
+                        renderArtifacts();
+                    }
+
+                    // Render backend log messages
+                    if (data.logs && statusListEl) {
+                        data.logs.forEach(logItem => {
+                            if (!loggedMessages.has(logItem.message)) {
+                                loggedMessages.add(logItem.message);
+
+                                // Mark previous log spinners as checked
+                                const prevSpinners = statusListEl.querySelectorAll('.animate-spin');
+                                prevSpinners.forEach(spin => {
+                                    spin.classList.remove('animate-spin', 'text-primary');
+                                    spin.classList.add('text-emerald-400');
+                                    spin.innerText = 'check_circle';
+                                });
+
+                                // Append new log list item
+                                const li = document.createElement('li');
+                                li.className = 'flex items-start gap-sm';
+                                const isFinal = progress >= 100 && logItem.message.includes('complete');
+                                li.innerHTML = `
+                                    <span class="material-symbols-outlined ${isFinal ? 'text-emerald-400' : 'text-primary animate-spin'} text-[18px]">${isFinal ? 'check_circle' : 'progress_activity'}</span>
+                                    <span class="font-body-sm text-body-sm text-on-surface">${logItem.message}</span>
+                                `;
+                                statusListEl.appendChild(li);
+                            }
+                        });
+                    }
+
+                    if (progress >= 100) {
+                        clearInterval(pollInterval);
+                        
+                        const jobStatus = document.getElementById('activeJobStatus');
+                        if (jobStatus) {
+                            jobStatus.className = 'text-emerald-400 font-mono text-[11px]';
+                            jobStatus.innerText = 'COMPLETE';
+                        }
+
+                        // Add completion CTA button link to artifact-workspace.html
+                        if (statusListEl && !document.getElementById('ctaWorkspaceButton')) {
+                            const ctaLi = document.createElement('li');
+                            ctaLi.id = 'ctaWorkspaceButton';
+                            ctaLi.className = 'pt-md';
+                            ctaLi.innerHTML = `
+                                <a href="artifact-workspace.html?id=${transformationId}" class="btn-neon-glow w-full text-white rounded-xl py-sm px-md flex items-center justify-center gap-sm font-label-md text-label-md">
+                                    <span>Open Artifact Workspace</span>
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            `;
+                            statusListEl.appendChild(ctaLi);
+                        }
+                    }
+                } catch (err) {
+                    console.error('Polling error:', err);
                 }
-            }, 600);
+            }
+
+            // Perform initial load and start polling interval
+            updateProgress();
+            const pollInterval = setInterval(updateProgress, 1000);
         })();
+
     </script>
 </body>
 </html>

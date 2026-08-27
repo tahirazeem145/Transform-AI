@@ -5,6 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>TransformAI - New Transformation</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="auth-check.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
@@ -521,7 +522,7 @@
                         <div class="px-md py-sm bg-surface-container-lowest/60 border-r border-white/10 flex items-center justify-center">
                             <label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Import from URL</label>
                         </div>
-                        <input class="w-full bg-transparent border-none text-white font-body-md text-body-md px-md py-sm placeholder:text-on-surface-variant/40 focus:ring-0" placeholder="https://..." type="url">
+                        <input id="urlInput" class="w-full bg-transparent border-none text-white font-body-md text-body-md px-md py-sm placeholder:text-on-surface-variant/40 focus:ring-0" placeholder="https://..." type="url">
                         <button type="button" class="px-md text-primary-container hover:text-white transition-colors bg-surface-container-high/40 hover:bg-primary-container/20 flex items-center">
                             <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </button>
@@ -540,12 +541,12 @@
                         <div>
                             <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Target Audience</label>
                             <div class="relative">
-                                <select class="w-full bg-surface-container border border-white/10 rounded-lg px-md py-sm text-white font-body-md text-body-md appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
+                                <select id="audienceSelect" class="w-full bg-surface-container border border-white/10 rounded-lg px-md py-sm text-white font-body-md text-body-md appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
                                     <option value="" disabled selected>Select target audience...</option>
-                                    <option>Executive</option>
-                                    <option>Technical Team</option>
-                                    <option>General Public</option>
-                                    <option>Investors</option>
+                                    <option>Cabinet / Ministry Secretaries</option>
+                                    <option>Technical / NIC Team</option>
+                                    <option>State Department Officers</option>
+                                    <option>General Citizens</option>
                                 </select>
                                 <span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-lg">expand_more</span>
                             </div>
@@ -566,11 +567,17 @@
                             <div>
                                 <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Language</label>
                                 <div class="relative">
-                                    <select class="w-full bg-surface-container border border-white/10 rounded-lg px-sm py-sm text-white font-body-sm text-body-sm appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
+                                    <select id="languageSelect" class="w-full bg-surface-container border border-white/10 rounded-lg px-sm py-sm text-white font-body-sm text-body-sm appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
                                         <option selected>English</option>
-                                        <option>Spanish</option>
-                                        <option>French</option>
-                                        <option>German</option>
+                                        <option>Hindi (हिन्दी)</option>
+                                        <option>Bengali (বাংলা)</option>
+                                        <option>Marathi (मराठी)</option>
+                                        <option>Telugu (తెలుగు)</option>
+                                        <option>Tamil (தமிழ்)</option>
+                                        <option>Gujarati (ગુજરાતી)</option>
+                                        <option>Kannada (ಕನ್ನಡ)</option>
+                                        <option>Malayalam (മലയാളം)</option>
+                                        <option>Punjabi (ਪੰਜਾਬੀ)</option>
                                     </select>
                                     <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px] pointer-events-none">expand_more</span>
                                 </div>
@@ -578,12 +585,13 @@
                             <div>
                                 <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Objective</label>
                                 <div class="relative">
-                                    <select class="w-full bg-surface-container border border-white/10 rounded-lg px-sm py-sm text-white font-body-sm text-body-sm appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
+                                    <select id="objectiveSelect" class="w-full bg-surface-container border border-white/10 rounded-lg px-sm py-sm text-white font-body-sm text-body-sm appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container/30 transition-all cursor-pointer">
                                         <option value="" disabled selected>Select objective...</option>
-                                        <option>Inform</option>
-                                        <option>Persuade</option>
-                                        <option>Alert</option>
-                                        <option>Summarize</option>
+                                        <option>Policy Drafting</option>
+                                        <option>PIB Press Release</option>
+                                        <option>Citizens Advisory</option>
+                                        <option>Official Circular</option>
+                                        <option>Summarize Scheme</option>
                                     </select>
                                     <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px] pointer-events-none">expand_more</span>
                                 </div>
@@ -594,7 +602,7 @@
                         <div class="pt-xs">
                             <label class="font-label-md text-label-md text-on-surface-variant block mb-sm">Detail Level</label>
                             <div class="px-xs">
-                                <input class="w-full" max="3" min="1" type="range" value="2"/>
+                                <input id="detailSlider" class="w-full" max="3" min="1" type="range" value="2"/>
                                 <div class="flex justify-between mt-sm font-label-md text-label-md text-on-surface-variant">
                                     <span>Brief</span>
                                     <span class="text-primary">Balanced</span>
@@ -671,7 +679,7 @@
                                     Ready
                                 </span>
                             </div>
-                            <button type="button" onclick="window.location.href='transformation-processing.html'" class="btn-neon-glow w-full text-white rounded-xl py-md px-lg flex items-center justify-center gap-sm font-headline-md text-[16px] font-semibold group">
+                            <button id="generateBtn" type="button" onclick="startTransformation()" class="btn-neon-glow w-full text-white rounded-xl py-md px-lg flex items-center justify-center gap-sm font-headline-md text-[16px] font-semibold group">
                                 <span class="material-symbols-outlined text-[20px]">auto_awesome</span>
                                 <span>Generate Content</span>
                                 <span class="material-symbols-outlined transition-transform group-hover:translate-x-1 text-sm">arrow_forward</span>
@@ -842,6 +850,92 @@
             if (fileInput) fileInput.value = '';
             fileCardContainer.classList.add('hidden');
             dropzone.classList.remove('hidden');
+        }
+
+        async function startTransformation() {
+            const generateBtn = document.getElementById('generateBtn');
+            const originalHTML = generateBtn.innerHTML;
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span><span>Preparing...</span>';
+
+            const sourceText = document.getElementById('pasteArea')?.value || '';
+            const sourceUrl = document.getElementById('urlInput')?.value || '';
+            
+            let fileName = '';
+            let fileSize = '';
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                fileName = fileInput.files[0].name;
+                fileSize = `${(fileInput.files[0].size / (1024 * 1024)).toFixed(2)} MB`;
+            }
+
+            const targetAudience = document.getElementById('audienceSelect')?.value || '';
+            
+            const activeToneBtn = document.querySelector('#toneSelector button.border-primary-container');
+            const tone = activeToneBtn ? activeToneBtn.textContent.trim() : 'Professional';
+
+            const language = document.getElementById('languageSelect')?.value || 'English';
+            const objective = document.getElementById('objectiveSelect')?.value || '';
+            const detailLevelVal = document.getElementById('detailSlider')?.value || '2';
+            const detailLevel = detailLevelVal === '1' ? 'Brief' : (detailLevelVal === '3' ? 'Detailed' : 'Balanced');
+
+            const deliverables = [];
+            document.querySelectorAll('.deliverable-card').forEach(card => {
+                const check = card.querySelector('.check-icon');
+                if (check && !check.classList.contains('hidden')) {
+                    const titleText = card.querySelector('p')?.textContent.trim();
+                    if (titleText) {
+                        deliverables.push(titleText);
+                    }
+                }
+            });
+
+            if (!sourceText && !sourceUrl && !fileName) {
+                alert('Please provide some source content (upload a file, paste text, or enter a URL).');
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = originalHTML;
+                return;
+            }
+
+            if (deliverables.length === 0) {
+                alert('Please select at least one deliverable to generate.');
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = originalHTML;
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/transformations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        sourceText,
+                        sourceUrl,
+                        fileName,
+                        fileSize,
+                        targetAudience,
+                        tone,
+                        language,
+                        objective,
+                        detailLevel,
+                        deliverables
+                    })
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to submit transformation configuration.');
+                }
+
+                // Redirect to processing page with the new transformation ID
+                window.location.href = `transformation-processing.html?id=${data.id}`;
+            } catch (err) {
+                console.error('Submission error:', err);
+                alert(err.message);
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = originalHTML;
+            }
         }
     </script>
 </body>
